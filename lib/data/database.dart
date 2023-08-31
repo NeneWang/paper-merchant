@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'dart:math';
 import 'dart:convert';
 
+import '../utils/color.dart';
+
 // reference our box
 final _myBox = Hive.box("market_user");
 const backendAPI = "https://crvmb5tnnr.us-east-1.awsapprunner.com";
@@ -138,6 +140,60 @@ class Database {
     userStockPrices = _myBox.get("userStockPrices");
   }
 
+  Map<dynamic, dynamic> getUserAsset(String userAssetSymbol) {
+    for (var asset in userAsset) {
+      if (asset["symbol"] == userAssetSymbol) {
+        return asset;
+      }
+    }
+    return {};
+  }
+
+  Future<Map<String, dynamic>> getDetailsShare(
+      String symbol, String price) async {
+    print("getDetails store");
+
+    // if ((_myBox.get("userAsset") == null || _myBox.get("userAsset").isEmpty) ||
+    //     (_myBox.get("userStockPrices") == null ||
+    //         _myBox.get("userStockPrices").isEmpty)) {
+    //   _myBox.put("userAsset", userAsset);
+    // }
+
+    try {
+      loadData();
+      await syncData();
+      final userAssetData = getUserAsset(symbol);
+      final double currentSymbolPrice = double.parse(price);
+
+      final int count = userAssetData["count"];
+      final double averagePrice = userAssetData["price_average"];
+      final double totalWorth = currentSymbolPrice * count;
+      final double profit = totalWorth - (averagePrice * count);
+      final double profitPercent = (profit / (averagePrice * count)) * 100;
+
+      final res = {
+        "shares_owned": count.toString(),
+        "shares_owned_worth": totalWorth.toStringAsFixed(2),
+        "shares_owned_profit": profit.toStringAsFixed(2),
+        "shares_owned_profit_percent": profitPercent.toStringAsFixed(2),
+        "shares_owned_average_price": averagePrice.toStringAsFixed(2),
+        "profit_color": profit > 0 ? green219653 : redEB5757,
+      };
+      print(res);
+      return res;
+    } catch (e) {
+      final res = {
+        "shares_owned": "0",
+        "shares_owned_worth": "-",
+        "shares_owned_profit": "-",
+        "shares_owned_profit_percent": "-",
+        "shares_owned_average_price": "-",
+        "profit_color": black,
+      };
+      return res;
+    }
+  }
+
   Future<List<Map<String, dynamic>>> getShowStockAsList() async {
     if (showStockData.isEmpty) {
       await populateAllStocksScreenData();
@@ -205,7 +261,7 @@ class Database {
     }
   }
 
-  void syncData() async {
+  Future syncData() async {
     final playerId = userData["player_id"];
     if (playerId != null) {
       final assetsUrl =

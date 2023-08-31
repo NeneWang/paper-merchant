@@ -10,6 +10,8 @@ import 'package:mymoney/screen/home/watchlist/toggle_design_screen.dart';
 import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
 
+import 'package:mymoney/data/database.dart';
+
 import '../drawer_open_.dart';
 
 final MyTabController myTabController = Get.put(MyTabController());
@@ -17,11 +19,36 @@ ColorChangeController colorChangeController = Get.put(
   ColorChangeController(),
 );
 
+const dividerComponent = Divider(
+  thickness: 3,
+  color: grayF2F2F2,
+);
+
 class BuySellScreen extends StatelessWidget {
   final String ticker;
   final String price;
 
   BuySellScreen({required this.ticker, required this.price});
+  final db = Database();
+
+  final blackBoldStyle = const TextStyle(
+      fontSize: 18,
+      color: black,
+      fontFamily: "Nunito",
+      fontWeight: FontWeight.w400);
+
+  final smallLetterStyle = const TextStyle(
+    fontSize: 18,
+    fontFamily: "NunitoBold",
+    fontWeight: FontWeight.w700,
+  );
+
+  final largeText = const TextStyle(
+    fontSize: 20,
+    color: black2,
+    fontFamily: "NunitoBold",
+    fontWeight: FontWeight.w700,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +59,7 @@ class BuySellScreen extends StatelessWidget {
         backgroundColor: pageBackGroundC,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             CupertinoIcons.back,
             color: black1,
           ),
@@ -42,173 +69,153 @@ class BuySellScreen extends StatelessWidget {
         ),
         title: Padding(
           padding: const EdgeInsets.only(left: 75),
-          child: Text(
-            ticker,
-            style: TextStyle(
-              fontSize: 20,
-              color: black2,
-              fontFamily: "NunitoBold",
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          child: Text(ticker, style: largeText),
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
-              child: SizedBox(
-                width: Get.width,
-                height: 56,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Current Price"),
-                        Text(
-                          price,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: green219653,
-                            fontFamily: "NunitoBold",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ],
-                    ),
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text("Shares Owned"),
-                        Text(
-                          "30",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: black,
-                            fontFamily: "Nunito",
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Divider(
-              thickness: 3,
-              color: grayF2F2F2,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
-              child: Container(
-                width: Get.width,
-                height: 56,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text("Average Price bought at"),
-                        Text(
-                          price,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            fontFamily: "NunitoBold",
-                            fontWeight: FontWeight.w700,
-                          ),
-                        )
-                      ],
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        const Text(
-                          "Total Profit",
-                        ),
-                        RichText(
-                          text: const TextSpan(
-                            children: [
-                              TextSpan(
-                                  text: "400",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: black,
-                                    fontFamily: "Nunito",
-                                    fontWeight: FontWeight.w400,
-                                  )),
-                              TextSpan(
-                                text: " (",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: black,
-                                  fontFamily: "Nunito",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              TextSpan(
-                                text: "+0.72%",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: green219653,
-                                  fontFamily: "Nunito",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              TextSpan(
-                                text: ")",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: black,
-                                  fontFamily: "Nunito",
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Divider(
-              thickness: 3,
-              color: grayF2F2F2,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 16, left: 33, right: 33, bottom: 16),
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
+            child: SizedBox(
+              width: Get.width,
+              height: 56,
               child: Row(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  buyButton(
-                    textLabel: "BUY",
-                    onTapButton: () {
-                      buyDialog(context);
-                    },
-                  ),
-                  sellButton(
-                    textLabel: "SELL",
-                    onTapButton: () {
-                      sellDialog();
-                    },
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text("Current Price"),
+                      Text(price, style: blackBoldStyle)
+                    ],
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
+          ),
+          dividerComponent,
+          FutureBuilder(
+              future: db.getDetailsShare(ticker, price),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(top: 21, left: 13, right: 18),
+                    child: Container(
+                      width: Get.width,
+                      height: 90,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("Average Price bought at"),
+                              Text(
+                                snapshot.data!["shares_owned_average_price"],
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: "NunitoBold",
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              )
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  const Text("Shares Owned"),
+                                  Text(
+                                    snapshot.data!["shares_owned"],
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: black,
+                                      fontFamily: "Nunito",
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Text(
+                                "Total Profit",
+                              ),
+                              RichText(
+                                text: TextSpan(
+                                  children: [
+                                    TextSpan(
+                                        text: snapshot
+                                            .data!["shares_owned_profit"],
+                                        style: blackBoldStyle),
+                                    TextSpan(
+                                      text: " (",
+                                      style: blackBoldStyle,
+                                    ),
+                                    TextSpan(
+                                      text: snapshot.data![
+                                              "shares_owned_profit_percent"] +
+                                          "%",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: snapshot.data!["profit_color"],
+                                        fontFamily: "Nunito",
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: ")",
+                                      style: blackBoldStyle,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                } else {
+                  return const Center(
+                    child: Column(
+                      children: [
+                        CircularProgressIndicator(),
+                        Text("Loading user data..."),
+                      ],
+                    ),
+                  );
+                }
+              }),
+          dividerComponent,
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 16, left: 33, right: 33, bottom: 16),
+            child: Row(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                buyButton(
+                  textLabel: "BUY",
+                  onTapButton: () {
+                    buyDialog(context);
+                  },
+                ),
+                sellButton(
+                  textLabel: "SELL",
+                  onTapButton: () {
+                    sellDialog();
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      )),
     );
   }
 }
@@ -239,16 +246,10 @@ buyDialog(context) {
             ),
           ),
           design1Buy(color1: appColor2F80ED),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           design2(color2: appColor),
           design3(color2: appColor),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           Padding(
             padding:
                 const EdgeInsets.only(right: 17, left: 17, top: 10, bottom: 10),
@@ -278,10 +279,7 @@ buyDialog(context) {
               ],
             ),
           ),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           Padding(
             padding:
                 const EdgeInsets.only(right: 17, left: 17, top: 10, bottom: 10),
@@ -311,10 +309,7 @@ buyDialog(context) {
               ],
             ),
           ),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           Padding(
             padding: EdgeInsets.only(top: 39, bottom: 16),
             child: buyDropDownButton(
@@ -363,16 +358,10 @@ sellDialog() {
             ),
           ),
           design1Sell(color1: redEB5757),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           design2(color2: redEB5757),
           design3Sell(color2: redEB5757),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           Padding(
             padding:
                 const EdgeInsets.only(right: 17, left: 17, top: 10, bottom: 10),
@@ -402,10 +391,7 @@ sellDialog() {
               ],
             ),
           ),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           Padding(
             padding:
                 const EdgeInsets.only(right: 17, left: 17, top: 10, bottom: 10),
@@ -435,10 +421,7 @@ sellDialog() {
               ],
             ),
           ),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          dividerComponent,
           Padding(
             padding: EdgeInsets.only(top: 39, bottom: 16),
             child: sellDropDownButton(
