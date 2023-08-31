@@ -116,7 +116,7 @@ class HomeScreen extends StatelessWidget {
 
 appBarDesign() {
   ColorChangeController colorChangeController = Get.find();
-  FocusNode _focusNode = new FocusNode();
+  FocusNode focusNode = FocusNode();
   return AppBar(
     backgroundColor: pageBackGroundC,
     leadingWidth: 30,
@@ -125,7 +125,7 @@ appBarDesign() {
     title: Container(
       height: 40,
       // width: 700,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: white,
         borderRadius: BorderRadius.all(
           Radius.circular(30),
@@ -133,18 +133,18 @@ appBarDesign() {
       ),
       child: TextField(
         cursorColor: appColor,
-        focusNode: _focusNode,
+        focusNode: focusNode,
         decoration: InputDecoration(
           alignLabelWithHint: true,
           border: InputBorder.none,
           hintText: "Search anything",
-          hintStyle: TextStyle(
+          hintStyle: const TextStyle(
             fontSize: 14,
             color: gray9B9797,
             fontFamily: "Nunito",
             fontWeight: FontWeight.w400,
           ),
-          prefixIcon: Icon(
+          prefixIcon: const Icon(
             CupertinoIcons.search,
             color: gray9B9797,
             size: 20,
@@ -152,7 +152,7 @@ appBarDesign() {
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
+              const SizedBox(
                 height: 20,
                 width: 1,
                 child: VerticalDivider(
@@ -161,7 +161,7 @@ appBarDesign() {
               ),
               IconButton(
                 onPressed: () {
-                  _focusNode.unfocus();
+                  focusNode.unfocus();
                   Get.bottomSheet(
                     Padding(
                       padding:
