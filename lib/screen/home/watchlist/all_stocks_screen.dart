@@ -7,6 +7,7 @@ import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/utils_text.dart';
 import 'package:mymoney/data/database.dart';
 
+// ignore: use_key_in_widget_constructors
 class AllStockScreen extends StatelessWidget {
   final db = Database();
 
@@ -23,7 +24,7 @@ class AllStockScreen extends StatelessWidget {
         child: Container(
           height: Get.height,
           width: Get.width,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: white,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
@@ -38,8 +39,8 @@ class AllStockScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 12, bottom: 18),
+                const Padding(
+                  padding: EdgeInsets.only(left: 12, bottom: 18),
                   child: Text(
                     "All Stocks",
                     style: TextStyle(
@@ -69,7 +70,7 @@ class AllStockScreen extends StatelessWidget {
                               ),
                             );
                           } else {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
