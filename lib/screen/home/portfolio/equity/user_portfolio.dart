@@ -7,7 +7,7 @@ import 'package:mymoney/data/database.dart';
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class UserPortfolio extends StatelessWidget {
   static Map<String, double> calculatePortfolioSummary(
-      List<Map<String, dynamic>> portfolioData) {
+      List<Map<dynamic, dynamic>> portfolioData) {
     double totalInvested = 0;
     double totalProfit = 0;
 

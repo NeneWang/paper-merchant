@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mymoney/screen/home/watchlist/home_screen.dart';
-import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
+import 'package:mymoney/components/simpleListItemDesign.dart';
+
 import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/data.dart';
 import 'package:mymoney/utils/utils_text.dart';
 import 'package:mymoney/data/database.dart';
 
@@ -62,7 +62,7 @@ class AllStockScreen extends StatelessWidget {
                               shrinkWrap: true,
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) =>
-                                  listViewItemDesign(
+                                  simpleStockListViewItem(
                                 image: "",
                                 title: snapshot.data![index]["title"],
                                 subTitle: "",

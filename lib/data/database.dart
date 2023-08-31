@@ -19,7 +19,7 @@ String generateShortGuid(int length) {
 
 class Database {
   Map<dynamic, dynamic> userData = {};
-  List<Map<String, dynamic>> userAsset = [];
+  List<Map<dynamic, dynamic>> userAsset = [];
 
   // For quick reference
   Map<dynamic, dynamic> userStockPrices = {};
