@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mymoney/controller/tabcontroller_screen.dart';
 import 'package:mymoney/screen/home/watchlist/all_stocks_screen.dart';
-import 'package:mymoney/screen/home/watchlist/buy_sell_screen.dart';
 import 'package:mymoney/screen/home/watchlist/home_screen.dart';
 
 import 'package:mymoney/components/simpleListItemDesign.dart';
