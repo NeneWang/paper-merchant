@@ -7,8 +7,8 @@ import 'package:mymoney/data/utils.dart';
 
 simpleStockListViewItem(
     /**
-   * Worse design, less available configruations sofar
-   */
+      * Basic design with a random chart, and price.
+    */
     {
   String? title,
   String? total,
@@ -48,9 +48,6 @@ simpleStockListViewItem(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Image(
-          //   image: AssetImage(image),
-          // ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -58,7 +55,7 @@ simpleStockListViewItem(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   title!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: black,
                     fontFamily: "NunitoSemiBold",
@@ -96,7 +93,7 @@ simpleStockListViewItem(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   total!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 20,
                     color: black,
                     fontFamily: "Nunito",
