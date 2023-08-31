@@ -63,12 +63,8 @@ class AllStockScreen extends StatelessWidget {
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) =>
                                   simpleStockListViewItem(
-                                image: "",
                                 title: snapshot.data![index]["title"],
-                                subTitle: "",
                                 total: snapshot.data![index]["totalRs"],
-                                stock1: "",
-                                stock2: "",
                                 colorName: green,
                               ),
                             );

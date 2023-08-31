@@ -9,14 +9,12 @@ simpleStockListViewItem(
     /**
    * Worse design, less available configruations sofar
    */
-    {String image = "assets/image/home/arrowDownRight.svg",
-    String? title,
-    String subTitle = "",
-    String? total,
-    String? stock1,
-    String? stock2,
-    BuildContext? context,
-    colorName}) {
+    {
+  String? title,
+  String? total,
+  BuildContext? context,
+  colorName = "black",
+}) {
   return InkWell(
     onTap: () {
       Get.to(BuySellScreen());
