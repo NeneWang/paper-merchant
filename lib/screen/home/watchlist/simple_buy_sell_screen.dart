@@ -1,37 +1,31 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:get/get.dart';
 import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
 import 'package:mymoney/controller/drawer_open_controller.dart';
 import 'package:mymoney/controller/tabcontroller_screen.dart';
-import 'package:mymoney/screen/home/watchlist/candel_chart.dart';
+
 import 'package:mymoney/screen/home/watchlist/toggle_design_screen.dart';
 import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
+
 import '../drawer_open_.dart';
 
 import 'package:mymoney/data/database.dart';
+import 'package:mymoney/components/QuantityRow.dart';
 
 final MyTabController myTabController = Get.put(MyTabController());
 ColorChangeController colorChangeController = Get.put(
   ColorChangeController(),
 );
 
-class BuySellScreen extends StatefulWidget {
+class BuySellScreen extends StatelessWidget {
   final String ticker;
   final String price;
 
   BuySellScreen({required this.ticker, required this.price});
-
-  @override
-  State<BuySellScreen> createState() => _BuySellScreenState();
-}
-
-class _BuySellScreenState extends State<BuySellScreen> {
   final db = Database();
 
   final blackBoldStyle = const TextStyle(
@@ -52,7 +46,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
     fontFamily: "NunitoBold",
     fontWeight: FontWeight.w700,
   );
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +66,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
         title: Padding(
           padding: const EdgeInsets.only(left: 75),
           child: Text(
-            widget.ticker,
+            ticker,
             style: TextStyle(
               fontSize: 20,
               color: black2,
@@ -119,7 +112,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Current Price"),
-                        Text(widget.price, style: blackBoldStyle)
+                        Text(price, style: blackBoldStyle)
                       ],
                     ),
                   ],
@@ -131,7 +124,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
               color: grayF2F2F2,
             ),
             FutureBuilder(
-                future: db.getDetailsShare(widget.ticker, widget.price),
+                future: db.getDetailsShare(ticker, price),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return Padding(
@@ -250,8 +243,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                   buyButton(
                     textLabel: "BUY",
                     onTapButton: () {
-                      buyDialog(context,
-                          price: widget.price, symbol: widget.ticker);
+                      buyDialog(context, price: price, symbol: ticker);
                     },
                   ),
                   sellButton(
@@ -273,63 +265,64 @@ class _BuySellScreenState extends State<BuySellScreen> {
 buyDialog(context, {String symbol = "", String price = "0"}) {
   ProfileController profileController = Get.find();
 
-  final TextEditingController quantityController =
+  final TextEditingController _quantityController =
       TextEditingController(text: '1');
 
   return Get.defaultDialog(
-      // barrierDismissible: true,
-      barrierDismissible: true,
-      contentPadding: EdgeInsets.all(0),
-      radius: 31,
-      title: "",
-      titlePadding: EdgeInsets.all(0),
-      content: Container(
-        width: Get.width,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(CupertinoIcons.clear),
-                ),
-              ),
-            ),
-            BuyMenuData(
-              symbol: symbol,
-              price: price,
-              color1: appColor2F80ED,
-            ),
-            Divider(
-              thickness: 3,
-              color: grayF2F2F2,
-            ),
-            priceQuantity(
-                color2: appColor,
-                price: price,
-                quantityController: quantityController),
-            Padding(
-              padding: EdgeInsets.only(top: 39, bottom: 16),
-              child: buyDropDownButton(
-                textLabel: "BUY",
-                onTapButton: () {
-                  profileController.selectedIndex.value = 1;
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DrawerOpenScreen(),
-                    ),
-                  );
+    // barrierDismissible: true,
+    barrierDismissible: true,
+    contentPadding: EdgeInsets.all(0),
+    radius: 31,
+    title: "",
+    titlePadding: EdgeInsets.all(0),
+    content: Container(
+      width: Get.width,
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                onPressed: () {
+                  Get.back();
                 },
+                icon: Icon(CupertinoIcons.clear),
               ),
             ),
-          ],
-        ),
-      ));
+          ),
+          buyMenuData(
+            symbol: symbol,
+            price: price,
+            color1: appColor2F80ED,
+          ),
+          Divider(
+            thickness: 3,
+            color: grayF2F2F2,
+          ),
+          priceQuantity(
+              color2: appColor,
+              price: price,
+              quantityController: _quantityController),
+          Padding(
+            padding: EdgeInsets.only(top: 39, bottom: 16),
+            child: buyDropDownButton(
+              textLabel: "BUY",
+              onTapButton: () {
+                profileController.selectedIndex.value = 1;
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DrawerOpenScreen(),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 sellDialog() {
@@ -448,688 +441,6 @@ sellDialog() {
   );
 }
 
-tableView() {
-  return Padding(
-    padding: const EdgeInsets.only(top: 14, bottom: 14),
-    child: Table(
-      // defaultColumnWidth: FixedColumnWidth(120),
-      children: [
-        TableRow(children: [
-          Column(children: [
-            Text(
-              'Bid',
-              style: TextStyle(
-                fontSize: 13.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: black2,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              'Offer',
-              style: TextStyle(
-                fontSize: 13.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: black2,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              'Qty',
-              style: TextStyle(
-                fontSize: 13.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: black2,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              'Offer',
-              style: TextStyle(
-                fontSize: 13.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: black2,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              'Order',
-              style: TextStyle(
-                fontSize: 13.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: black2,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              'Qty',
-              style: TextStyle(
-                fontSize: 13.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: black2,
-              ),
-            )
-          ]),
-        ]),
-        TableRow(children: [
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-        ]),
-        TableRow(children: [
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-        ]),
-        TableRow(children: [
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-        ]),
-        TableRow(children: [
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            ),
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-        ]),
-        TableRow(children: [
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-        ]),
-        TableRow(children: [
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-        ]),
-        TableRow(children: [
-          Column(children: [
-            Text(
-              'Total',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: appColor2F80ED,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              'Total',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-          Column(children: [
-            Text(
-              '0.00',
-              style: TextStyle(
-                fontSize: 10.0,
-                fontFamily: "Nunito",
-                fontWeight: FontWeight.w400,
-                color: redEB5757,
-              ),
-            )
-          ]),
-        ]),
-      ],
-    ),
-  );
-}
-
-lineGraph() {
-  return LineChart(
-    LineChartData(
-      borderData: FlBorderData(show: false),
-      minX: 0,
-      maxX: 7,
-      minY: 0,
-      maxY: 8,
-      titlesData: FlTitlesData(
-        show: true,
-        rightTitles: SideTitles(showTitles: false),
-        topTitles: SideTitles(showTitles: false),
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-              color: gray7C828A,
-              fontWeight: FontWeight.w400,
-              fontFamily: "Nunito",
-              fontSize: 12),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '·11am';
-              case 2:
-                return '.12am';
-              case 3:
-                return '·1pm';
-              case 4:
-                return '·2pm';
-              case 5:
-                return '·3pm';
-              case 6:
-                return '.03.45.09';
-            }
-            return '';
-          },
-          margin: 0,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-              color: gray7C828A,
-              fontWeight: FontWeight.w400,
-              fontFamily: "Nunito",
-              fontSize: 12),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '0';
-              case 2:
-                return '150';
-              case 3:
-                return '250';
-              case 4:
-                return '350';
-              case 5:
-                return '500';
-              case 6:
-                return '650';
-              case 7:
-                return '750';
-            }
-            return '';
-          },
-          reservedSize: 32,
-          margin: 12,
-        ),
-      ),
-      gridData: FlGridData(
-        show: true,
-        getDrawingHorizontalLine: (value) {
-          return FlLine(
-            color: Color(0xffD6D9DC),
-            strokeWidth: 1,
-          );
-        },
-        drawVerticalLine: false,
-        /* getDrawingVerticalLine: (value) {
-                          return FlLine(
-                            color: Color(0xffD6D9DC),
-                            strokeWidth: 1,
-                          );
-                        },*/
-      ),
-      lineBarsData: [
-        LineChartBarData(
-          dotData: FlDotData(show: false),
-          spots: [
-            FlSpot(0, 5),
-            FlSpot(1, 4),
-            FlSpot(2.5, 6),
-            FlSpot(3.5, 5),
-            FlSpot(4.5, 2),
-            FlSpot(6.5, 4.5),
-            FlSpot(7, 2.5),
-          ],
-          isCurved: true,
-          barWidth: 1,
-          colors: [
-            appColor,
-          ],
-        ),
-        LineChartBarData(
-          dotData: FlDotData(show: false),
-          spots: [
-            FlSpot(0, 4),
-            FlSpot(1, 4.9),
-            FlSpot(2.5, 2),
-            FlSpot(3.5, 3),
-            FlSpot(4.5, 3.4),
-            FlSpot(6.5, 3.5),
-            FlSpot(7, 3.9),
-          ],
-          isCurved: true,
-          barWidth: 1,
-          colors: [
-            redEB5757,
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
 design1({price, symbol, color1}) {
   return Padding(
     padding: const EdgeInsets.only(left: 17, right: 17, bottom: 17),
@@ -1218,7 +529,7 @@ design1({price, symbol, color1}) {
   );
 }
 
-BuyMenuData({symbol, price, color1, quantityController}) {
+buyMenuData({symbol, price, color1, quantityController}) {
   return Padding(
     padding: const EdgeInsets.only(left: 17, right: 17, bottom: 17),
     child: Container(
@@ -1321,86 +632,7 @@ priceQuantity({color2, price = "0.00", count = 1, quantityController}) {
         top: 17),
     child: Container(
       height: 60,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Quantity" + quantityController.text,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: gray4,
-                  fontFamily: "NunitoSemiBold",
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Container(
-                height: 31,
-                width: Get.width / 4.37 /*94*/,
-                padding: EdgeInsets.only(left: 10),
-                decoration: BoxDecoration(
-                  color: white,
-                  borderRadius: BorderRadius.circular(100),
-                  border: Border.all(
-                    color: Color(0xff66000000),
-                    width: 1,
-                  ),
-                ),
-                child: TextField(
-                  textAlign: TextAlign.start,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
-                  onChanged: (inputvalue) {
-                    totalPrice = priceValue * int.parse(inputvalue);
-                    print(
-                        'Editing Complete. Value: ${inputvalue}, ${totalPrice}');
-                  },
-                  cursorColor: black,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Column(
-            // mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Total",
-                style: TextStyle(
-                  fontSize: 13,
-                  color: gray4,
-                  fontFamily: "NunitoSemiBold",
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              Container(
-                height: 31,
-                width: Get.width / 4.37 /* 94*/,
-                padding: EdgeInsets.only(left: 10),
-                child: Center(
-                  child: Text(
-                    "\$${totalPrice}",
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: black,
-                      fontFamily: "NunitoBold",
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
+      child: QuantitiyRow(singularPrice: totalPrice),
     ),
   );
 }
@@ -1715,11 +947,3 @@ design3Sell({color2}) {
     ),
   );
 }
-
-List sampleData = [
-  {"open": 50.0, "high": 100.0, "low": 40.0, "close": 80, "volumeto": 5000.0},
-  {"open": 80.0, "high": 90.0, "low": 55.0, "close": 65, "volumeto": 4000.0},
-  {"open": 65.0, "high": 120.0, "low": 60.0, "close": 90, "volumeto": 7000.0},
-  {"open": 90.0, "high": 95.0, "low": 85.0, "close": 80, "volumeto": 2000.0},
-  {"open": 80.0, "high": 85.0, "low": 40.0, "close": 50, "volumeto": 3000.0},
-];
