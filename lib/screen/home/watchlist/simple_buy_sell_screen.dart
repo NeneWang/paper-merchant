@@ -267,7 +267,7 @@ class BuySellScreen extends StatelessWidget {
 buyDialog(context, {String symbol = "", String price = "0"}) {
   ProfileController profileController = Get.find();
 
-  final TextEditingController _quantityController =
+  final TextEditingController _totalCostController =
       TextEditingController(text: '1');
 
   return Get.defaultDialog(
@@ -305,19 +305,14 @@ buyDialog(context, {String symbol = "", String price = "0"}) {
           priceQuantity(
               color2: appColor,
               price: price,
-              quantityController: _quantityController),
+              totalcostController: _totalCostController),
           Padding(
             padding: EdgeInsets.only(top: 39, bottom: 16),
             child: buyDropDownButton(
               textLabel: "BUY",
               onTapButton: () {
-                profileController.selectedIndex.value = 1;
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DrawerOpenScreen(),
-                  ),
-                );
+                print("_totalCostController.text");
+                print(_totalCostController.text);
               },
             ),
           ),
@@ -543,9 +538,8 @@ design1Sell({color1}) {
   );
 }
 
-priceQuantity({color2, price = "0.00", count = 1, quantityController}) {
+priceQuantity({color2, price = "0.00", totalcostController}) {
   double priceValue = double.parse(price);
-  double totalPrice = priceValue * count;
 
   return Padding(
     padding: EdgeInsets.only(
@@ -554,7 +548,8 @@ priceQuantity({color2, price = "0.00", count = 1, quantityController}) {
         top: 17),
     child: Container(
       height: 60,
-      child: QuantitiyRow(singularPrice: totalPrice),
+      child: QuantitiyRow(
+          singularPrice: priceValue, totalcostController: totalcostController),
     ),
   );
 }

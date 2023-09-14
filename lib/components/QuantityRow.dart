@@ -7,9 +7,11 @@ class QuantitiyRow extends StatefulWidget {
   const QuantitiyRow({
     super.key,
     required this.singularPrice,
+    required this.totalcostController,
   });
 
   final double singularPrice;
+  final TextEditingController totalcostController;
 
   @override
   State<QuantitiyRow> createState() => _QuantitiyRowState();
@@ -24,6 +26,7 @@ class _QuantitiyRowState extends State<QuantitiyRow> {
     super.initState();
     totalPrice = widget.singularPrice;
     quantityController.text = "1";
+    widget.totalcostController.text = totalPrice.toString();
   }
 
   @override
@@ -64,6 +67,7 @@ class _QuantitiyRowState extends State<QuantitiyRow> {
                   setState(() {
                     totalPrice = widget.singularPrice * double.parse(value);
                   });
+                  widget.totalcostController.text = totalPrice.toString();
                   print("Changed into :" + totalPrice.toString());
                 },
                 controller: quantityController,
