@@ -153,12 +153,6 @@ class Database {
       String symbol, String price) async {
     print("getDetails store");
 
-    // if ((_myBox.get("userAsset") == null || _myBox.get("userAsset").isEmpty) ||
-    //     (_myBox.get("userStockPrices") == null ||
-    //         _myBox.get("userStockPrices").isEmpty)) {
-    //   _myBox.put("userAsset", userAsset);
-    // }
-
     try {
       loadData();
       await syncData();
@@ -343,7 +337,7 @@ class Database {
       final assetsUrl =
           "$backendAPI/api/assets/$playerId"; // Replace with actual API URL
 
-      // Make API call using your preferred HTTP client (e.g., http package)
+      // Make API call using your pr eferred HTTP client (e.g., http package)
       // Example using http package:
       final response = await http.get(Uri.parse(assetsUrl));
 
@@ -392,6 +386,7 @@ class Database {
         userBookmarkPrices = responseData["bookmarks"];
         userStockPrices = responseData["stocks"];
         userData["papel_asset_worth"] = responseData["papel_asset_worth"];
+        userData["cash"] = responseData["user_cash"];
 
         _myBox.put("userBookmarkPrices", userBookmarkPrices);
         _myBox.put("userStockPrices", userStockPrices);

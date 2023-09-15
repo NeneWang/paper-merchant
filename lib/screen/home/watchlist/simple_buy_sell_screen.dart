@@ -244,7 +244,8 @@ class BuySellScreen extends StatelessWidget {
                       buyDialog(context,
                           price: price,
                           symbol: ticker,
-                          purchaseMethod: db.purchaseStock);
+                          purchaseMethod: db.purchaseStock,
+                          userCash: db.userData["cash"].toStringAsFixed(2));
                     },
                   ),
                   sellButton(
@@ -266,7 +267,8 @@ class BuySellScreen extends StatelessWidget {
   }
 }
 
-buyDialog(context, {String symbol = "", String price = "0", purchaseMethod}) {
+buyDialog(context,
+    {String symbol = "", String price = "0", purchaseMethod, userCash = "0"}) {
   final TextEditingController _totalCostController =
       TextEditingController(text: '1');
 
@@ -294,10 +296,10 @@ buyDialog(context, {String symbol = "", String price = "0", purchaseMethod}) {
             ),
           ),
           buyMenuData(
-            symbol: symbol,
-            price: price,
-            color1: appColor2F80ED,
-          ),
+              symbol: symbol,
+              price: price,
+              color1: appColor2F80ED,
+              userCash: userCash),
           Divider(
             thickness: 3,
             color: grayF2F2F2,
@@ -377,12 +379,12 @@ design1({price, symbol, color1}) {
   );
 }
 
-buyMenuData({symbol, price, color1, quantityController}) {
+buyMenuData({symbol, price, color1, quantityController, userCash}) {
   return Padding(
     padding: const EdgeInsets.only(left: 17, right: 17, bottom: 17),
     child: Container(
       width: Get.width,
-      height: /*Get.height/ 15.91*/ 56,
+      height: /*Get.height/ 15.91*/ 76,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -414,7 +416,25 @@ buyMenuData({symbol, price, color1, quantityController}) {
                   fontFamily: "NunitoBold",
                   fontWeight: FontWeight.w700,
                 ),
-              )
+              ),
+              Text(
+                "Cash Available",
+                style: TextStyle(
+                  fontSize: 13,
+                  color: gray4,
+                  fontFamily: "NunitoSemiBold",
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                "\$${userCash}",
+                style: TextStyle(
+                  fontSize: 18,
+                  color: black2,
+                  fontFamily: "NunitoBold",
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
             ],
           ),
         ],

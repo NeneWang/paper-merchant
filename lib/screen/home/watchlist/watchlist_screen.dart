@@ -23,8 +23,12 @@ class WatchListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     db.loadData();
+    print("Loaded data");
 
-    final stockList = convertToListingFormat(watchListPageBuildStocks);
+    print(db.userBookmarkPrices);
+
+    final stockList = convertToListingFormat(db.userStockPrices);
+    final bookmarkedList = convertToListingFormat(db.userBookmarkPrices);
 
     return SingleChildScrollView(
       child: Column(
@@ -206,11 +210,11 @@ class WatchListScreen extends StatelessWidget {
                   padding: EdgeInsets.only(top: 0),
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: watchListPageBuildDesignMostStock.length,
+                  itemCount: bookmarkedList.length,
                   itemBuilder: (context, index) => simpleStockListViewItem(
                     context: context,
-                    title: watchListPageBuildDesignMostStock[index]["title"],
-                    total: watchListPageBuildDesignMostStock[index]["totalRs"],
+                    title: bookmarkedList[index]["title"],
+                    total: bookmarkedList[index]["totalRs"],
                   ),
                 ),
               ],
