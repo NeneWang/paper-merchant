@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mymoney/screen/home/watchlist/simple_buy_sell_screen.dart';
 
-import 'package:mymoney/screen/home/watchlist/simple_buy_sell_screen.dart';
 import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/data/utils.dart';
 

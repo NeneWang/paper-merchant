@@ -1,17 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
-import 'package:mymoney/controller/drawer_open_controller.dart';
 import 'package:mymoney/controller/tabcontroller_screen.dart';
 
 import 'package:mymoney/screen/home/watchlist/toggle_design_screen.dart';
 import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
-
-import '../drawer_open_.dart';
 
 import 'package:mymoney/data/database.dart';
 
@@ -245,13 +241,19 @@ class BuySellScreen extends StatelessWidget {
                   buyButton(
                     textLabel: "BUY",
                     onTapButton: () {
-                      buyDialog(context, price: price, symbol: ticker);
+                      buyDialog(context,
+                          price: price,
+                          symbol: ticker,
+                          purchaseMethod: db.purchaseStock);
                     },
                   ),
                   sellButton(
                     textLabel: "SELL",
                     onTapButton: () {
-                      sellDialog();
+                      sellDialog(context,
+                          price: price,
+                          symbol: ticker,
+                          sellMethod: db.sellStock);
                     },
                   ),
                 ],
@@ -264,9 +266,7 @@ class BuySellScreen extends StatelessWidget {
   }
 }
 
-buyDialog(context, {String symbol = "", String price = "0"}) {
-  ProfileController profileController = Get.find();
-
+buyDialog(context, {String symbol = "", String price = "0", purchaseMethod}) {
   final TextEditingController _totalCostController =
       TextEditingController(text: '1');
 
@@ -312,7 +312,15 @@ buyDialog(context, {String symbol = "", String price = "0"}) {
               textLabel: "BUY",
               onTapButton: () {
                 print("_totalCostController.text");
-                print(_totalCostController.text);
+                // print(_totalCostController.text);
+                String totalCostString = _totalCostController.text;
+
+                // Check if the input string is a valid integer
+                double totalCost = double.parse(totalCostString);
+                int count = (totalCost / double.parse(price)).round();
+
+                purchaseMethod(symbol,
+                    count: count, price: double.parse(price));
               },
             ),
           ),
@@ -322,113 +330,36 @@ buyDialog(context, {String symbol = "", String price = "0"}) {
   );
 }
 
-sellDialog() {
+sellDialog(context, {String symbol = "", String price = "0", sellMethod}) {
+  final TextEditingController _totalProfitController =
+      TextEditingController(text: '1');
   return Get.defaultDialog(
     // barrierDismissible: true,
     barrierDismissible: true,
-    contentPadding: EdgeInsets.all(0),
+    contentPadding: const EdgeInsets.all(0),
     radius: 31,
     title: "",
-    titlePadding: EdgeInsets.all(0),
+    titlePadding: const EdgeInsets.all(0),
     content: Container(
       width: Get.width,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(0.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(CupertinoIcons.clear),
-                ),
-              ],
-            ),
-          ),
-          design1Sell(color1: redEB5757),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
-          priceQuantity(color2: redEB5757),
-          design3Sell(color2: redEB5757),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(right: 17, left: 17, top: 10, bottom: 10),
-            child: Row(
-              children: [
-                Text(
-                  "Set Stoploss",
-                  style: TextStyle(
-                    color: black2,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "NunitoBold",
-                    fontSize: 18,
-                  ),
-                ),
-                SizedBox(
-                  width: 14,
-                ),
-                Obx(
-                  () => CupertinoSwitch(
-                    activeColor: redEB5757,
-                    value: colorChangeController.lights.value,
-                    onChanged: (bool value) {
-                      colorChangeController.lights.value = value;
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
-          Padding(
-            padding:
-                const EdgeInsets.only(right: 17, left: 17, top: 10, bottom: 10),
-            child: Row(
-              children: [
-                Text(
-                  "Set target",
-                  style: TextStyle(
-                    color: black2,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "NunitoBold",
-                    fontSize: 18,
-                  ),
-                ),
-                SizedBox(
-                  width: 36,
-                ),
-                Obx(
-                  () => CupertinoSwitch(
-                    activeColor: redEB5757,
-                    value: colorChangeController.lights1.value,
-                    onChanged: (bool value) {
-                      colorChangeController.lights1.value = value;
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Divider(
-            thickness: 3,
-            color: grayF2F2F2,
-          ),
+          priceQuantity(
+              color2: redEB5757,
+              price: price,
+              totalcostController: _totalProfitController),
           Padding(
             padding: EdgeInsets.only(top: 39, bottom: 16),
             child: sellDropDownButton(
-              onTapButton: () {},
+              onTapButton: () {
+                String totalCostString = _totalProfitController.text;
+
+                // Check if the input string is a valid integer
+                double totalCost = double.parse(totalCostString);
+                int count = (totalCost / double.parse(price)).round();
+
+                sellMethod(symbol, count: count, price: double.parse(price));
+              },
               textLabel: "SELL",
             ),
           ),

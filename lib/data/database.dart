@@ -218,6 +218,82 @@ class Database {
     return;
   }
 
+  Future<void> purchaseStock(String ticker_symbol,
+      {int count = 1, double price = 100}) async {
+    // Create post request of model:
+    // class AssetPurchase(BaseModel):
+    // player_id: str
+    // symbol: str
+    // count: int
+    // price: float
+    // Into api: "${backendAPI}/api/buy";
+    final POST_URL = "${backendAPI}/api/buy";
+    print("Purchase stock requested");
+    print(POST_URL);
+
+    final response = await http.post(
+      Uri.parse(POST_URL),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        "player_id": userData["player_id"],
+        "symbol": ticker_symbol,
+        "count": count,
+        "price": price,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("Purchase stock success");
+      print(response.body);
+      await syncData();
+      return;
+    } else {
+      // print("Purchase stock failed");
+      print(response.body);
+      return;
+    }
+  }
+
+  Future<void> sellStock(String ticker_symbol,
+      {int count = 1, double price = 100}) async {
+    // Create post request of model:
+    // class AssetPurchase(BaseModel):
+    // player_id: str
+    // symbol: str
+    // count: int
+    // price: float
+    // Into api: "${backendAPI}/api/sell";
+    final POST_URL = "${backendAPI}/api/sell";
+    print("Sell stock requested");
+    print(POST_URL);
+
+    final response = await http.post(
+      Uri.parse(POST_URL),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode({
+        "player_id": userData["player_id"],
+        "symbol": ticker_symbol,
+        "count": count,
+        "price": price,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print("Sell stock success");
+      print(response.body);
+      await syncData();
+      return;
+    } else {
+      // print("Purchase stock failed");
+      print(response.body);
+      return;
+    }
+  }
+
   Future<Map<dynamic, dynamic>> researchMultiple(
       List<String> stocksNames) async {
     final multipleAPI = "${backendAPI}/api/get_today_data_multiple";
