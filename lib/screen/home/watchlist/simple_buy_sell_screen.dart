@@ -28,7 +28,7 @@ class BuySellScreen extends StatefulWidget {
   final String ticker;
   final String price;
 
-  BuySellScreen({required this.ticker, required this.price});
+  const BuySellScreen({super.key, required this.ticker, required this.price});
 
   @override
   State<BuySellScreen> createState() => _BuySellScreenState();

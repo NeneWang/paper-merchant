@@ -44,6 +44,7 @@ dependencies:
   hive_flutter: ^1.1.0
   http: ^1.1.0
   syncfusion_flutter_charts: ^22.1.39
+  fuzzy: <1.0.0
   
 
 dev_dependencies:

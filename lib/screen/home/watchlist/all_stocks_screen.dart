@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/screen/home/watchlist/home_screen.dart';
-import 'package:mymoney/components/simpleListItemDesign.dart';
 
+import 'package:mymoney/components/simpleListItemDesign.dart';
+import 'package:mymoney/data/database.dart';
+import 'package:mymoney/screen/home/watchlist/home_screen.dart';
 import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/utils_text.dart';
-import 'package:mymoney/data/database.dart';
 
-// ignore: use_key_in_widget_constructors
+// ignore: use_key_in_widget_constructors, must_be_immutable
 class AllStockScreen extends StatefulWidget {
+  String search;
+
+  AllStockScreen({
+    Key? key,
+    this.search = "",
+  }) : super(key: key);
+
   @override
   State<AllStockScreen> createState() => _AllStockScreenState();
 }
@@ -18,7 +25,7 @@ class _AllStockScreenState extends State<AllStockScreen> {
 
   @override
   void initState() {
-    db.populateAllStocksScreenData();
+    db.populateAllStocksScreenData(filter: widget.search);
     super.initState();
   }
 
@@ -63,7 +70,7 @@ class _AllStockScreenState extends State<AllStockScreen> {
                   behavior: MyBehavior(),
                   child: Expanded(
                     child: FutureBuilder(
-                        future: db.getShowStockAsList(),
+                        future: db.getShowStockAsList(filter: widget.search),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.done) {

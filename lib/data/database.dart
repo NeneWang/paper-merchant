@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 import 'dart:convert';
+import 'package:fuzzy/fuzzy.dart';
 
 import '../utils/color.dart';
 
@@ -196,10 +197,15 @@ class Database {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getShowStockAsList() async {
-    if (showStockData.isEmpty) {
-      await populateAllStocksScreenData();
+  Future<List<Map<String, dynamic>>> getShowStockAsList(
+      {String filter = ""}) async {
+    if (showStockData.isEmpty || filter.isNotEmpty) {
+      await populateAllStocksScreenData(filter: filter);
     }
+    print("Searching $filter");
+    print("showStockData");
+    print(showStockData);
+
     return convertToListingFormat(showStockData);
   }
 
@@ -213,9 +219,25 @@ class Database {
       ticketNames = _myBox.get("ticketNames");
     }
 
-    final int limitCount = min<int>(count, ticketNames.length);
+    List<String> result = [];
 
-    final stocksToLookup = ticketNames.sublist(0, limitCount);
+    if (filter.isNotEmpty || filter != "") {
+      final fuse = Fuzzy(ticketNames);
+      final fuzzyResults = fuse.search(filter);
+      for (var element in fuzzyResults) {
+        result.add(element.item);
+      }
+    } else {
+      result = ticketNames;
+    }
+
+    // print("Result search results:");
+    // print(result);
+    final minCount = min<int>(count, result.length);
+
+    final int limitCount = min<int>(count, minCount);
+
+    final stocksToLookup = result.sublist(0, limitCount);
     showStockData = await researchMultiple(stocksToLookup);
     return;
   }
