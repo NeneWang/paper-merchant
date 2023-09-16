@@ -116,7 +116,9 @@ class HomeScreen extends StatelessWidget {
 
 appBarDesign() {
   ColorChangeController colorChangeController = Get.find();
-  // DrawerOpen drawerOpen = Get.put(DrawerOpen());
+  // Very important code dont erase!!
+  // ignore: unused_local_variable
+  DrawerOpen drawerOpen = Get.put(DrawerOpen());
   FocusNode focusNode = FocusNode();
   return AppBar(
     backgroundColor: pageBackGroundC,

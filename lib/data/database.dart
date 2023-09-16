@@ -59,28 +59,7 @@ class Database {
       }
     };
 
-    userAsset = [
-      {
-        "player_id": "85b0ecf8-4ea7-4ad2-a388-30df41971095",
-        "symbol": "AAPL",
-        "count": 1,
-        "created_time": "2023-07-13T18:36:04.564303",
-        "estimated_profit": 401,
-        "id": "13340456-48e0-4075-8c68-b1be25bc315b",
-        "price_average": 190.5,
-        "updated_time": "2023-07-13T21:27:11.948837"
-      },
-      {
-        "player_id": "85b0ecf8-4ea7-4ad2-a388-30df41971095",
-        "symbol": "ACN",
-        "count": 1,
-        "created_time": "2023-08-29T15:29:27.421439",
-        "estimated_profit": 0,
-        "id": "89dd6fa9-c106-479f-9c11-12e2a2b8efbb",
-        "price_average": 320.3900146484375,
-        "updated_time": "2023-08-29T15:29:27.421439"
-      }
-    ];
+    userAsset = [];
 
     userStockPrices = {
       "AAPL": {
@@ -149,14 +128,33 @@ class Database {
     return {};
   }
 
+  int updateUserAssetCount(String userAssetSymbol, int increaseBy) {
+    for (var asset in userAsset) {
+      if (asset["symbol"] == userAssetSymbol) {
+        if (asset["count"] + increaseBy < 0) {
+          return asset["count"] - increaseBy;
+        }
+        asset["count"] += increaseBy;
+        return asset["count"];
+      }
+    }
+    return 0;
+  }
+
   Future<Map<String, dynamic>> getDetailsShare(
       String symbol, String price) async {
     print("getDetails store");
 
     try {
       loadData();
-      await syncData();
+
+      final test_if_data_exists = getUserAsset(symbol);
+      if (!test_if_data_exists.containsKey("count")) {
+        await syncData();
+      }
+
       final userAssetData = getUserAsset(symbol);
+
       final double currentSymbolPrice = double.parse(price);
 
       final int count = userAssetData["count"];
@@ -172,10 +170,13 @@ class Database {
         "shares_owned_profit_percent": profitPercent.toStringAsFixed(2),
         "shares_owned_average_price": averagePrice.toStringAsFixed(2),
         "profit_color": profit > 0 ? green219653 : redEB5757,
+        "user_cash": userData["cash"].toStringAsFixed(2),
       };
       print(res);
       return res;
     } catch (e) {
+      // print("error", e);
+
       final res = {
         "shares_owned": "0",
         "shares_owned_worth": "-",
@@ -183,6 +184,7 @@ class Database {
         "shares_owned_profit_percent": "-",
         "shares_owned_average_price": "-",
         "profit_color": black,
+        "user_cash": "",
       };
       return res;
     }
@@ -225,6 +227,18 @@ class Database {
     print("Purchase stock requested");
     print(POST_URL);
 
+    // update userCash
+    if (!(price * count > userData["cash"])) {
+      userData["cash"] -= price * count;
+      updateUserAssetCount(ticker_symbol, count);
+
+      // Update the stock names
+      if (!ticketNames.contains(ticker_symbol)) {
+        ticketNames.add(ticker_symbol);
+        _myBox.put("ticketNames", ticketNames);
+      }
+    }
+
     final response = await http.post(
       Uri.parse(POST_URL),
       headers: <String, String>{
@@ -259,6 +273,21 @@ class Database {
     // count: int
     // price: float
     // Into api: "${backendAPI}/api/sell";
+
+    // Make internal changes monetarily
+
+    final countStocks = updateUserAssetCount(ticker_symbol, -count);
+    // update userCash
+    if (countStocks >= 0) {
+      userData["cash"] += price * count;
+
+      // Update the stock names
+      if (countStocks == 0) {
+        ticketNames.remove(ticker_symbol);
+        _myBox.put("ticketNames", ticketNames);
+      }
+    }
+
     final POST_URL = "${backendAPI}/api/sell";
     print("Sell stock requested");
     print(POST_URL);

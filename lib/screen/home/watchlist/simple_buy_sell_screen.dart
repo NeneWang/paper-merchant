@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,16 +21,33 @@ ColorChangeController colorChangeController = Get.put(
   ColorChangeController(),
 );
 
-class BuySellScreen extends StatelessWidget {
+// Function to reload the page
+void reloadPage(BuildContext context) {
+  Navigator.of(context).popAndPushNamed('/your_page_route_name');
+}
+
+class BuySellScreen extends StatefulWidget {
   final String ticker;
   final String price;
 
   BuySellScreen({required this.ticker, required this.price});
+
+  @override
+  State<BuySellScreen> createState() => _BuySellScreenState();
+}
+
+class _BuySellScreenState extends State<BuySellScreen> {
   final db = Database();
 
   final blackBoldStyle = const TextStyle(
       fontSize: 18,
       color: black,
+      fontFamily: "Nunito",
+      fontWeight: FontWeight.w400);
+
+  final greenBoldStyle = const TextStyle(
+      fontSize: 18,
+      color: green219653,
       fontFamily: "Nunito",
       fontWeight: FontWeight.w400);
 
@@ -44,8 +63,28 @@ class BuySellScreen extends StatelessWidget {
     fontFamily: "NunitoBold",
     fontWeight: FontWeight.w700,
   );
+
   @override
   Widget build(BuildContext context) {
+    // final GlobalKey<_MyPageState> _key = GlobalKey();
+    String sample = "";
+    void reloadPage() {
+      print("Page reloaded");
+      setState(() {
+        sample = "Hello";
+      });
+    }
+
+    String userCash = "0";
+    bool moreCashThanCost(double currentPrice) {
+      double totalCost = currentPrice;
+      if (totalCost > double.parse(userCash)) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
     return Scaffold(
       backgroundColor: white,
       resizeToAvoidBottomInset: true,
@@ -64,7 +103,7 @@ class BuySellScreen extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(left: 75),
           child: Text(
-            ticker,
+            widget.ticker,
             style: TextStyle(
               fontSize: 20,
               color: black2,
@@ -110,9 +149,9 @@ class BuySellScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("Current Price"),
-                        Text(price, style: blackBoldStyle)
+                        Text(widget.price, style: blackBoldStyle)
                       ],
-                    ),
+                    )
                   ],
                 ),
               ),
@@ -122,9 +161,10 @@ class BuySellScreen extends StatelessWidget {
               color: grayF2F2F2,
             ),
             FutureBuilder(
-                future: db.getDetailsShare(ticker, price),
+                future: db.getDetailsShare(widget.ticker, widget.price),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
+                    userCash = snapshot.data!["user_cash"];
                     return Padding(
                       padding:
                           const EdgeInsets.only(top: 21, left: 13, right: 18),
@@ -138,6 +178,7 @@ class BuySellScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text("Average Price bought at"),
+                                Text(sample),
                                 Text(
                                   snapshot.data!["shares_owned_average_price"],
                                   style: const TextStyle(
@@ -145,7 +186,9 @@ class BuySellScreen extends StatelessWidget {
                                     fontFamily: "NunitoBold",
                                     fontWeight: FontWeight.w700,
                                   ),
-                                )
+                                ),
+                                Text(userCash == "" ? "" : "Cash Available"),
+                                Text(userCash)
                               ],
                             ),
                             Column(
@@ -242,19 +285,26 @@ class BuySellScreen extends StatelessWidget {
                     textLabel: "BUY",
                     onTapButton: () {
                       buyDialog(context,
-                          price: price,
-                          symbol: ticker,
-                          purchaseMethod: db.purchaseStock,
-                          userCash: db.userData["cash"].toStringAsFixed(2));
+                          price: widget.price,
+                          symbol: widget.ticker, purchaseMethod: (String symbol,
+                              {required int count, required double price}) {
+                        db.purchaseStock(symbol, count: count, price: price);
+
+                        print('userCash: $userCash');
+                        reloadPage();
+                      }, userCash: userCash);
                     },
                   ),
                   sellButton(
                     textLabel: "SELL",
                     onTapButton: () {
                       sellDialog(context,
-                          price: price,
-                          symbol: ticker,
-                          sellMethod: db.sellStock);
+                          price: widget.price,
+                          symbol: widget.ticker, sellMethod: (String symbol,
+                              {required int count, required double price}) {
+                        db.sellStock(symbol, count: count, price: price);
+                        reloadPage();
+                      });
                     },
                   ),
                 ],
@@ -323,6 +373,8 @@ buyDialog(context,
 
                 purchaseMethod(symbol,
                     count: count, price: double.parse(price));
+                // dismiss
+                Get.back();
               },
             ),
           ),
@@ -361,6 +413,8 @@ sellDialog(context, {String symbol = "", String price = "0", sellMethod}) {
                 int count = (totalCost / double.parse(price)).round();
 
                 sellMethod(symbol, count: count, price: double.parse(price));
+                // dismiss
+                Get.back();
               },
               textLabel: "SELL",
             ),
@@ -379,7 +433,7 @@ design1({price, symbol, color1}) {
   );
 }
 
-buyMenuData({symbol, price, color1, quantityController, userCash}) {
+buyMenuData({symbol, price, color1, quantityController, userCash = ""}) {
   return Padding(
     padding: const EdgeInsets.only(left: 17, right: 17, bottom: 17),
     child: Container(
@@ -418,7 +472,7 @@ buyMenuData({symbol, price, color1, quantityController, userCash}) {
                 ),
               ),
               Text(
-                "Cash Available",
+                userCash == "" ? "Cash Available" : "",
                 style: TextStyle(
                   fontSize: 13,
                   color: gray4,
@@ -427,7 +481,7 @@ buyMenuData({symbol, price, color1, quantityController, userCash}) {
                 ),
               ),
               Text(
-                "\$${userCash}",
+                userCash == "" ? "" : "\$${userCash}",
                 style: TextStyle(
                   fontSize: 18,
                   color: black2,
