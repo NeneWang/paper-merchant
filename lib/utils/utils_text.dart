@@ -42,7 +42,6 @@ notificationText({String? svgUrl, String? notificationText, String? textTime}) {
 }
 
 class MyBehavior extends ScrollBehavior {
-  @override
   Widget buildViewportChrome(
       BuildContext context, Widget child, AxisDirection axisDirection) {
     return child;
