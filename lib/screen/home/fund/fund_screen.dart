@@ -2,10 +2,49 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
+import 'package:mymoney/data/database.dart';
 
-class FundScreen extends StatelessWidget {
+class FundScreen extends StatefulWidget {
+  @override
+  State<FundScreen> createState() => _FundScreenState();
+}
+
+class _FundScreenState extends State<FundScreen> {
+  Database db = Database();
+  double assets = 0.0;
+  double cash = 0.0;
+  double netWorth = 0.0;
+
+  String assetsString = "";
+  String cashString = "";
+  String netWorthString = "";
+
+  void refreshData() {
+    db.loadData();
+    db.syncData();
+    assets = db.userData["papel_asset_worth"];
+    cash = db.userData["cash"];
+    netWorth = assets + cash;
+
+    assetsString = assets.toStringAsFixed(2);
+    cashString = cash.toStringAsFixed(2);
+    netWorthString = netWorth.toStringAsFixed(2);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    refreshData();
+  }
+
   @override
   Widget build(BuildContext context) {
+    const boldDarkStyle = TextStyle(
+      fontSize: 21,
+      color: appColor,
+      fontFamily: "NunitoSemiBold",
+      fontWeight: FontWeight.w600,
+    );
     return Scaffold(
       body: Stack(
         children: [
@@ -35,16 +74,12 @@ class FundScreen extends StatelessWidget {
             child: Container(
               width: Get.width,
               height: Get.height / 1.33,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(22.56),
                   topRight: Radius.circular(22.56),
                 ),
-                /*   image: DecorationImage(
-                  image: AssetImage(bg1),
-                  fit: BoxFit.cover,
-                ),*/
               ),
               child: Padding(
                 padding: EdgeInsets.only(
@@ -52,7 +87,7 @@ class FundScreen extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       "Cash + Assets",
                       style: TextStyle(
                         fontSize: 17,
@@ -62,13 +97,8 @@ class FundScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "2,265.35",
-                      style: TextStyle(
-                        fontSize: 21,
-                        color: appColor,
-                        fontFamily: "NunitoSemiBold",
-                        fontWeight: FontWeight.w600,
-                      ),
+                      netWorthString,
+                      style: boldDarkStyle,
                     ),
                     Padding(
                       padding: EdgeInsets.only(
@@ -76,21 +106,20 @@ class FundScreen extends StatelessWidget {
                         left: Get.width / 25.71,
                         right: Get.width / 41.14,
                       ),
+                      child: const Divider(
+                        color: gray,
+                        thickness: 1,
+                      ),
+                    ),
+                    design1(text1: "Cash", text2: cashString),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 10.28, left: 16, top: 10),
                       child: Divider(
                         color: gray,
                         thickness: 1,
                       ),
                     ),
-                    design1(text1: "Cash", text2: "2,4389"),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          right: 10.28, left: 16, top: 10),
-                      child: Divider(
-                        color: gray,
-                        thickness: 1,
-                      ),
-                    ),
-                    design1(text1: "Assets", text2: "0.00"),
+                    design1(text1: "Assets", text2: assetsString),
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
                       child: Row(

@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:mymoney/data/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -282,13 +283,32 @@ class Database {
     );
 
     if (response.statusCode == 200) {
+      if (response.body.contains("Not enough cash")) {
+        Get.snackbar(
+          "Failed",
+          "Not enough cash to purchase $ticker_symbol share",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
+
       print("Purchase stock success");
       print(response.body);
       await syncData();
+      Get.snackbar("Success", "$ticker_symbol share purchased",
+          backgroundColor: green219653,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM);
       return;
     } else {
       // print("Purchase stock failed");
       print(response.body);
+      Get.snackbar("Failed", "Failed to purchase $ticker_symbol share",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM);
       return;
     }
   }
@@ -338,10 +358,24 @@ class Database {
     );
 
     if (response.statusCode == 200) {
-      print("Sell stock success");
       print(response.body);
-      await syncData();
-      return;
+      if (response.body.contains("Not enough")) {
+        Get.snackbar(
+          "Failed",
+          "Not enough shares to sell $ticker_symbol share",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      } else {
+        await syncData();
+        Get.snackbar("Success", "$ticker_symbol share sold",
+            backgroundColor: green219653,
+            colorText: white,
+            snackPosition: SnackPosition.BOTTOM);
+        return;
+      }
     } else {
       // print("Purchase stock failed");
       print(response.body);

@@ -5,7 +5,7 @@ import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/data/database.dart';
 
 // ignore: use_key_in_widget_constructors, must_be_immutable
-class UserPortfolio extends StatelessWidget {
+class UserPortfolio extends StatefulWidget {
   static Map<String, double> calculatePortfolioSummary(
       List<Map<dynamic, dynamic>> portfolioData) {
     double totalInvested = 0;
@@ -27,7 +27,29 @@ class UserPortfolio extends StatelessWidget {
     };
   }
 
+  @override
+  State<UserPortfolio> createState() => _UserPortfolioState();
+}
+
+class _UserPortfolioState extends State<UserPortfolio> {
   final Database db = Database();
+
+  @override
+  void initState() {
+    super.initState();
+    db.loadData();
+  }
+
+  void refresh() {
+    db.loadData();
+    Get.snackbar(
+      "Refreshed",
+      "Portfolio refreshed",
+      backgroundColor: green219653,
+      colorText: white,
+    );
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,112 +58,120 @@ class UserPortfolio extends StatelessWidget {
     print("UserPorfolio Data became");
     print(UserPortfolioData);
     Map<String, double> portfolioSummary =
-        calculatePortfolioSummary(UserPortfolioData);
+        UserPortfolio.calculatePortfolioSummary(UserPortfolioData);
     double totalInvested = portfolioSummary["totalInvested"]!;
     double totalProfit = portfolioSummary["totalProfit"]!;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: UserPortfolioData.length,
-            itemBuilder: (context, index) => holdScreenListDesign(
-                bankName: UserPortfolioData[index]["symbol"],
-                avgTextNum: double.parse(
-                    UserPortfolioData[index]["price_average"].toString()),
-                profitNum: double.parse(
-                    UserPortfolioData[index]["estimated_profit"].toString()),
-                qtyNum: UserPortfolioData[index]["count"]),
-          ),
-        ),
-        Container(
-          height: 90,
-          width: Get.width,
-          decoration: BoxDecoration(
-            color: white,
-            boxShadow: [
-              BoxShadow(
-                color: Color(0xff40000000),
-                spreadRadius: 1,
-                blurRadius: 3,
-                offset: Offset(0, 0),
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          refresh();
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: UserPortfolioData.length,
+                itemBuilder: (context, index) => holdScreenListDesign(
+                    bankName: UserPortfolioData[index]["symbol"],
+                    avgTextNum: double.parse(
+                        UserPortfolioData[index]["price_average"].toString()),
+                    profitNum: double.parse(UserPortfolioData[index]
+                            ["estimated_profit"]
+                        .toString()),
+                    qtyNum: UserPortfolioData[index]["count"]),
               ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Container(
-                margin:
-                    EdgeInsets.only(left: 19, right: 19, bottom: 10, top: 10),
-                height: 37,
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            ),
+            Container(
+              height: 90,
+              width: Get.width,
+              decoration: BoxDecoration(
+                color: white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Color(0xff40000000),
+                    spreadRadius: 1,
+                    blurRadius: 3,
+                    offset: Offset(0, 0),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                        left: 19, right: 19, bottom: 10, top: 10),
+                    height: 37,
+                    child: Column(
                       children: [
-                        Text(
-                          "Invested",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: black2.withOpacity(0.6),
-                            fontFamily: "NunitoSemiBold",
-                            fontWeight: FontWeight.w600,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Invested",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: black2.withOpacity(0.6),
+                                fontFamily: "NunitoSemiBold",
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              "Return",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: black2.withOpacity(0.6),
+                                fontFamily: "NunitoSemiBold",
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          "Return",
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: black2.withOpacity(0.6),
-                            fontFamily: "NunitoSemiBold",
-                            fontWeight: FontWeight.w600,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              totalInvested.toStringAsFixed(2),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: black2,
+                                fontFamily: "NunitoSemiBold",
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            Text(
+                              totalProfit.toStringAsFixed(2),
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: green219653,
+                                fontFamily: "NunitoSemiBold",
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          totalInvested.toStringAsFixed(2),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: black2,
-                            fontFamily: "NunitoSemiBold",
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Text(
-                          totalProfit.toStringAsFixed(2),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: green219653,
-                            fontFamily: "NunitoSemiBold",
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ],
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 19,
+                      right: 19,
                     ),
-                  ],
-                ),
+                    child: Divider(
+                      height: 1,
+                      thickness: 1,
+                      color: gray4.withOpacity(0.2),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 19,
-                  right: 19,
-                ),
-                child: Divider(
-                  height: 1,
-                  thickness: 1,
-                  color: gray4.withOpacity(0.2),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
