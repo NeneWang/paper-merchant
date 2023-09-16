@@ -116,6 +116,11 @@ class Database {
       }
     }
 
+    if (_myBox.get("userBookmarkPrices") == null ||
+        _myBox.get("userBookmarkPrices").isEmpty) {
+      _myBox.put("userBookmarkPrices", userBookmarkPrices);
+      _myBox.put("userStockPrices", userStockPrices);
+    }
     userBookmarkPrices = _myBox.get("userBookmarkPrices");
     userStockPrices = _myBox.get("userStockPrices");
   }
@@ -208,35 +213,6 @@ class Database {
       ticketNames = _myBox.get("ticketNames");
     }
 
-    String currentSearch;
-    List<String> historySearchesToAdd = [];
-    // Filter
-    if (_myBox.get("SEARCH_HISTORY") == null ||
-        _myBox.get("SEARCH_HISTORY").isEmpty) {
-      _myBox.put("SEARCH_HISTORY", ["AMZN"]);
-    }
-    searchHistory = _myBox.get("SEARCH_HISTORY");
-    if (filter == "") {
-      // Slice last 5 searches
-      final int searchLen = searchHistory.length;
-      currentSearch = historySearchesToAdd[searchLen - 1];
-    } else {
-      currentSearch = filter;
-      searchHistory.add(filter.toUpperCase());
-      _myBox.put("SEARCH_HISTORY", searchHistory);
-    }
-
-    final int searchLen = searchHistory.length;
-    final int searchUpTo = min<int>(5, searchLen);
-    historySearchesToAdd =
-        searchHistory.sublist(searchLen - searchUpTo, searchLen - 1);
-
-    ticketNames = ticketNames
-        .where((element) =>
-            element.toLowerCase().contains(currentSearch.toLowerCase()))
-        .toList();
-
-    ticketNames.addAll(historySearchesToAdd);
     final int limitCount = min<int>(count, ticketNames.length);
 
     final stocksToLookup = ticketNames.sublist(0, limitCount);

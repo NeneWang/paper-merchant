@@ -18,6 +18,7 @@ class _AllStockScreenState extends State<AllStockScreen> {
 
   @override
   void initState() {
+    db.populateAllStocksScreenData();
     super.initState();
   }
 
