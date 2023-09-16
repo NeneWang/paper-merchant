@@ -14,7 +14,7 @@ import 'package:mymoney/data/database.dart';
 import 'package:mymoney/components/QuantityRow.dart';
 import 'package:mymoney/components/NamesWithPricing.dart';
 
-final MyTabController myTabController = Get.put(MyTabController());
+final applicationController myTabController = Get.put(applicationController());
 ColorChangeController colorChangeController = Get.put(
   ColorChangeController(),
 );

@@ -16,13 +16,15 @@ import 'package:mymoney/data/utils.dart';
 import '../notification_screen.dart';
 
 class WatchListScreen extends StatefulWidget {
-  final MyTabController myTabController = Get.put(MyTabController());
+  final applicationController myTabController =
+      Get.put(applicationController());
   @override
   State<WatchListScreen> createState() => _WatchListScreenState();
 }
 
 class _WatchListScreenState extends State<WatchListScreen> {
-  final MyTabController myTabController = Get.put(MyTabController());
+  final applicationController myTabController =
+      Get.put(applicationController());
 
   final Database db = Database();
 
@@ -109,7 +111,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                       borderSide: BorderSide(color: appColor, width: 2),
                       // insets: EdgeInsets.only(bottom: 52),
                     ),
-                    tabs: myTabController.myTabs,
+                    tabs: myTabController.dateViewController,
                     labelStyle: TextStyle(
                       fontSize: 15,
                       color: black,

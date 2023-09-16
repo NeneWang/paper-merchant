@@ -263,6 +263,9 @@ class Database {
         ticketNames.add(ticker_symbol);
         _myBox.put("ticketNames", ticketNames);
       }
+
+      // Update the userAsset
+      _myBox.put("userAsset", userAsset);
     }
 
     final response = await http.post(
@@ -312,6 +315,9 @@ class Database {
         ticketNames.remove(ticker_symbol);
         _myBox.put("ticketNames", ticketNames);
       }
+
+      // Update the userAsset
+      _myBox.put("userAsset", userAsset);
     }
 
     final POST_URL = "${backendAPI}/api/sell";

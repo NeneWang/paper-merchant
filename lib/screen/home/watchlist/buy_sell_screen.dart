@@ -13,7 +13,7 @@ import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/imagenames.dart';
 import '../drawer_open_.dart';
 
-final MyTabController myTabController = Get.put(MyTabController());
+final applicationController myTabController = Get.put(applicationController());
 ColorChangeController colorChangeController = Get.put(
   ColorChangeController(),
 );
@@ -170,7 +170,7 @@ class BuySellScreen extends StatelessWidget {
                           borderSide: BorderSide(color: transPrent, width: 2),
                           // insets: EdgeInsets.only(bottom: 52),
                         ),
-                        tabs: myTabController.myTabs5,
+                        tabs: myTabController.weekYearContoller,
                         labelStyle: TextStyle(
                           fontSize: 15,
                           color: black,

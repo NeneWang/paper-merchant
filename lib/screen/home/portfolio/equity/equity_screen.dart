@@ -7,7 +7,7 @@ import 'package:mymoney/utils/color.dart';
 
 // ignore: must_be_immutable
 class EquityScreen extends StatelessWidget {
-  MyTabController myTabController = Get.find();
+  applicationController myTabController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class EquityScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: white,
         title: Padding(
-          padding: EdgeInsets.only(top: 10),
+          padding: const EdgeInsets.only(top: 10),
           child: TabBar(
             // automaticIndicatorColorAdjustment: false,
             // labelPadding: EdgeInsets.all(15),
@@ -30,7 +30,7 @@ class EquityScreen extends StatelessWidget {
             indicatorSize: TabBarIndicatorSize.tab,
             indicatorWeight: 2,
             // isScrollable: false,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             // labelPadding: EdgeInsets.only(right: 40),
             indicator: BoxDecoration(
               boxShadow: [
@@ -44,8 +44,8 @@ class EquityScreen extends StatelessWidget {
               borderRadius: BorderRadius.circular(40),
               color: pageBackGroundC,
             ),
-            tabs: myTabController.myTabs4,
-            labelStyle: TextStyle(
+            tabs: myTabController.portfolioController,
+            labelStyle: const TextStyle(
               fontSize: 12,
               color: black2,
               fontFamily: "PoppinsMedium",
@@ -55,7 +55,7 @@ class EquityScreen extends StatelessWidget {
         ),
       ),
       body: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: myTabController.controller4,
         children: [
           UserPortfolio(),

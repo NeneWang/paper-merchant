@@ -6,7 +6,7 @@ import 'package:mymoney/utils/color.dart';
 
 // ignore: must_be_immutable
 class PortFolioScreen extends StatelessWidget {
-  MyTabController myTabController = Get.find();
+  applicationController myTabController = Get.find();
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ import 'package:mymoney/utils/color.dart';
 
 // ignore: must_be_immutable
 class OrderScreen extends StatelessWidget {
-  MyTabController myTabController = Get.put(MyTabController());
+  applicationController myTabController = Get.put(applicationController());
 
   @override
   Widget build(BuildContext context) {

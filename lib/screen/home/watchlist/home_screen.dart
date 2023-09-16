@@ -3,16 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
 import 'package:mymoney/controller/drawer_open_controller.dart';
 import 'package:mymoney/screen/home/account/account_screen.dart';
 import 'package:mymoney/screen/home/fund/fund_screen.dart';
 import 'package:mymoney/screen/home/portfolio/portfolio_screen.dart';
 import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
+import 'package:mymoney/screen/welcome/welcome_screen.dart';
 import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/data.dart';
 import 'package:mymoney/utils/imagenames.dart';
 import 'package:mymoney/screen/home/watchlist/all_stocks_screen.dart';
+
+import '../drawer_open_.dart';
+// import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -116,15 +118,19 @@ class HomeScreen extends StatelessWidget {
 }
 
 appBarDesign() {
-  ColorChangeController colorChangeController = Get.find();
+  // ColorChangeController colorChangeController = Get.find();
   // Very important code dont erase!!
   // ignore: unused_local_variable
   DrawerOpen drawerOpen = Get.put(DrawerOpen());
   FocusNode focusNode = FocusNode();
+  // Print current path
+  print("============current path==========");
+  print(Get.currentRoute);
   return AppBar(
     backgroundColor: pageBackGroundC,
     leadingWidth: 30,
     elevation: 0,
+    // go back button to WatchListScreen
     centerTitle: true,
     title: Container(
       height: 40,
@@ -138,21 +144,24 @@ appBarDesign() {
       child: TextField(
         cursorColor: appColor,
         onSubmitted: (value) => {
-          // TODO PUSH into all screen with the search
+          // if (Get.currentRoute == "/AllStockScreen")
+          //   },
+          // Get.to(PortFolioScreen()),
+          Get.offAll(DrawerOpenScreen()),
           Get.to(AllStockScreen(search: value)),
         },
         focusNode: focusNode,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           alignLabelWithHint: true,
           border: InputBorder.none,
           hintText: "Search anything",
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             fontSize: 14,
             color: gray9B9797,
             fontFamily: "Nunito",
             fontWeight: FontWeight.w400,
           ),
-          prefixIcon: const Icon(
+          prefixIcon: Icon(
             CupertinoIcons.search,
             color: gray9B9797,
             size: 20,
@@ -160,229 +169,230 @@ appBarDesign() {
           suffixIcon: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const SizedBox(
+              SizedBox(
                 height: 20,
                 width: 1,
                 child: VerticalDivider(
                   color: gray9B9797,
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  focusNode.unfocus();
-                  Get.bottomSheet(
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(top: 29, left: 30, right: 30),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "Filter",
-                                  style: TextStyle(
-                                    color: black0D1F3C,
-                                    fontFamily: "PoppinsSemiBold",
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                  child: Text(
-                                    "Done",
-                                    style: TextStyle(
-                                      color: appColor,
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 19,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            children: [
-                              Obx(
-                                () => MaterialButton(
-                                  onPressed: () {
-                                    if (colorChangeController
-                                            .buttonCheck1.isTrue ||
-                                        colorChangeController
-                                            .buttonCheck2.isTrue) {
-                                      colorChangeController.buttonCheck1(false);
-                                      colorChangeController.buttonCheck2(false);
-                                    }
-                                    colorChangeController.buttonCheck1(true);
-                                    if (colorChangeController
-                                        .buttonCheck1.isTrue) {
-                                      colorChangeController.isCheck[0] = true;
-                                      colorChangeController.isCheck[1] = true;
-                                      colorChangeController.isCheck[2] = true;
-                                      colorChangeController.isCheck[3] = true;
-                                    }
-                                  },
-                                  elevation: 0,
-                                  height: 32,
-                                  minWidth: 88,
-                                  color:
-                                      colorChangeController.buttonCheck1.isTrue
-                                          ? pageBackGroundC
-                                          : white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(
-                                      color: colorChangeController
-                                              .buttonCheck1.isTrue
-                                          ? transPrent
-                                          : Color(0xffDFDFDF),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Select All",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: appColor,
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 12,
-                              ),
-                              Obx(
-                                () => MaterialButton(
-                                  onPressed: () {
-                                    if (colorChangeController
-                                            .buttonCheck2.isTrue ||
-                                        colorChangeController
-                                            .buttonCheck1.isTrue) {
-                                      colorChangeController.buttonCheck2(false);
-                                      colorChangeController.buttonCheck1(false);
-                                    }
-                                    colorChangeController.buttonCheck2(true);
-                                    if (colorChangeController
-                                        .buttonCheck2.isTrue) {
-                                      colorChangeController.isCheck[0] = false;
-                                      colorChangeController.isCheck[1] = false;
-                                      colorChangeController.isCheck[2] = false;
-                                      colorChangeController.isCheck[3] = false;
-                                    }
-                                  },
-                                  elevation: 0,
-                                  height: 32,
-                                  minWidth: 81,
-                                  color:
-                                      colorChangeController.buttonCheck2.isTrue
-                                          ? pageBackGroundC
-                                          : white,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                    side: BorderSide(
-                                      color: colorChangeController
-                                              .buttonCheck2.isTrue
-                                          ? transPrent
-                                          : Color(0xffDFDFDF),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Clear All",
-                                    style: TextStyle(
-                                      fontSize: 15,
-                                      color: appColor,
-                                      fontFamily: "PoppinsMedium",
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: bottomSheetListBuild.length,
-                            itemBuilder: (context, index) => Obx(
-                              () => ListTile(
-                                onTap: () {
-                                  colorChangeController.isCheck[index] =
-                                      !colorChangeController.isCheck[index];
-                                },
-                                contentPadding: EdgeInsets.all(0),
-                                leading: Container(
-                                  width: 40,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: pageBackGroundC,
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: SvgPicture.asset(
-                                        bottomSheetListBuild[index]["img"]),
-                                  ),
-                                ),
-                                title: Text(
-                                  bottomSheetListBuild[index]["title"],
-                                  style: TextStyle(
-                                    color: black0D1F3C,
-                                    fontFamily: "PoppinsMedium",
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 19,
-                                  ),
-                                ),
-                                trailing:
-                                    colorChangeController.isCheck[index] == true
-                                        ? Container(
-                                            height: 25,
-                                            width: 25,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: appColor,
-                                            ),
-                                            child: Icon(
-                                              Icons.check,
-                                              color: white,
-                                              size: 12,
-                                            ),
-                                          )
-                                        : SizedBox.shrink(),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 30,
-                          ),
-                        ],
-                      ),
-                    ),
-                    backgroundColor: white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
-                    ),
-                    elevation: 2,
-                  );
-                },
-                icon: SvgPicture.asset(
-                  sort,
-                  color: gray9B9797,
-                ),
-              ),
+              // IconButton(
+              //   onPressed: () {
+              //     focusNode.unfocus();
+              //     Get.bottomSheet(
+              //       Padding(
+              //         padding:
+              //             const EdgeInsets.only(top: 29, left: 30, right: 30),
+              //         child: Column(
+              //           mainAxisSize: MainAxisSize.min,
+              //           children: [
+              //             Padding(
+              //               padding: const EdgeInsets.only(bottom: 10),
+              //               child: Row(
+              //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //                 children: [
+              //                   const Text(
+              //                     "Filter",
+              //                     style: TextStyle(
+              //                       color: black0D1F3C,
+              //                       fontFamily: "PoppinsSemiBold",
+              //                       fontWeight: FontWeight.w600,
+              //                       fontSize: 24,
+              //                     ),
+              //                   ),
+              //                   TextButton(
+              //                     onPressed: () {
+              //                       Get.back();
+              //                       // Get.to(W());
+              //                     },
+              //                     child: const Text(
+              //                       "Done",
+              //                       style: TextStyle(
+              //                         color: appColor,
+              //                         fontFamily: "PoppinsMedium",
+              //                         fontWeight: FontWeight.w500,
+              //                         fontSize: 19,
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //             Row(
+              //               children: [
+              //                 Obx(
+              //                   () => MaterialButton(
+              //                     onPressed: () {
+              //                       if (colorChangeController
+              //                               .buttonCheck1.isTrue ||
+              //                           colorChangeController
+              //                               .buttonCheck2.isTrue) {
+              //                         colorChangeController.buttonCheck1(false);
+              //                         colorChangeController.buttonCheck2(false);
+              //                       }
+              //                       colorChangeController.buttonCheck1(true);
+              //                       if (colorChangeController
+              //                           .buttonCheck1.isTrue) {
+              //                         colorChangeController.isCheck[0] = true;
+              //                         colorChangeController.isCheck[1] = true;
+              //                         colorChangeController.isCheck[2] = true;
+              //                         colorChangeController.isCheck[3] = true;
+              //                       }
+              //                     },
+              //                     elevation: 0,
+              //                     height: 32,
+              //                     minWidth: 88,
+              //                     color:
+              //                         colorChangeController.buttonCheck1.isTrue
+              //                             ? pageBackGroundC
+              //                             : white,
+              //                     shape: RoundedRectangleBorder(
+              //                       borderRadius: BorderRadius.circular(15),
+              //                       side: BorderSide(
+              //                         color: colorChangeController
+              //                                 .buttonCheck1.isTrue
+              //                             ? transPrent
+              //                             : Color(0xffDFDFDF),
+              //                       ),
+              //                     ),
+              //                     child: Text(
+              //                       "Select All",
+              //                       style: TextStyle(
+              //                         fontSize: 15,
+              //                         color: appColor,
+              //                         fontFamily: "PoppinsMedium",
+              //                         fontWeight: FontWeight.w500,
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ),
+              //                 SizedBox(
+              //                   width: 12,
+              //                 ),
+              //                 Obx(
+              //                   () => MaterialButton(
+              //                     onPressed: () {
+              //                       if (colorChangeController
+              //                               .buttonCheck2.isTrue ||
+              //                           colorChangeController
+              //                               .buttonCheck1.isTrue) {
+              //                         colorChangeController.buttonCheck2(false);
+              //                         colorChangeController.buttonCheck1(false);
+              //                       }
+              //                       colorChangeController.buttonCheck2(true);
+              //                       if (colorChangeController
+              //                           .buttonCheck2.isTrue) {
+              //                         colorChangeController.isCheck[0] = false;
+              //                         colorChangeController.isCheck[1] = false;
+              //                         colorChangeController.isCheck[2] = false;
+              //                         colorChangeController.isCheck[3] = false;
+              //                       }
+              //                     },
+              //                     elevation: 0,
+              //                     height: 32,
+              //                     minWidth: 81,
+              //                     color:
+              //                         colorChangeController.buttonCheck2.isTrue
+              //                             ? pageBackGroundC
+              //                             : white,
+              //                     shape: RoundedRectangleBorder(
+              //                       borderRadius: BorderRadius.circular(15),
+              //                       side: BorderSide(
+              //                         color: colorChangeController
+              //                                 .buttonCheck2.isTrue
+              //                             ? transPrent
+              //                             : Color(0xffDFDFDF),
+              //                       ),
+              //                     ),
+              //                     child: Text(
+              //                       "Clear All",
+              //                       style: TextStyle(
+              //                         fontSize: 15,
+              //                         color: appColor,
+              //                         fontFamily: "PoppinsMedium",
+              //                         fontWeight: FontWeight.w500,
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 ),
+              //               ],
+              //             ),
+              //             SizedBox(
+              //               height: 20,
+              //             ),
+              //             ListView.builder(
+              //               shrinkWrap: true,
+              //               physics: NeverScrollableScrollPhysics(),
+              //               itemCount: bottomSheetListBuild.length,
+              //               itemBuilder: (context, index) => Obx(
+              //                 () => ListTile(
+              //                   onTap: () {
+              //                     colorChangeController.isCheck[index] =
+              //                         !colorChangeController.isCheck[index];
+              //                   },
+              //                   contentPadding: EdgeInsets.all(0),
+              //                   leading: Container(
+              //                     width: 40,
+              //                     height: 40,
+              //                     decoration: BoxDecoration(
+              //                       color: pageBackGroundC,
+              //                       borderRadius: BorderRadius.circular(12),
+              //                     ),
+              //                     child: Padding(
+              //                       padding: const EdgeInsets.all(10.0),
+              //                       child: SvgPicture.asset(
+              //                           bottomSheetListBuild[index]["img"]),
+              //                     ),
+              //                   ),
+              //                   title: Text(
+              //                     bottomSheetListBuild[index]["title"],
+              //                     style: TextStyle(
+              //                       color: black0D1F3C,
+              //                       fontFamily: "PoppinsMedium",
+              //                       fontWeight: FontWeight.w500,
+              //                       fontSize: 19,
+              //                     ),
+              //                   ),
+              //                   trailing:
+              //                       colorChangeController.isCheck[index] == true
+              //                           ? Container(
+              //                               height: 25,
+              //                               width: 25,
+              //                               decoration: BoxDecoration(
+              //                                 shape: BoxShape.circle,
+              //                                 color: appColor,
+              //                               ),
+              //                               child: Icon(
+              //                                 Icons.check,
+              //                                 color: white,
+              //                                 size: 12,
+              //                               ),
+              //                             )
+              //                           : SizedBox.shrink(),
+              //                 ),
+              //               ),
+              //             ),
+              //             SizedBox(
+              //               height: 30,
+              //             ),
+              //           ],
+              //         ),
+              //       ),
+              //       backgroundColor: white,
+              //       shape: RoundedRectangleBorder(
+              //         borderRadius: BorderRadius.only(
+              //           topLeft: Radius.circular(20),
+              //           topRight: Radius.circular(20),
+              //         ),
+              //       ),
+              //       elevation: 2,
+              //     );
+              //   },
+              //   icon: SvgPicture.asset(
+              //     sort,
+              //     color: gray9B9797,
+              //   ),
+              // ),
             ],
           ),
         ),

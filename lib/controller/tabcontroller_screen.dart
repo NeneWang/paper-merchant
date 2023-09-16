@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class MyTabController extends GetxController with SingleGetTickerProviderMixin {
-  final List<Tab> myTabs = <Tab>[
-    Tab(text: 'Day'),
-    Tab(text: 'Week'),
-    Tab(text: 'Month'),
-    Tab(text: 'Year'),
-    Tab(text: 'All'),
+class applicationController extends GetxController
+    with SingleGetTickerProviderMixin {
+  final List<Tab> dateViewController = <Tab>[
+    const Tab(text: 'Day'),
+    const Tab(text: 'Week'),
+    const Tab(text: 'Month'),
+    const Tab(text: 'Year'),
+    const Tab(text: 'All'),
   ];
   final List<Tab> myTabs2 = <Tab>[
     Tab(text: 'Pending'),
@@ -17,15 +18,17 @@ class MyTabController extends GetxController with SingleGetTickerProviderMixin {
     Tab(text: 'EQUITY'),
     Tab(text: 'COMMODITY'),
   ];
-  final List<Container> myTabs4 = <Container>[
+  final List<Container> portfolioController = <Container>[
     Container(
         height: 30,
         alignment: Alignment.center,
-        child: Tab(text: 'Your Portfolio')),
+        child: const Tab(text: 'Your Portfolio')),
     Container(
-        height: 30, alignment: Alignment.center, child: Tab(text: 'Others')),
+        height: 30,
+        alignment: Alignment.center,
+        child: const Tab(text: 'Others')),
   ];
-  final List<Tab> myTabs5 = <Tab>[
+  final List<Tab> weekYearContoller = <Tab>[
     // Tab(text: 'Day'),
     Tab(text: 'Week'),
     // Tab(text: 'Month'),
@@ -61,11 +64,12 @@ class MyTabController extends GetxController with SingleGetTickerProviderMixin {
   @override
   void onInit() {
     super.onInit();
-    controller = TabController(vsync: this, length: myTabs.length);
+    controller = TabController(vsync: this, length: dateViewController.length);
     controller1 = TabController(vsync: this, length: myTabs2.length);
     controller2 = TabController(vsync: this, length: myTabs3.length);
-    controller4 = TabController(vsync: this, length: myTabs4.length);
-    controller5 = TabController(vsync: this, length: myTabs5.length);
+    controller4 =
+        TabController(vsync: this, length: portfolioController.length);
+    controller5 = TabController(vsync: this, length: weekYearContoller.length);
   }
 
   @override
