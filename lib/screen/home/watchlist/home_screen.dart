@@ -12,6 +12,7 @@ import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
 import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/data.dart';
 import 'package:mymoney/utils/imagenames.dart';
+import 'package:mymoney/data/database.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {
@@ -116,6 +117,7 @@ class HomeScreen extends StatelessWidget {
 
 appBarDesign() {
   ColorChangeController colorChangeController = Get.find();
+  final db = Database();
   // Very important code dont erase!!
   // ignore: unused_local_variable
   DrawerOpen drawerOpen = Get.put(DrawerOpen());
@@ -136,6 +138,10 @@ appBarDesign() {
       ),
       child: TextField(
         cursorColor: appColor,
+        onSubmitted: (value) => {
+          print('value' + value),
+          db.populateAllStocksScreenData(filter: value),
+        },
         focusNode: focusNode,
         decoration: InputDecoration(
           alignLabelWithHint: true,

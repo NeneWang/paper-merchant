@@ -25,6 +25,7 @@ class Database {
   // For quick reference
   Map<dynamic, dynamic> userStockPrices = {};
   Map<dynamic, dynamic> userBookmarkPrices = {};
+  List<String> searchHistory = ["GOOGL"];
   List<String> ticketNames = [];
   Map<dynamic, dynamic> showStockData =
       {}; //The stocks being shown in the watchlist
@@ -197,7 +198,7 @@ class Database {
     return convertToListingFormat(showStockData);
   }
 
-  Future populateAllStocksScreenData() async {
+  Future populateAllStocksScreenData({String filter = "", count = 10}) async {
     // get the top 10 stocks from ticket names and request api to include their data on them.
 
     if (_myBox.get("ticketNames") == null ||
@@ -206,10 +207,39 @@ class Database {
     } else {
       ticketNames = _myBox.get("ticketNames");
     }
-    print("checking the first 10 out of " + ticketNames.length.toString());
-    final stocksToLookup = ticketNames.sublist(0, 10);
-    print("Researching multiple:");
-    print(stocksToLookup);
+
+    String currentSearch;
+    List<String> historySearchesToAdd = [];
+    // Filter
+    if (_myBox.get("SEARCH_HISTORY") == null ||
+        _myBox.get("SEARCH_HISTORY").isEmpty) {
+      _myBox.put("SEARCH_HISTORY", ["AMZN"]);
+    }
+    searchHistory = _myBox.get("SEARCH_HISTORY");
+    if (filter == "") {
+      // Slice last 5 searches
+      final int searchLen = searchHistory.length;
+      currentSearch = historySearchesToAdd[searchLen - 1];
+    } else {
+      currentSearch = filter;
+      searchHistory.add(filter.toUpperCase());
+      _myBox.put("SEARCH_HISTORY", searchHistory);
+    }
+
+    final int searchLen = searchHistory.length;
+    final int searchUpTo = min<int>(5, searchLen);
+    historySearchesToAdd =
+        searchHistory.sublist(searchLen - searchUpTo, searchLen - 1);
+
+    ticketNames = ticketNames
+        .where((element) =>
+            element.toLowerCase().contains(currentSearch.toLowerCase()))
+        .toList();
+
+    ticketNames.addAll(historySearchesToAdd);
+    final int limitCount = min<int>(count, ticketNames.length);
+
+    final stocksToLookup = ticketNames.sublist(0, limitCount);
     showStockData = await researchMultiple(stocksToLookup);
     return;
   }
@@ -223,9 +253,7 @@ class Database {
     // count: int
     // price: float
     // Into api: "${backendAPI}/api/buy";
-    final POST_URL = "${backendAPI}/api/buy";
-    print("Purchase stock requested");
-    print(POST_URL);
+    const postUrl = "$backendAPI/api/buy";
 
     // update userCash
     if (!(price * count > userData["cash"])) {
@@ -240,7 +268,7 @@ class Database {
     }
 
     final response = await http.post(
-      Uri.parse(POST_URL),
+      Uri.parse(postUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

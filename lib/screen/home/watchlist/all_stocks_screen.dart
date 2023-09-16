@@ -8,14 +8,21 @@ import 'package:mymoney/utils/utils_text.dart';
 import 'package:mymoney/data/database.dart';
 
 // ignore: use_key_in_widget_constructors
-class AllStockScreen extends StatelessWidget {
+class AllStockScreen extends StatefulWidget {
+  @override
+  State<AllStockScreen> createState() => _AllStockScreenState();
+}
+
+class _AllStockScreenState extends State<AllStockScreen> {
   final db = Database();
 
   @override
-  Widget build(BuildContext context) {
-    // db.loadData();
-    db.populateAllStocksScreenData();
+  void initState() {
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBarDesign(),
       backgroundColor: pageBackGroundC,
