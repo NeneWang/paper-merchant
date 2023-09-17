@@ -33,15 +33,31 @@ class UserPortfolio extends StatefulWidget {
 
 class _UserPortfolioState extends State<UserPortfolio> {
   final Database db = Database();
+  Map<String, double> portfolioSummary = {
+    "totalInvested": 0,
+    "totalProfit": 0,
+  };
+  List<Map<dynamic, dynamic>> UserPortfolioData = [];
+  double totalInvested = 0;
+  double totalProfit = 0;
 
   @override
   void initState() {
     super.initState();
+    loadInformation();
+  }
+
+  void loadInformation() {
     db.loadData();
+    UserPortfolioData = db.userPortfolio;
+    portfolioSummary =
+        UserPortfolio.calculatePortfolioSummary(UserPortfolioData);
+    totalInvested = portfolioSummary["totalInvested"]!;
+    totalProfit = portfolioSummary["totalProfit"]!;
   }
 
   void refresh() {
-    db.loadData();
+    loadInformation();
     Get.snackbar(
       "Refreshed",
       "Portfolio refreshed",
@@ -53,15 +69,6 @@ class _UserPortfolioState extends State<UserPortfolio> {
 
   @override
   Widget build(BuildContext context) {
-    db.loadData();
-    final UserPortfolioData = db.userAsset;
-    print("UserPorfolio Data became");
-    print(UserPortfolioData);
-    Map<String, double> portfolioSummary =
-        UserPortfolio.calculatePortfolioSummary(UserPortfolioData);
-    double totalInvested = portfolioSummary["totalInvested"]!;
-    double totalProfit = portfolioSummary["totalProfit"]!;
-
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {

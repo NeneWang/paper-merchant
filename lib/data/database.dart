@@ -22,7 +22,7 @@ String generateShortGuid(int length) {
 
 class Database {
   Map<dynamic, dynamic> userData = {};
-  List<Map<dynamic, dynamic>> userAsset = [];
+  List<Map<dynamic, dynamic>> userPortfolio = [];
 
   // For quick reference
   Map<dynamic, dynamic> userStockPrices = {};
@@ -34,13 +34,13 @@ class Database {
 
   void createDefaultData() {
     userData = {
-      "name": generateShortGuid(5),
-      "user_id": "4379afa2-8dd0-471d-8d1e-695106dae29a",
+      "name": "No User Logged in.",
+      "user_id": "-",
       "is_connected": "false",
-      "current_competition": "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b",
-      "player_id": "85b0ecf8-4ea7-4ad2-a388-30df41971095",
-      "cash": 1000000.00,
-      "papel_asset_worth": 507.57000732421875
+      "current_competition": "-",
+      "player_id": "92cb1815-bbc7-47aa-aba4-4788425b0524",
+      "cash": 0.00,
+      "papel_asset_worth": 0.0
     };
 
     userBookmarkPrices = {
@@ -62,7 +62,7 @@ class Database {
       }
     };
 
-    userAsset = [];
+    userPortfolio = [];
 
     userStockPrices = {
       "AAPL": {
@@ -87,18 +87,29 @@ class Database {
     _myBox.put("userData", userData);
   }
 
+  void logOff() {
+    _myBox.delete("userData");
+    _myBox.delete("userPortfolio");
+    _myBox.delete("userBookmarkPrices");
+    _myBox.delete("userStockPrices");
+    _myBox.delete("ticketNames");
+  }
+
+  void loginWithDemo() {}
+
   void loadData() {
     // If userData doesnt exist then create it
     if (_myBox.get("userData") == null) {
       createDefaultData();
     }
 
-    if ((_myBox.get("userAsset") == null || _myBox.get("userAsset").isEmpty) ||
+    if ((_myBox.get("userPortfolio") == null ||
+            _myBox.get("userPortfolio").isEmpty) ||
         (_myBox.get("userBookmarkPrices") == null ||
             _myBox.get("userBookmarkPrices").isEmpty) ||
         (_myBox.get("userStockPrices") == null ||
             _myBox.get("userStockPrices").isEmpty)) {
-      _myBox.put("userAsset", userAsset);
+      _myBox.put("userPortfolio", userPortfolio);
       syncData();
     }
 
@@ -110,11 +121,11 @@ class Database {
     }
 
     userData = _myBox.get("userData");
-    List<dynamic> userAssetData = _myBox.get("userAsset");
-    userAsset = [];
-    for (var asset in userAssetData) {
+    List<dynamic> userPortfolioData = _myBox.get("userPortfolio");
+    userPortfolio = [];
+    for (var asset in userPortfolioData) {
       if (asset is Map<String, dynamic>) {
-        userAsset.add(asset);
+        userPortfolio.add(asset);
       }
     }
 
@@ -127,18 +138,18 @@ class Database {
     userStockPrices = _myBox.get("userStockPrices");
   }
 
-  Map<dynamic, dynamic> getUserAsset(String userAssetSymbol) {
-    for (var asset in userAsset) {
-      if (asset["symbol"] == userAssetSymbol) {
+  Map<dynamic, dynamic> getuserPortfolio(String userPortfolioSymbol) {
+    for (var asset in userPortfolio) {
+      if (asset["symbol"] == userPortfolioSymbol) {
         return asset;
       }
     }
     return {};
   }
 
-  int updateUserAssetCount(String userAssetSymbol, int increaseBy) {
-    for (var asset in userAsset) {
-      if (asset["symbol"] == userAssetSymbol) {
+  int updateuserPortfolioCount(String userPortfolioSymbol, int increaseBy) {
+    for (var asset in userPortfolio) {
+      if (asset["symbol"] == userPortfolioSymbol) {
         if (asset["count"] + increaseBy < 0) {
           return asset["count"] - increaseBy;
         }
@@ -156,17 +167,17 @@ class Database {
     try {
       loadData();
 
-      final test_if_data_exists = getUserAsset(symbol);
+      final test_if_data_exists = getuserPortfolio(symbol);
       if (!test_if_data_exists.containsKey("count")) {
         await syncData();
       }
 
-      final userAssetData = getUserAsset(symbol);
+      final userPortfolioData = getuserPortfolio(symbol);
 
       final double currentSymbolPrice = double.parse(price);
 
-      final int count = userAssetData["count"];
-      final double averagePrice = userAssetData["price_average"];
+      final int count = userPortfolioData["count"];
+      final double averagePrice = userPortfolioData["price_average"];
       final double totalWorth = currentSymbolPrice * count;
       final double profit = totalWorth - (averagePrice * count);
       final double profitPercent = (profit / (averagePrice * count)) * 100;
@@ -203,9 +214,6 @@ class Database {
     if (showStockData.isEmpty || filter.isNotEmpty) {
       await populateAllStocksScreenData(filter: filter);
     }
-    print("Searching $filter");
-    print("showStockData");
-    print(showStockData);
 
     return convertToListingFormat(showStockData);
   }
@@ -232,8 +240,6 @@ class Database {
       result = ticketNames;
     }
 
-    // print("Result search results:");
-    // print(result);
     final minCount = min<int>(count, result.length);
 
     final int limitCount = min<int>(count, minCount);
@@ -245,19 +251,12 @@ class Database {
 
   Future<void> purchaseStock(String ticker_symbol,
       {int count = 1, double price = 100}) async {
-    // Create post request of model:
-    // class AssetPurchase(BaseModel):
-    // player_id: str
-    // symbol: str
-    // count: int
-    // price: float
-    // Into api: "${backendAPI}/api/buy";
     const postUrl = "$backendAPI/api/buy";
 
     // update userCash
     if (!(price * count > userData["cash"])) {
       userData["cash"] -= price * count;
-      updateUserAssetCount(ticker_symbol, count);
+      updateuserPortfolioCount(ticker_symbol, count);
 
       // Update the stock names
       if (!ticketNames.contains(ticker_symbol)) {
@@ -265,8 +264,8 @@ class Database {
         _myBox.put("ticketNames", ticketNames);
       }
 
-      // Update the userAsset
-      _myBox.put("userAsset", userAsset);
+      // Update the userPortfolio
+      _myBox.put("userPortfolio", userPortfolio);
     }
 
     final response = await http.post(
@@ -294,8 +293,6 @@ class Database {
         return;
       }
 
-      print("Purchase stock success");
-      print(response.body);
       await syncData();
       Get.snackbar("Success", "$ticker_symbol share purchased",
           backgroundColor: green219653,
@@ -303,8 +300,6 @@ class Database {
           snackPosition: SnackPosition.BOTTOM);
       return;
     } else {
-      // print("Purchase stock failed");
-      print(response.body);
       Get.snackbar("Failed", "Failed to purchase $ticker_symbol share",
           backgroundColor: redEB5757,
           colorText: white,
@@ -325,7 +320,7 @@ class Database {
 
     // Make internal changes monetarily
 
-    final countStocks = updateUserAssetCount(ticker_symbol, -count);
+    final countStocks = updateuserPortfolioCount(ticker_symbol, -count);
     // update userCash
     if (countStocks >= 0) {
       userData["cash"] += price * count;
@@ -336,13 +331,11 @@ class Database {
         _myBox.put("ticketNames", ticketNames);
       }
 
-      // Update the userAsset
-      _myBox.put("userAsset", userAsset);
+      // Update the userPortfolio
+      _myBox.put("userPortfolio", userPortfolio);
     }
 
     const postUrl = "$backendAPI/api/sell";
-    print("Sell stock requested");
-    print(postUrl);
 
     final response = await http.post(
       Uri.parse(postUrl),
@@ -358,7 +351,6 @@ class Database {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       if (response.body.contains("Not enough")) {
         Get.snackbar(
           "Failed",
@@ -404,7 +396,7 @@ class Database {
   }
 
   Future getStockNames() async {
-    final stockAPI = "$backendAPI/api/stickers"; // Replace with actual API URL
+    const stockAPI = "$backendAPI/api/stickers"; // Replace with actual API URL
     final response = await http.get(Uri.parse(stockAPI));
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
@@ -439,22 +431,22 @@ class Database {
       // Process the API response and print assets
       if (response.statusCode == 200) {
         final assetsData = json.decode(response.body);
-        userAsset = []; //Empty the userData before
+        userPortfolio = []; //Empty the userData before
         for (var asset in assetsData) {
           if (asset is Map<String, dynamic>) {
-            userAsset.add(asset);
+            userPortfolio.add(asset);
           }
         }
       } else {
         print("Failed to fetch assets");
       }
 
-      _myBox.put("userAsset", userAsset);
+      _myBox.put("userPortfolio", userPortfolio);
 
       const getHighlightURL =
           "$backendAPI/api/get_highlight_today"; // Replace with actual API URL
 
-      final bookmarks = ["META", "AAPL"];
+      final bookmarks = ["AAPL", "JPM", "MSFT", "EBAY", "SHOP"];
       final headers = <String, String>{
         'Content-Type': 'application/json',
       };
@@ -476,12 +468,17 @@ class Database {
         // Successful response
         final responseData = jsonDecode(response_2.body);
         // Process responseData as needed
-        print("body 2");
+        print("Why is this being called multiple times.");
         print(responseData);
         userBookmarkPrices = responseData["bookmarks"];
         userStockPrices = responseData["stocks"];
-        userData["papel_asset_worth"] = responseData["papel_asset_worth"];
-        userData["cash"] = responseData["user_cash"];
+
+        userData["papel_asset_worth"] =
+            responseData["papel_asset_worth"].toDouble();
+        userData["cash"] = responseData["user_cash"].toDouble();
+        userData["name"] = responseData["user_name"];
+        userData["user_id"] = responseData["user_id"];
+        userData["current_competition"] = responseData["competition_id"];
 
         _myBox.put("userBookmarkPrices", userBookmarkPrices);
         _myBox.put("userStockPrices", userStockPrices);

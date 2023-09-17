@@ -34,7 +34,7 @@ List<Map<String, dynamic>> convertToListingFormat(
   List<Map<String, dynamic>> outputList = [];
 
   inputMap.forEach((key, value) {
-    double adjClose = value["Adj Close"];
+    double adjClose = value["Adj Close"] ?? 0.0;
     outputList.add({
       "title": key,
       "totalRs": adjClose

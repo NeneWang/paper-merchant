@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-// import 'package:mymoney/screen/auth/signup/signup_screen.dart';
-// import '../auth/login/login_screen.dart';
+import 'package:mymoney/screen/auth/signup/signup_screen.dart';
+import '../auth/login/login_screen.dart';
 import 'package:mymoney/screen/home/drawer_open_.dart';
 import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
@@ -62,32 +62,32 @@ class WelcomeScreen extends StatelessWidget {
               SizedBox(
                 height: Get.height / 49.52,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     Text(
-              //       "Don't have an account?",
-              //       style: TextStyle(
-              //         fontSize: 14,
-              //         fontFamily: "Nunito",
-              //         color: black,
-              //       ),
-              //     ),
-              //     InkWell(
-              //       onTap: () {
-              //         Get.to(SignUpScreen());
-              //       },
-              //       child: Text(
-              //         " Sign up",
-              //         style: TextStyle(
-              //           fontSize: 14,
-              //           color: appColor,
-              //           fontFamily: "NunitoSemiBold",
-              //         ),
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Don't have an account?",
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: "Nunito",
+                      color: black,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.to(SignUpScreen());
+                    },
+                    child: Text(
+                      " Sign up",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: appColor,
+                        fontFamily: "NunitoSemiBold",
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

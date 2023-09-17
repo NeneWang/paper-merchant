@@ -123,8 +123,6 @@ appBarDesign() {
   DrawerOpen drawerOpen = Get.put(DrawerOpen());
   FocusNode focusNode = FocusNode();
   // Print current path
-  print("============current path==========");
-  print(Get.currentRoute);
   return AppBar(
     backgroundColor: pageBackGroundC,
     leadingWidth: 30,
