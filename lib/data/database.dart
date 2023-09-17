@@ -340,12 +340,12 @@ class Database {
       _myBox.put("userAsset", userAsset);
     }
 
-    final POST_URL = "${backendAPI}/api/sell";
+    const postUrl = "$backendAPI/api/sell";
     print("Sell stock requested");
-    print(POST_URL);
+    print(postUrl);
 
     final response = await http.post(
-      Uri.parse(POST_URL),
+      Uri.parse(postUrl),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -385,7 +385,7 @@ class Database {
 
   Future<Map<dynamic, dynamic>> researchMultiple(
       List<String> stocksNames) async {
-    final multipleAPI = "${backendAPI}/api/get_today_data_multiple";
+    const multipleAPI = "$backendAPI/api/get_today_data_multiple";
     final response = await http.post(
       Uri.parse(multipleAPI),
       headers: <String, String>{

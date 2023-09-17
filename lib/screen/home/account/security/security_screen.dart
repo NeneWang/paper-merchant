@@ -67,7 +67,7 @@ class SecurityScreen extends StatelessWidget {
                         onTap: () {
                           Get.to(ChangePasswordSecurity());
                         },
-                        child: design1Profile(
+                        child: leftArrowRowLink(
                           labelText: "Change Password",
                         ),
                       ),
@@ -75,7 +75,7 @@ class SecurityScreen extends StatelessWidget {
                         onTap: () {
                           Get.to(EnterOldPinScreen());
                         },
-                        child: design1Profile(
+                        child: leftArrowRowLink(
                           labelText: "Change PIN",
                         ),
                       ),

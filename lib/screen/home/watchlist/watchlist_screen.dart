@@ -34,9 +34,6 @@ class _WatchListScreenState extends State<WatchListScreen> {
     List bookmarkedList = [];
     reloadScreen() {
       db.loadData();
-      print("Loaded data");
-
-      print(db.userBookmarkPrices);
       setState(() {
         stockList = convertToListingFormat(db.userStockPrices);
       });
@@ -44,8 +41,6 @@ class _WatchListScreenState extends State<WatchListScreen> {
       setState(() {
         bookmarkedList = convertToListingFormat(db.userBookmarkPrices);
       });
-      print("stockList");
-      print(stockList);
     }
 
     reloadScreen();

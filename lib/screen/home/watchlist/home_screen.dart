@@ -8,7 +8,6 @@ import 'package:mymoney/screen/home/account/account_screen.dart';
 import 'package:mymoney/screen/home/fund/fund_screen.dart';
 import 'package:mymoney/screen/home/portfolio/portfolio_screen.dart';
 import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
-import 'package:mymoney/screen/welcome/welcome_screen.dart';
 import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/imagenames.dart';
 import 'package:mymoney/screen/home/watchlist/all_stocks_screen.dart';
@@ -50,7 +49,7 @@ class HomeScreen extends StatelessWidget {
         height: Get.height,
         width: Get.width,
         curve: Curves.bounceOut,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           boxShadow: [
             BoxShadow(
               color: Color(0xff40000000),
@@ -64,7 +63,7 @@ class HomeScreen extends StatelessWidget {
           drawerOpen.yOffset.value,
           0,
         )..scale(drawerOpen.scaleFactor.value),
-        duration: Duration(
+        duration: const Duration(
           milliseconds: 250,
         ),
         child: WillPopScope(
