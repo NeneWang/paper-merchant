@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:mymoney/controller/drawer_open_controller.dart';
 import 'package:mymoney/screen/home/account/account_screen.dart';
-import 'package:mymoney/screen/home/fund/fund_screen.dart';
 import 'package:mymoney/screen/home/portfolio/portfolio_screen.dart';
 import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
 import 'package:mymoney/utils/color.dart';
@@ -92,17 +91,12 @@ class HomeScreen extends StatelessWidget {
                     NavigatorPage(
                       child: PortFolioScreen(),
                       title: "port",
-                      navigatorKey: navigatorKeys[2]!,
-                    ),
-                    NavigatorPage(
-                      child: FundScreen(),
-                      title: "fund",
-                      navigatorKey: navigatorKeys[3]!,
+                      navigatorKey: navigatorKeys[1]!,
                     ),
                     NavigatorPage(
                       child: AccountScreen(),
                       title: "account",
-                      navigatorKey: navigatorKeys[4]!,
+                      navigatorKey: navigatorKeys[2]!,
                     ),
                   ],
                 ),
@@ -408,7 +402,6 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
       // init: ProfileController(),
       builder: (s) => Obx(
         () => BottomNavigationBar(
-          backgroundColor: gray9B9797,
           elevation: 0,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -423,23 +416,15 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   portFolio,
-                  color: s.selectedIndex.value == 2
+                  color: s.selectedIndex.value == 1
                       ? Color(0xff2F80ED)
                       : black.withOpacity(0.7),
                 ),
                 label: "PortFolio"),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
-                  fund,
-                  color: s.selectedIndex.value == 3
-                      ? Color(0xff2F80ED)
-                      : black.withOpacity(0.7),
-                ),
-                label: "Fund"),
-            BottomNavigationBarItem(
-                icon: SvgPicture.asset(
                   user,
-                  color: s.selectedIndex.value == 4
+                  color: s.selectedIndex.value == 2
                       ? Color(0xff2F80ED)
                       : gray9B9797,
                 ),

@@ -9,6 +9,7 @@ import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/imagenames.dart';
 import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
+import 'package:mymoney/data/database.dart';
 
 // ignore: must_be_immutable
 class WelcomeScreen extends StatelessWidget {
@@ -47,18 +48,41 @@ class WelcomeScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: Get.height / 4.81),
                 child: loginButton(
                     textLabel: "Login as Demo",
-                    onTapButton: () {
+                    onTapButton: () async {
+                      // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
+                      final Database db = Database();
+                      final loginResponse = await db.login(
+                          email: "wangnelson4@gmail.com", password: "test123");
+                      if (loginResponse) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DrawerOpenScreen(),
+                          ),
+                        );
+                      }
+                    }),
+              ),
+              SizedBox(
+                height: Get.height / 49.52,
+              ),
+              loginButton(
+                  textLabel: "Login as Demo2",
+                  onTapButton: () async {
+                    // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
+                    final Database db = Database();
+                    final loginResponse = await db.login(
+                        email: "caramelitogoloso2k@gmail.com",
+                        password: "test123");
+                    if (loginResponse) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => DrawerOpenScreen(),
                         ),
                       );
-                      // Get.to(
-                      //   LogInScreen(),
-                      // );
-                    }),
-              ),
+                    }
+                  }),
               SizedBox(
                 height: Get.height / 49.52,
               ),

@@ -468,8 +468,6 @@ class Database {
         // Successful response
         final responseData = jsonDecode(response_2.body);
         // Process responseData as needed
-        print("Why is this being called multiple times.");
-        print(responseData);
         userBookmarkPrices = responseData["bookmarks"];
         userStockPrices = responseData["stocks"];
 
@@ -491,5 +489,62 @@ class Database {
     } else {
       print("Player ID is missing");
     }
+  }
+
+  Future<bool> login({required String email, required String password}) async {
+    const loginURL = "$backendAPI/login"; // Replace with actual API URL
+
+    // Make API call using your preferred HTTP client (e.g., http package)
+    // Example using http package:
+    final response = await http.post(
+      Uri.parse(loginURL),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'email': email,
+        'password': password,
+      }),
+    );
+
+    // Debug
+    print(response.body);
+
+    // Process the API response and return true/false
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      userData["player_id"] = responseData["player_id"];
+      userData["name"] = responseData["user_name"];
+      userData["user_id"] = responseData["user_id"];
+      userData["current_competition"] = responseData["competition_id"];
+      userData["cash"] = responseData["user_cash"].toDouble();
+      userData["papel_asset_worth"] =
+          responseData["papel_asset_worth"].toDouble();
+      _myBox.put("userData", userData);
+
+      Get.snackbar(
+        "Success",
+        "Successfully logged in",
+        backgroundColor: green219653,
+        colorText: white,
+        duration: const Duration(seconds: 1),
+      );
+
+      return true;
+    } else {
+      Get.snackbar("Failed", "Failed to login",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM);
+      print("Failed to login");
+      return false;
+    }
+  }
+
+  Future<Map<String, dynamic>> signUp() async {
+    return {
+      "message": "success",
+      "success": true,
+    };
   }
 }
