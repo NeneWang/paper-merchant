@@ -132,13 +132,6 @@ class SignUpScreen extends StatelessWidget {
                       inputFieldCustom(
                         hint: "Name",
                         textController: nameController,
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                            user,
-                            color: gray9B9797,
-                          ),
-                        ),
                       ),
                       SizedBox(
                         height: Get.height / 31.83,
@@ -146,11 +139,6 @@ class SignUpScreen extends StatelessWidget {
                       inputFieldCustom(
                         hint: "Email",
                         textController: emailController,
-                        iconWidget: Icon(
-                          Icons.email_outlined,
-                          color: gray9B9797,
-                          size: 27,
-                        ),
                       ),
                       SizedBox(
                         height: Get.height / 31.83,

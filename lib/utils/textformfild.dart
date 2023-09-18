@@ -47,10 +47,7 @@ textFromFieldDesign({String? hint, iconWidget, iconWidget1}) {
 }
 
 inputFieldCustom(
-    {String? hint,
-    iconWidget,
-    iconWidget1,
-    TextEditingController? textController}) {
+    {String? hint, iconWidget, TextEditingController? textController}) {
   return TextFormField(
     cursorColor: appColor,
     controller: textController,
@@ -63,10 +60,6 @@ inputFieldCustom(
         fontWeight: FontWeight.w400,
       ),
       prefixIcon: iconWidget,
-      /*Icon(
-        Icons.email_outlined,
-        color: gray,
-      ),*/
       border: UnderlineInputBorder(
         borderSide: BorderSide(
           color: Color(0xffE7E8EB),

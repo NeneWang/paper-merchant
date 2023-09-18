@@ -11,10 +11,13 @@ import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/imagenames.dart';
 import 'package:mymoney/utils/textformfild.dart';
+import 'package:mymoney/data/database.dart';
 
 // ignore: must_be_immutable
 class LogInScreen extends StatelessWidget {
   CheckBoxController checkBoxController = Get.put(CheckBoxController());
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   ColorChangeController colorChangeController =
       Get.put(ColorChangeController());
@@ -74,33 +77,14 @@ class LogInScreen extends StatelessWidget {
                       SizedBox(
                         height: Get.height / 17.47,
                       ),
-                      textFromFieldDesign(
-                        hint: "Email",
-                        iconWidget: Icon(
-                          Icons.email_outlined,
-                          color: gray,
-                        ),
-                        iconWidget1: Icon(
-                          Icons.visibility_outlined,
-                          color: gray,
-                        ),
-                      ),
+                      inputFieldCustom(
+                          hint: "Email", textController: emailController),
                       SizedBox(
                         height: Get.height / 31.83,
                       ),
-                      textFromFieldDesign(
+                      inputfieldDesignPassword(
                         hint: "Password",
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                            lockIcon,
-                            color: gray,
-                          ),
-                        ),
-                        iconWidget1: Icon(
-                          Icons.visibility_outlined,
-                          color: gray,
-                        ),
+                        textController: passwordController,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -150,6 +134,9 @@ class LogInScreen extends StatelessWidget {
                       ),
                       loginButton(
                         onTapButton: () {
+                          Database db = Database();
+                          db.login(email: '', password: '');
+
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -161,7 +148,7 @@ class LogInScreen extends StatelessWidget {
                           //   VerificationScreen(),
                           // );
                         },
-                        textLabel: "Log In (Demo)",
+                        textLabel: "Log In",
                       ),
                       SizedBox(
                         height: Get.height / 74.28,

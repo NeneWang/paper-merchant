@@ -55,20 +55,12 @@ class ChangePasswordScreen extends StatelessWidget {
                 children: [
                   inputFieldCustom(
                     hint: "New password",
-                    iconWidget1: Icon(
-                      Icons.visibility_outlined,
-                      color: gray4,
-                    ),
                   ),
                   SizedBox(
                     height: Get.height / 22.28,
                   ),
                   inputFieldCustom(
                     hint: "Repeat password",
-                    iconWidget1: Icon(
-                      Icons.visibility_outlined,
-                      color: gray4,
-                    ),
                   ),
                   SizedBox(
                     height: Get.height / 12.73,

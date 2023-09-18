@@ -40,7 +40,9 @@ class Database {
       "current_competition": "-",
       "player_id": "92cb1815-bbc7-47aa-aba4-4788425b0524",
       "cash": 0.00,
-      "papel_asset_worth": 0.0
+      "papel_asset_worth": 0.0,
+      "saved_email": "",
+      "saved_password": "",
     };
 
     userBookmarkPrices = {
@@ -508,11 +510,25 @@ class Database {
     }
   }
 
-  Future<bool> login({required String email, required String password}) async {
+  void saveEmailPassword(String email, String password) {
+    userData["saved_email"] = email;
+    userData["saved_password"] = password;
+    _myBox.put("userData", userData);
+  }
+
+  Future<bool> login(
+      {required String email,
+      required String password,
+      bool rememberAccount = false}) async {
     const loginURL = "$backendAPI/login"; // Replace with actual API URL
 
     // Make API call using your preferred HTTP client (e.g., http package)
     // Example using http package:
+
+    if (rememberAccount) {
+      saveEmailPassword(email, password);
+    }
+
     final response = await http.post(
       Uri.parse(loginURL),
       headers: <String, String>{

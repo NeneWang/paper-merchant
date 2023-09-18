@@ -46,23 +46,31 @@ class WelcomeScreen extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.only(top: Get.height / 4.81),
-                child: loginButton(
-                    textLabel: "Login as Demo",
-                    onTapButton: () async {
-                      // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
-                      final Database db = Database();
-                      final loginResponse = await db.login(
-                          email: "wangnelson4@gmail.com", password: "test123");
-                      if (loginResponse) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DrawerOpenScreen(),
-                          ),
-                        );
-                      }
-                    }),
               ),
+              loginButton(
+                  textLabel: "Login",
+                  onTapButton: () {
+                    Get.to(LogInScreen());
+                  }),
+              SizedBox(
+                height: Get.height / 49.52,
+              ),
+              loginButton(
+                  textLabel: "Login as Demo",
+                  onTapButton: () async {
+                    // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
+                    final Database db = Database();
+                    final loginResponse = await db.login(
+                        email: "wangnelson4@gmail.com", password: "test123");
+                    if (loginResponse) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DrawerOpenScreen(),
+                        ),
+                      );
+                    }
+                  }),
               SizedBox(
                 height: Get.height / 49.52,
               ),
