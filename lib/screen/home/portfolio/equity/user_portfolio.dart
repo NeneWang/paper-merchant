@@ -50,11 +50,18 @@ class _UserPortfolioState extends State<UserPortfolio> {
   void loadInformation() async {
     db.loadData();
     await db.syncData();
-    UserPortfolioData = db.userPortfolio;
+    setState(() {
+      UserPortfolioData = db.userPortfolio;
+    });
     portfolioSummary =
         UserPortfolio.calculatePortfolioSummary(UserPortfolioData);
-    totalInvested = portfolioSummary["totalInvested"]!;
-    totalProfit = portfolioSummary["totalProfit"]!;
+
+    setState(() {
+      totalInvested = portfolioSummary["totalInvested"]!;
+    });
+    setState(() {
+      totalProfit = portfolioSummary["totalProfit"]!;
+    });
   }
 
   void refresh() {

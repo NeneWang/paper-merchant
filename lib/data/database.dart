@@ -112,6 +112,8 @@ class Database {
         (_myBox.get("userStockPrices") == null ||
             _myBox.get("userStockPrices").isEmpty)) {
       _myBox.put("userPortfolio", userPortfolio);
+      _myBox.put("userBookmarkPrices", userBookmarkPrices);
+      _myBox.put("userStockPrices", userStockPrices);
       // syncData();
     }
 

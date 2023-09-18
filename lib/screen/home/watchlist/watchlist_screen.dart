@@ -27,25 +27,33 @@ class _WatchListScreenState extends State<WatchListScreen> {
       Get.put(applicationController());
 
   final Database db = Database();
+  List stockList = [];
+  List bookmarkedList = [];
+
+  reloadScreen() async {
+    db.loadData();
+    await db.syncData();
+    setState(() {
+      stockList = convertToListingFormat(db.userStockPrices);
+    });
+
+    setState(() {
+      bookmarkedList = convertToListingFormat(db.userBookmarkPrices);
+    });
+
+    print("bookmarkedList: $bookmarkedList");
+    print('stockList');
+    print(stockList);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    reloadScreen();
+  }
 
   @override
   Widget build(BuildContext context) {
-    List stockList = [];
-    List bookmarkedList = [];
-
-    reloadScreen() async {
-      db.loadData();
-      await db.syncData();
-      setState(() {
-        stockList = convertToListingFormat(db.userStockPrices);
-      });
-
-      setState(() {
-        bookmarkedList = convertToListingFormat(db.userBookmarkPrices);
-      });
-    }
-
-    reloadScreen();
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
