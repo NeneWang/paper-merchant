@@ -3,14 +3,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mymoney/screen/auth/login/login_screen.dart';
+import 'package:mymoney/screen/home/drawer_open_.dart';
 import 'package:mymoney/utils/buttons_widget.dart';
 import 'package:mymoney/utils/color.dart';
 import 'package:mymoney/utils/imagenames.dart';
 import 'package:mymoney/utils/textformfild.dart';
-
-import 'creatpin_screen.dart';
+import 'package:mymoney/data/database.dart';
 
 class SignUpScreen extends StatelessWidget {
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController reEnterPasswordController =
+      TextEditingController();
+
+  bool verifyEmail(String emailString) {
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    return emailRegex.hasMatch(emailString);
+  }
+
+  Future<void> submit(BuildContext context) async {
+    final String name = nameController.text;
+    final String email = emailController.text;
+    final String password = passwordController.text;
+    final String reEnterPassword = reEnterPasswordController.text;
+
+    print("Name: $name");
+    print("Email: $email");
+    print("Password: $password");
+    print("Re Enter Password: $reEnterPassword");
+
+    if (!verifyEmail(email)) {
+      showErrorSnackBar(
+          title: "Email is not valid", message: "Please enter valid email");
+    }
+
+    if (password != reEnterPassword) {
+      showErrorSnackBar(
+          title: "Password not match", message: "Please enter same password");
+    }
+
+    final Database db = Database();
+    bool signUpSuccess = await db.signUp(
+      name: name,
+      email: email,
+      password: password,
+    );
+
+    if (signUpSuccess) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DrawerOpenScreen(),
+        ),
+      );
+    }
+  }
+
+  void showErrorSnackBar({required String title, required String message}) {
+    Get.snackbar(
+      title,
+      message,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: Colors.red,
+      colorText: Colors.white,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,8 +129,9 @@ class SignUpScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      textFromFieldDesign1(
-                        hint: "First Name",
+                      inputFieldCustom(
+                        hint: "Name",
+                        textController: nameController,
                         iconWidget: Padding(
                           padding: const EdgeInsets.all(12),
                           child: SvgPicture.asset(
@@ -79,69 +139,42 @@ class SignUpScreen extends StatelessWidget {
                             color: gray9B9797,
                           ),
                         ),
-                        iconWidget1: Icon(
-                          Icons.visibility_outlined,
-                          color: gray9B9797,
-                        ),
                       ),
                       SizedBox(
                         height: Get.height / 31.83,
                       ),
-                      textFromFieldDesign1(
-                        hint: "Last Name",
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                            user,
-                            color: gray9B9797,
-                          ),
-                        ),
-                        iconWidget1: Icon(
-                          Icons.visibility_outlined,
-                          color: gray9B9797,
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height / 31.83,
-                      ),
-                      textFromFieldDesign1(
+                      inputFieldCustom(
                         hint: "Email",
+                        textController: emailController,
                         iconWidget: Icon(
                           Icons.email_outlined,
                           color: gray9B9797,
                           size: 27,
                         ),
-                        iconWidget1: Icon(
-                          Icons.visibility_outlined,
-                          color: gray9B9797,
-                        ),
                       ),
                       SizedBox(
                         height: Get.height / 31.83,
                       ),
-                      textFromFieldDesign1(
+                      inputfieldDesignPassword(
                         hint: "Password",
-                        iconWidget: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                            lockIcon,
-                            color: gray9B9797,
-                          ),
-                        ),
-                        iconWidget1: Icon(
-                          Icons.visibility_outlined,
-                          color: gray9B9797,
-                        ),
+                        textController: passwordController,
                       ),
+                      SizedBox(
+                        height: Get.height / 31.83,
+                      ),
+                      inputfieldDesignPassword(
+                          hint: "Re enter - Password",
+                          textController: reEnterPasswordController),
                       SizedBox(
                         height: Get.height / 17.82,
                       ),
                       signUpButton(
                         textLabel: "Sign Up",
                         onTapButton: () {
-                          Get.to(
-                            CreatePinScreen(),
-                          );
+                          // Get.to(
+                          //   CreatePinScreen(),
+                          // );
+                          submit(context);
                         },
                       ),
                       SizedBox(
@@ -150,7 +183,7 @@ class SignUpScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Already have an account?",
                             style: TextStyle(
                               fontSize: 15,

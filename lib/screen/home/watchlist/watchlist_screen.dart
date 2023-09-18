@@ -32,8 +32,10 @@ class _WatchListScreenState extends State<WatchListScreen> {
   Widget build(BuildContext context) {
     List stockList = [];
     List bookmarkedList = [];
-    reloadScreen() {
+
+    reloadScreen() async {
       db.loadData();
+      await db.syncData();
       setState(() {
         stockList = convertToListingFormat(db.userStockPrices);
       });

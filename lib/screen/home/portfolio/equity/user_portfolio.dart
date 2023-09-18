@@ -47,8 +47,9 @@ class _UserPortfolioState extends State<UserPortfolio> {
     loadInformation();
   }
 
-  void loadInformation() {
+  void loadInformation() async {
     db.loadData();
+    await db.syncData();
     UserPortfolioData = db.userPortfolio;
     portfolioSummary =
         UserPortfolio.calculatePortfolioSummary(UserPortfolioData);

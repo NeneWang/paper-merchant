@@ -110,7 +110,7 @@ class Database {
         (_myBox.get("userStockPrices") == null ||
             _myBox.get("userStockPrices").isEmpty)) {
       _myBox.put("userPortfolio", userPortfolio);
-      syncData();
+      // syncData();
     }
 
     if (_myBox.get("ticketNames") == null ||
@@ -386,11 +386,17 @@ class Database {
       body: jsonEncode(stocksNames),
     );
 
+    print("response body");
+    print(response.body);
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       return responseData;
     } else {
       print("Failed to fetch stock names");
+      print("FAiled with status code ${response.statusCode}");
+      print("api: $multipleAPI");
+      print("body: $stocksNames");
+
       return {};
     }
   }
@@ -413,13 +419,23 @@ class Database {
       print(ticketNames[0]);
       return;
     } else {
-      print("Failed to fetch stock names");
+      print("Failed to fetch ticker names");
+      print("FAiled with status code ${response.statusCode}");
+      print("api: $stockAPI/api/stickers");
       return;
     }
   }
 
   Future syncData() async {
     final playerId = userData["player_id"];
+
+    if (playerId == null) {
+      print("attempting to fix null player id by loading data");
+      loadData();
+      print("data loaded");
+      print("player id: ${userData["player_id"]}");
+    }
+
     if (playerId != null) {
       final assetsUrl =
           "$backendAPI/api/assets/$playerId"; // Replace with actual API URL
@@ -488,6 +504,7 @@ class Database {
       }
     } else {
       print("Player ID is missing");
+      print(userData);
     }
   }
 
@@ -508,6 +525,7 @@ class Database {
     );
 
     // Debug
+    print("login successed");
     print(response.body);
 
     // Process the API response and return true/false
@@ -541,10 +559,52 @@ class Database {
     }
   }
 
-  Future<Map<String, dynamic>> signUp() async {
-    return {
-      "message": "success",
-      "success": true,
-    };
+  Future<bool> signUp(
+      {required name, required email, required password}) async {
+    const signUpURL = "$backendAPI/signup"; // Replace with actual API URL
+    final response = await http.post(
+      Uri.parse(signUpURL),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(<String, String>{
+        'name': name,
+        'email': email,
+        'password': password,
+        "competition_id": ""
+      }),
+    );
+
+    print(response.body);
+
+    // Process the API response and return true/false
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      userData["player_id"] = responseData["player_id"];
+      userData["name"] = responseData["user_name"];
+      userData["user_id"] = responseData["user_id"];
+      userData["current_competition"] = responseData["competition_id"];
+      userData["cash"] = responseData["user_cash"].toDouble();
+      userData["papel_asset_worth"] =
+          responseData["papel_asset_worth"].toDouble();
+      _myBox.put("userData", userData);
+
+      Get.snackbar(
+        "Success",
+        "Successfully Creating the Account and logged in",
+        backgroundColor: green219653,
+        colorText: white,
+        duration: const Duration(seconds: 1),
+      );
+
+      return true;
+    } else {
+      Get.snackbar("Failed", "Failed to sign up",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM);
+      print("Failed to login");
+      return false;
+    }
   }
 }

@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import 'color.dart';
+
+const lightBlueUnderlineInputBorder = UnderlineInputBorder(
+  borderSide: BorderSide(
+    color: Color.fromARGB(255, 138, 160, 228),
+  ),
+);
 
 textFromFieldDesign({String? hint, iconWidget, iconWidget1}) {
   return TextFormField(
@@ -39,9 +46,14 @@ textFromFieldDesign({String? hint, iconWidget, iconWidget1}) {
   );
 }
 
-textFromFieldDesign1({String? hint, iconWidget, iconWidget1}) {
+inputFieldCustom(
+    {String? hint,
+    iconWidget,
+    iconWidget1,
+    TextEditingController? textController}) {
   return TextFormField(
     cursorColor: appColor,
+    controller: textController,
     decoration: InputDecoration(
       hintText: hint,
       hintStyle: TextStyle(
@@ -51,7 +63,6 @@ textFromFieldDesign1({String? hint, iconWidget, iconWidget1}) {
         fontWeight: FontWeight.w400,
       ),
       prefixIcon: iconWidget,
-      suffixIcon: iconWidget1,
       /*Icon(
         Icons.email_outlined,
         color: gray,
@@ -61,11 +72,7 @@ textFromFieldDesign1({String? hint, iconWidget, iconWidget1}) {
           color: Color(0xffE7E8EB),
         ),
       ),
-      focusedBorder: UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: Color(0xffE7E8EB),
-        ),
-      ),
+      focusedBorder: lightBlueUnderlineInputBorder,
       enabledBorder: UnderlineInputBorder(
         borderSide: BorderSide(
           color: Color(0xffE7E8EB),
@@ -73,6 +80,72 @@ textFromFieldDesign1({String? hint, iconWidget, iconWidget1}) {
       ),
     ),
   );
+}
+
+inputfieldDesignPassword(
+    {String? hint, TextEditingController? textController}) {
+  return PasswordFormField(
+    textController: textController!,
+    hint: hint,
+  );
+}
+
+class PasswordFormField extends StatefulWidget {
+  final TextEditingController textController;
+  final String? hint;
+
+  const PasswordFormField({
+    super.key,
+    required this.textController,
+    this.hint = "",
+  });
+
+  @override
+  State<PasswordFormField> createState() => _PasswordFormFieldState();
+}
+
+class _PasswordFormFieldState extends State<PasswordFormField> {
+  bool _obscureText = true;
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      cursorColor: appColor,
+      obscureText: _obscureText,
+      controller: widget.textController,
+      decoration: InputDecoration(
+        hintText: widget.hint,
+        hintStyle: TextStyle(
+          color: gray2,
+          fontSize: 19,
+          fontFamily: "Nunito",
+          fontWeight: FontWeight.w400,
+        ),
+        prefixIcon: Icon(color: gray2, Icons.lock_outline),
+        suffixIcon: IconButton(
+          icon: Icon(
+            _obscureText ? Icons.visibility : Icons.visibility_off,
+            color: gray2,
+          ),
+          onPressed: () {
+            setState(() {
+              _obscureText = !_obscureText;
+            });
+          },
+        ),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE7E8EB),
+          ),
+        ),
+        focusedBorder: lightBlueUnderlineInputBorder,
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffE7E8EB),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 textFromFieldDesign2({String? hint, iconWidget, iconWidget1}) {
@@ -155,7 +228,6 @@ textFromFieldDesign3({String? label, iconWidget, iconWidget1}) {
         ),
         prefixIcon: iconWidget,
         suffixIcon: iconWidget1,
-       
         border: UnderlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xffE7E8EB),

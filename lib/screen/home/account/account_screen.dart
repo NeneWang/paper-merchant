@@ -85,6 +85,8 @@ class _AccountScreenState extends State<AccountScreen> {
                       const SizedBox(
                         height: 5.14,
                       ),
+                      Text(
+                          'player_id: ${db.userData["player_id"] ?? "player_id_not_set"}'),
                       Text("${db.userData["user_id"] ?? 'id_not_set'}",
                           style: detailsTextStyle),
                       Text(
