@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import 'package:mymoney/controller/tabcontroller_screen.dart';
-import 'package:mymoney/screen/home/watchlist/all_stocks_screen.dart';
-import 'package:mymoney/screen/home/watchlist/home_screen.dart';
+import 'package:papermarket/controller/tabcontroller_screen.dart';
+import 'package:papermarket/screen/home/watchlist/all_stocks_screen.dart';
+import 'package:papermarket/screen/home/watchlist/home_screen.dart';
 
-import 'package:mymoney/components/simpleListItemDesign.dart';
+import 'package:papermarket/components/simpleListItemDesign.dart';
 
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/data/database.dart';
-import 'package:mymoney/data/utils.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/data/database.dart';
+import 'package:papermarket/data/utils.dart';
 import '../notification_screen.dart';
 
 class WatchListScreen extends StatefulWidget {

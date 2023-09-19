@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/utils/round_container.dart';
-import 'package:mymoney/utils/textformfild.dart';
+import 'package:papermarket/controller/conteiner_color_change_keypade.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/utils/round_container.dart';
+import 'package:papermarket/utils/textformfild.dart';
 
 import 'confirm_pin_security.dart';
 
@@ -102,7 +102,7 @@ class EnterNewPin extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height:Get.height / 24.09,
+              height: Get.height / 24.09,
             ),
             InkWell(
               onTap: () {
@@ -118,16 +118,16 @@ class EnterNewPin extends StatelessWidget {
                 child: Icon(
                   Icons.arrow_forward,
                   color: white,
-                  size:Get.height / 29.71,
+                  size: Get.height / 29.71,
                 ),
               ),
             ),
             SizedBox(
-              height:  Get.height / 29.714,
+              height: Get.height / 29.714,
             ),
-
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
+              padding: EdgeInsets.symmetric(
+                  horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -178,7 +178,8 @@ class EnterNewPin extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
+              padding: EdgeInsets.symmetric(
+                  horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -228,7 +229,8 @@ class EnterNewPin extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
+              padding: EdgeInsets.symmetric(
+                  horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -278,7 +280,8 @@ class EnterNewPin extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
+              padding: EdgeInsets.symmetric(
+                  horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -290,7 +293,7 @@ class EnterNewPin extends StatelessWidget {
                         insertText(".");
                       },
                       child: Container(
-                        height:Get.height / 14.37,
+                        height: Get.height / 14.37,
                         width: Get.width / 6.63,
                         decoration: BoxDecoration(
                           color: colorChangeController.isChange9.isTrue

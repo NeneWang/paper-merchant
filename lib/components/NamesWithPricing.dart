@@ -4,8 +4,8 @@ import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
 
-import 'package:mymoney/screen/home/watchlist/toggle_design_screen.dart';
-import 'package:mymoney/utils/color.dart';
+import 'package:papermarket/screen/home/watchlist/toggle_design_screen.dart';
+import 'package:papermarket/utils/color.dart';
 
 class NamesWithPricing extends StatelessWidget {
   final String price;

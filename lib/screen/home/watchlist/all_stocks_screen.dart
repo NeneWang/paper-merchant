@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:mymoney/components/simpleListItemDesign.dart';
-import 'package:mymoney/data/database.dart';
-import 'package:mymoney/screen/home/watchlist/home_screen.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/utils_text.dart';
+import 'package:papermarket/components/simpleListItemDesign.dart';
+import 'package:papermarket/data/database.dart';
+import 'package:papermarket/screen/home/watchlist/home_screen.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/utils_text.dart';
 
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class AllStockScreen extends StatefulWidget {

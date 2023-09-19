@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/data.dart';
-import 'package:mymoney/utils/utils_text.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/data.dart';
+import 'package:papermarket/utils/utils_text.dart';
 
 class NotificationScreen extends StatelessWidget {
   @override

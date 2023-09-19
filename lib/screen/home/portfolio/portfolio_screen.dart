@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/controller/tabcontroller_screen.dart';
-import 'package:mymoney/screen/home/portfolio/equity/equity_screen.dart';
-import 'package:mymoney/utils/color.dart';
+import 'package:papermarket/controller/tabcontroller_screen.dart';
+import 'package:papermarket/screen/home/portfolio/equity/equity_screen.dart';
+import 'package:papermarket/utils/color.dart';
 
 // ignore: must_be_immutable
 class PortFolioScreen extends StatelessWidget {

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/utils/buttons_widget.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/utils/textformfild.dart';
+import 'package:papermarket/utils/buttons_widget.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/utils/textformfild.dart';
 
 import 'email_verification_security.dart';
 

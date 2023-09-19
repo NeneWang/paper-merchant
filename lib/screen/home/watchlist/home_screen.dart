@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/controller/drawer_open_controller.dart';
-import 'package:mymoney/screen/home/account/account_screen.dart';
-import 'package:mymoney/screen/home/portfolio/portfolio_screen.dart';
-import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/screen/home/watchlist/all_stocks_screen.dart';
+import 'package:papermarket/controller/drawer_open_controller.dart';
+import 'package:papermarket/screen/home/account/account_screen.dart';
+import 'package:papermarket/screen/home/portfolio/portfolio_screen.dart';
+import 'package:papermarket/screen/home/watchlist/watchlist_screen.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/screen/home/watchlist/all_stocks_screen.dart';
 
 import '../drawer_open_.dart';
-// import 'package:mymoney/screen/home/watchlist/watchlist_screen.dart';
+// import 'package:papermarket/screen/home/watchlist/watchlist_screen.dart';
 
 // ignore: must_be_immutable
 class HomeScreen extends StatelessWidget {

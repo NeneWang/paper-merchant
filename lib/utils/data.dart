@@ -1,5 +1,5 @@
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
 
 const List notificationList = [
   {

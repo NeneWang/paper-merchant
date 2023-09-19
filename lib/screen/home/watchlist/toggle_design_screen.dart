@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/utils/color.dart';
+import 'package:papermarket/utils/color.dart';
 
 // ignore: must_be_immutable
 class ToggleScreen extends StatelessWidget {

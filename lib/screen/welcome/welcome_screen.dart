@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/screen/auth/signup/signup_screen.dart';
+import 'package:papermarket/screen/auth/signup/signup_screen.dart';
 import '../auth/login/login_screen.dart';
-import 'package:mymoney/screen/home/drawer_open_.dart';
-import 'package:mymoney/utils/buttons_widget.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
-import 'package:mymoney/data/database.dart';
+import 'package:papermarket/screen/home/drawer_open_.dart';
+import 'package:papermarket/utils/buttons_widget.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/controller/conteiner_color_change_keypade.dart';
+import 'package:papermarket/data/database.dart';
 
 // ignore: must_be_immutable
 class WelcomeScreen extends StatelessWidget {

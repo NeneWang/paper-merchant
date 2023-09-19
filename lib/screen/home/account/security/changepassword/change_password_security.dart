@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/controller/checkbox_controller.dart';
-import 'package:mymoney/utils/buttons_widget.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/textformfild.dart';
+import 'package:papermarket/controller/checkbox_controller.dart';
+import 'package:papermarket/utils/buttons_widget.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/textformfild.dart';
 import 'well_done_changepassword_screen.dart';
 
 // ignore: must_be_immutable

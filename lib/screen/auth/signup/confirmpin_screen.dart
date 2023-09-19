@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
-import 'package:mymoney/screen/auth/login/login_screen.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/utils/round_container.dart';
-import 'package:mymoney/utils/textformfild.dart';
+import 'package:papermarket/controller/conteiner_color_change_keypade.dart';
+import 'package:papermarket/screen/auth/login/login_screen.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/utils/round_container.dart';
+import 'package:papermarket/utils/textformfild.dart';
 
 // ignore: must_be_immutable
 class ConfirmPinScreen extends StatelessWidget {

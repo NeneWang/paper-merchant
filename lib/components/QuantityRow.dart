@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/utils/color.dart';
+import 'package:papermarket/utils/color.dart';
 
 class QuantitiyRow extends StatefulWidget {
   const QuantitiyRow({

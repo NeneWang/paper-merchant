@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/screen/auth/login/login_screen.dart';
-import 'package:mymoney/screen/home/drawer_open_.dart';
-import 'package:mymoney/utils/buttons_widget.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/utils/textformfild.dart';
-import 'package:mymoney/data/database.dart';
+import 'package:papermarket/screen/auth/login/login_screen.dart';
+import 'package:papermarket/screen/home/drawer_open_.dart';
+import 'package:papermarket/utils/buttons_widget.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/utils/textformfild.dart';
+import 'package:papermarket/data/database.dart';
 
 class SignUpScreen extends StatelessWidget {
   final TextEditingController nameController = TextEditingController();

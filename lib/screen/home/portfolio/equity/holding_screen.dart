@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/data.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/data.dart';
 
 class HoldingScreen extends StatelessWidget {
   @override

@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'email_verification_resetpin.dart';
-import 'package:mymoney/utils/buttons_widget.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/utils/textformfild.dart';
+import 'package:papermarket/utils/buttons_widget.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/utils/textformfild.dart';
 
 class RestPinEmailScreen extends StatelessWidget {
   @override
@@ -66,7 +66,7 @@ class RestPinEmailScreen extends StatelessWidget {
                     padding: EdgeInsets.only(top: Get.height / 44.57),
                     child: SvgPicture.asset(
                       forgetPinBenner,
-                      height: Get.height /3.87,
+                      height: Get.height / 3.87,
                     ),
                   ),
                 ],

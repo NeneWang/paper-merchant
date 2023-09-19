@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:mymoney/controller/conteiner_color_change_keypade.dart';
-import 'package:mymoney/utils/color.dart';
-import 'package:mymoney/utils/imagenames.dart';
-import 'package:mymoney/utils/round_container.dart';
-import 'package:mymoney/utils/textformfild.dart';
+import 'package:papermarket/controller/conteiner_color_change_keypade.dart';
+import 'package:papermarket/utils/color.dart';
+import 'package:papermarket/utils/imagenames.dart';
+import 'package:papermarket/utils/round_container.dart';
+import 'package:papermarket/utils/textformfild.dart';
 
 import 'confirmpin_screen.dart';
 
@@ -230,7 +230,7 @@ class CreatePinScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal:Get.width / 7.61, vertical: Get.height / 50.93),
+                  horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -281,7 +281,7 @@ class CreatePinScreen extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal:Get.width / 7.61, vertical: Get.height / 50.93),
+                  horizontal: Get.width / 7.61, vertical: Get.height / 50.93),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
