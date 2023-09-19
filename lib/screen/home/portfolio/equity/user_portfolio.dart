@@ -12,10 +12,11 @@ class UserPortfolio extends StatefulWidget {
     double totalProfit = 0;
 
     for (final data in portfolioData) {
-      double priceAverage = double.parse(data["price_average"].toString());
+      double priceAverage =
+          double.parse(data["price_average"].toStringAsFixed(2));
       int count = data["count"];
       double estimatedProfit =
-          double.parse(data["estimated_profit"].toString());
+          double.parse(data["estimated_profit"].toStringAsFixed(2));
 
       totalInvested += priceAverage * count;
       totalProfit += estimatedProfit;
@@ -47,9 +48,11 @@ class _UserPortfolioState extends State<UserPortfolio> {
     loadInformation();
   }
 
-  void loadInformation() async {
+  Future<void> loadInformation({onlyLoad = false}) async {
     db.loadData();
-    await db.syncData();
+    if (!onlyLoad) {
+      await db.syncData();
+    }
     setState(() {
       UserPortfolioData = db.userPortfolio;
     });
@@ -64,14 +67,15 @@ class _UserPortfolioState extends State<UserPortfolio> {
     });
   }
 
-  void refresh() {
-    loadInformation();
+  void refresh() async {
+    await loadInformation(onlyLoad: true);
     Get.snackbar(
       "Refreshed",
       "Portfolio refreshed",
       backgroundColor: green219653,
       colorText: white,
     );
+    await loadInformation(onlyLoad: false);
     setState(() {});
   }
 

@@ -30,9 +30,15 @@ class _WatchListScreenState extends State<WatchListScreen> {
   List stockList = [];
   List bookmarkedList = [];
 
-  reloadScreen() async {
-    db.loadData();
-    await db.syncData();
+  reloadScreen({onlyDB = false, onlySync = false}) async {
+    if (!onlySync) {
+      db.loadData();
+    }
+
+    if (!onlyDB) {
+      await db.syncData();
+    }
+
     setState(() {
       stockList = convertToListingFormat(db.userStockPrices);
     });
@@ -57,7 +63,8 @@ class _WatchListScreenState extends State<WatchListScreen> {
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: () async {
-          reloadScreen();
+          reloadScreen(onlyDB: true);
+          reloadScreen(onlySync: true);
         },
         child: SingleChildScrollView(
           child: Column(

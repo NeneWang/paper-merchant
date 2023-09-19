@@ -29,6 +29,7 @@ class Database {
   Map<dynamic, dynamic> userBookmarkPrices = {};
   List<String> searchHistory = ["GOOGL"];
   List<String> ticketNames = [];
+
   Map<dynamic, dynamic> showStockData =
       {}; //The stocks being shown in the watchlist
 
@@ -43,6 +44,7 @@ class Database {
       "papel_asset_worth": 0.0,
       "saved_email": "",
       "saved_password": "",
+      "auto_login": false,
     };
 
     userBookmarkPrices = {
@@ -265,7 +267,20 @@ class Database {
       // Update the stock names
       if (!ticketNames.contains(ticker_symbol)) {
         ticketNames.add(ticker_symbol);
+
+        userStockPrices.addAll({
+          ticker_symbol: {
+            "Adj Close": price,
+            "Close": price,
+            "High": price,
+            "Low": price,
+            "Open": price,
+            "Volume": 0
+          }
+        });
+
         _myBox.put("ticketNames", ticketNames);
+        _myBox.put("userStockPrices", userStockPrices);
       }
 
       // Update the userPortfolio
@@ -332,7 +347,10 @@ class Database {
       // Update the stock names
       if (countStocks == 0) {
         ticketNames.remove(ticker_symbol);
+        userStockPrices.remove(ticker_symbol);
+
         _myBox.put("ticketNames", ticketNames);
+        _myBox.put("userStockPrices", userStockPrices);
       }
 
       // Update the userPortfolio
@@ -448,6 +466,8 @@ class Database {
       // Example using http package:
       final response = await http.get(Uri.parse(assetsUrl));
 
+      print("body from " + assetsUrl);
+      print(response.body);
       // Process the API response and print assets
       if (response.statusCode == 200) {
         final assetsData = json.decode(response.body);
