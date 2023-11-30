@@ -5,6 +5,91 @@ Diagram Process
 https://app.diagrams.net/?libs=general;flowchart#G1dBLbwRWmtB2V1uJhricZBCyXAEZr1rLU
 
 
+## Deployment
+
+```
+flutter buiid
+firebase deploy
+```
 
 
+## Logs
 
+
+```
+{
+  "bookmarks_names": [
+    "AAPL",
+    "JPM",
+    "MSFT"
+  ],
+  "bookmarks": {
+    "AAPL": {
+      "Date": "2023-11-30",
+      "Open": 190.9,
+      "High": 192.09,
+      "Low": 188.97,
+      "Close": 189.37,
+      "Volume": 43013232
+    },
+    "JPM": {
+      "Date": "2023-11-30",
+      "Open": 154.17,
+      "High": 155.625,
+      "Low": 154,
+      "Close": 154.32,
+      "Volume": 9126055
+    },
+    "MSFT": {
+      "Date": "2023-11-30",
+      "Open": 383.76,
+      "High": 384.3,
+      "Low": 377.44,
+      "Close": 378.85,
+      "Volume": 28963577
+    }
+  },
+  "stocks": {
+    "JPM": {
+      "Date": "2023-11-30",
+      "Open": 154.17,
+      "High": 155.625,
+      "Low": 154,
+      "Close": 154.32,
+      "Volume": 9126055
+    },
+    "MSFT": {
+      "Date": "2023-11-30",
+      "Open": 383.76,
+      "High": 384.3,
+      "Low": 377.44,
+      "Close": 378.85,
+      "Volume": 28963577
+    },
+    "AAPL": {
+      "Date": "2023-11-30",
+      "Open": 190.9,
+      "High": 192.09,
+      "Low": 188.97,
+      "Close": 189.37,
+      "Volume": 43013232
+    },
+    "COIN": {
+      "Date": "2023-11-30",
+      "Open": 127.82,
+      "High": 131.42,
+      "Low": 126.3,
+      "Close": 127.82,
+      "Volume": 13908770
+    }
+  },
+  "papel_asset_worth": 1004.6800000000001,
+  "user_cash": 9110.24,
+  "user_total_worth": 10114.92,
+  "player_id": "92cb1815-bbc7-47aa-aba4-4788425b0524",
+  "competition_id": "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b",
+  "user_id": "bbf8e248-ca89-41c4-b55c-e4e20977a6e0",
+  "user_name": "Nelson the Tester",
+  "user_email": "wangnelson4@gmail.com"
+}
+```

@@ -563,7 +563,10 @@ class Database {
     );
 
     // Debug
-    print("login successed");
+    print("login requested");
+    print(loginURL);
+    print(email);
+    print(password);
     print(response.body);
 
     // Process the API response and return true/false
