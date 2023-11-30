@@ -209,7 +209,7 @@ class Database {
         "shares_owned_profit_percent": "-",
         "shares_owned_average_price": "-",
         "profit_color": black,
-        "user_cash": "",
+        "user_cash": userData["cash"].toStringAsFixed(2),
       };
       return res;
     }

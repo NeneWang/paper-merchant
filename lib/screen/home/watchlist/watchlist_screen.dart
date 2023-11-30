@@ -254,6 +254,8 @@ class _WatchListScreenState extends State<WatchListScreen> {
                         title: bookmarkedList[index]["title"],
                         total: bookmarkedList[index]["totalRs"],
                         imageUrl: bookmarkedList[index]["imageUrl"],
+                        stockData: db
+                            .userBookmarkPrices[bookmarkedList[index]["title"]],
                       ),
                     ),
                   ],

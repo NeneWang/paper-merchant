@@ -41,6 +41,7 @@ List<Map<String, dynamic>> convertToListingFormat(
       "imageUrl": imageUrl,
       "totalRs": adjClose
           .toStringAsFixed(2), // Format the double with 2 decimal places
+      "stockData": value,
     });
   });
 

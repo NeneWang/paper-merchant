@@ -198,4 +198,16 @@ simpleStockListViewItem(
       Get.to(BuySellScreen(ticker: title, price: total));
 ```
 
+```dart
+
+buyMenuData({symbol, price, color1, quantityController, userCash = ""}) {
+  return Padding(
+  )}
+```
+
+Lets check the user cash?
+
+
+
+
 

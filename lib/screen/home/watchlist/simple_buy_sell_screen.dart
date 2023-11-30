@@ -15,9 +15,9 @@ import 'package:papermarket/components/QuantityRow.dart';
 import 'package:papermarket/components/NamesWithPricing.dart';
 
 final applicationController myTabController = Get.put(applicationController());
-ColorChangeController colorChangeController = Get.put(
-  ColorChangeController(),
-);
+// ColorChangeController colorChangeController = Get.put(
+//   ColorChangeController(),
+// );
 
 // Function to reload the page
 void reloadPage(BuildContext context) {
@@ -139,7 +139,9 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 ),
               ),
             ),
-            widget.stockData != null || widget.stockData?["type"]
+            widget.stockData != null &&
+                    widget.stockData?["type"] != null &&
+                    widget.stockData?["type"] == "CS"
                 ? Padding(
                     padding:
                         const EdgeInsets.only(top: 21, left: 13, right: 18),
@@ -180,12 +182,17 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                           "Volume",
                                       style: blackBoldStyle),
                                   SizedBox(height: 5),
-                                  const Text('sic_description'),
-                                  Text(
+                                  const Text(
+                                      'Standard Industrial Classification'),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    child: Text(
                                       widget.stockData?["sic_description"]
                                               .toString() ??
                                           "sic_description",
-                                      style: blackBoldStyle),
+                                    ),
+                                  ),
                                 ],
                               ),
                               Column(
@@ -231,96 +238,107 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     userCash = snapshot.data!["user_cash"];
+                    print("usercash db.getDetailsShare $userCash");
                     return Padding(
                       padding:
                           const EdgeInsets.only(top: 21, left: 13, right: 18),
-                      child: Container(
-                        width: Get.width,
-                        height: 90,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text("Average Price bought at"),
-                                Text(sample),
-                                Text(
-                                  snapshot.data!["shares_owned_average_price"],
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    fontFamily: "NunitoBold",
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(userCash == "" ? "" : "Cash Available"),
-                                Text(userCash)
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  children: [
-                                    const Text("Shares Owned"),
-                                    Text(
-                                      snapshot.data!["shares_owned"],
-                                      style: const TextStyle(
-                                        fontSize: 18,
-                                        color: black,
-                                        fontFamily: "Nunito",
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Text(
-                                  "Total Profit",
-                                ),
-                                RichText(
-                                  text: TextSpan(
+                      child: snapshot.data?["shares_owned"] != null &&
+                              snapshot.data?["shares_owned"] != "0" &&
+                              snapshot.data?["shares_owned"] != ""
+                          ? Container(
+                              width: Get.width,
+                              height: 150,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      TextSpan(
-                                          text: snapshot
-                                              .data!["shares_owned_profit"],
-                                          style: blackBoldStyle),
-                                      TextSpan(
-                                        text: " (",
-                                        style: TextStyle(
+                                      const Text("Average Price bought at"),
+                                      Text(sample),
+                                      Text(
+                                        snapshot.data![
+                                            "shares_owned_average_price"],
+                                        style: const TextStyle(
                                           fontSize: 18,
-                                          color: black,
-                                          fontFamily: "Nunito",
-                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "NunitoBold",
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
-                                      TextSpan(
-                                        text: snapshot.data![
-                                            "shares_owned_profit_percent"],
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: green219653,
-                                          fontFamily: "Nunito",
-                                          fontWeight: FontWeight.w400,
-                                        ),
+                                      Text(userCash == ""
+                                          ? ""
+                                          : "Cash Available"),
+                                      Text(userCash)
+                                    ],
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          const Text("Shares Owned"),
+                                          Text(
+                                            snapshot.data!["shares_owned"],
+                                            style: const TextStyle(
+                                              fontSize: 18,
+                                              color: black,
+                                              fontFamily: "Nunito",
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      TextSpan(
-                                        text: ")",
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: black,
-                                          fontFamily: "Nunito",
-                                          fontWeight: FontWeight.w400,
+                                      const Text(
+                                        "Total Profit",
+                                      ),
+                                      RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: snapshot.data![
+                                                    "shares_owned_profit"],
+                                                style: blackBoldStyle),
+                                            TextSpan(
+                                              text: " (",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: black,
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: snapshot.data![
+                                                  "shares_owned_profit_percent"],
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: green219653,
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: ")",
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: black,
+                                                fontFamily: "Nunito",
+                                                fontWeight: FontWeight.w400,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                                ],
+                              ),
+                            )
+                          : Container(),
                     );
                   } else {
                     return Center(
@@ -328,18 +346,18 @@ class _BuySellScreenState extends State<BuySellScreen> {
                         children: [
                           CircularProgressIndicator(),
                           Text("Loading user data..."),
+                          SizedBox(
+                            height: 22,
+                          ),
+                          Divider(
+                            thickness: 3,
+                            color: grayF2F2F2,
+                          ),
                         ],
                       ),
                     );
                   }
                 }),
-            SizedBox(
-              height: 22,
-            ),
-            Divider(
-              thickness: 3,
-              color: grayF2F2F2,
-            ),
             Padding(
               padding: const EdgeInsets.only(
                   top: 16, left: 33, right: 33, bottom: 16),
@@ -500,6 +518,7 @@ design1({price, symbol, color1}) {
 }
 
 buyMenuData({symbol, price, color1, quantityController, userCash = ""}) {
+  print("userCash: $userCash");
   return Padding(
     padding: const EdgeInsets.only(left: 17, right: 17, bottom: 17),
     child: Container(
@@ -521,7 +540,6 @@ buyMenuData({symbol, price, color1, quantityController, userCash = ""}) {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              ToggleScreenBuy(color1),
             ],
           ),
           Column(
