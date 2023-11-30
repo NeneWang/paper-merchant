@@ -197,7 +197,6 @@ class Database {
         "profit_color": profit > 0 ? green219653 : redEB5757,
         "user_cash": userData["cash"].toStringAsFixed(2),
       };
-      print(res);
       return res;
     } catch (e) {
       // print("error", e);
@@ -254,8 +253,8 @@ class Database {
 
     showStockData = await researchMultiple(stocksToLookup);
 
-    print("show stock data");
-    print(showStockData);
+    // print("show stock data");
+    // print(showStockData);
     return;
   }
 
@@ -468,8 +467,8 @@ class Database {
       // Example using http package:
       final response = await http.get(Uri.parse(assetsUrl));
 
-      print("body from " + assetsUrl);
-      print(response.body);
+      // print("body from " + assetsUrl);
+      // print(response.body);
       // Process the API response and print assets
       if (response.statusCode == 200) {
         final assetsData = json.decode(response.body);

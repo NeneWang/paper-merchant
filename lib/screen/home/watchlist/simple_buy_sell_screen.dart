@@ -148,83 +148,92 @@ class _BuySellScreenState extends State<BuySellScreen> {
                     child: SizedBox(
                       width: Get.width,
                       // height: 156,
-                      child: Column(
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              widget.stockData?["description"][0].toString() ??
-                                  "Description",
-                            ),
-                          ),
-                          SizedBox(
-                            height: 7,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Text("Market Cap"),
-                                  Text(
-                                      widget.stockData?["market_cap"]
-                                              .toStringAsFixed(2) ??
-                                          "Market Cap",
-                                      style: blackBoldStyle),
-                                  SizedBox(height: 5),
-                                  const Text('Volume'),
-                                  Text(
-                                      widget.stockData?["Volume"]
-                                              .toStringAsFixed(2) ??
-                                          "Volume",
-                                      style: blackBoldStyle),
-                                  SizedBox(height: 5),
-                                  const Text(
-                                      'Standard Industrial Classification'),
-                                  Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    child: Text(
-                                      widget.stockData?["sic_description"]
-                                              .toString() ??
-                                          "sic_description",
-                                    ),
-                                  ),
-                                ],
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                widget.stockData?["description"][0]
+                                        .toString() ??
+                                    "Description",
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text('total_employees'),
-                                  Text(
-                                      widget.stockData?["total_employees"]
-                                              .toStringAsFixed(2) ??
-                                          "total_employees",
-                                      style: blackBoldStyle),
-                                  SizedBox(
-                                    height: 5,
+                            ),
+                            SizedBox(
+                              height: 7,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text("Market Cap"),
+                                    Text(
+                                        widget.stockData?["market_cap"]
+                                                .toStringAsFixed(2) ??
+                                            "Market Cap",
+                                        style: blackBoldStyle),
+                                    SizedBox(height: 5),
+                                    const Text('Volume'),
+                                    Text(
+                                        widget.stockData?["Volume"]
+                                                .toStringAsFixed(2) ??
+                                            "Volume",
+                                        style: blackBoldStyle),
+                                    SizedBox(height: 5),
+                                    const Text(
+                                        'Standard Industrial Classification:'),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
+                                      child: Text(
+                                        widget.stockData?["sic_description"]
+                                                .toString() ??
+                                            "sic_description",
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text('total_employees'),
+                                      Text(
+                                          widget.stockData?["total_employees"]
+                                                  .toStringAsFixed(2) ??
+                                              "total_employees",
+                                          style: blackBoldStyle),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("city", style: blackBoldStyle),
+                                      Text(
+                                        widget.stockData?["city"].toString() ??
+                                            "city",
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text("state", style: blackBoldStyle),
+                                      Text(
+                                          widget.stockData?["state"]
+                                                  .toString() ??
+                                              "state",
+                                          style: blackBoldStyle),
+                                    ],
                                   ),
-                                  Text("city", style: blackBoldStyle),
-                                  Text(
-                                      widget.stockData?["city"].toString() ??
-                                          "city",
-                                      style: blackBoldStyle),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text("state", style: blackBoldStyle),
-                                  Text(
-                                      widget.stockData?["state"].toString() ??
-                                          "state",
-                                      style: blackBoldStyle),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -392,6 +401,40 @@ class _BuySellScreenState extends State<BuySellScreen> {
                     },
                   ),
                 ],
+              ),
+            ),
+            Divider(
+              thickness: 3,
+              color: grayF2F2F2,
+            ),
+            // History
+            Padding(
+              padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
+              child: SizedBox(
+                // width: Get.width,
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Text("History",
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: black2,
+                          fontFamily: "NunitoBold",
+                          fontWeight: FontWeight.w700,
+                        )),
+                    Row(children: [
+                      Text('AMZN SELL',
+                          style: TextStyle(
+                            fontSize: 18,
+                          ))
+                    ]),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[Text('2022-01-01'), Text('+ 40.23')],
+                    ),
+                    Divider(),
+                  ],
+                ),
               ),
             ),
           ],

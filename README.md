@@ -207,7 +207,140 @@ buyMenuData({symbol, price, color1, quantityController, userCash = ""}) {
 
 Lets check the user cash?
 
+Building the History
 
+Lets call the api that should be here. Lets see how the future builder works on this case:
+
+```dart
+
+FutureBuilder(
+    future: db.getDetailsShare(widget.ticker, widget.price),
+    builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+        userCash = snapshot.data!["user_cash"];
+       .... }})
+```
+
+
+
+Here the details share that is beign called on future. We can see that is async and returns a json once it finishes. However, we can set so that it calls EVERY time to reviw the transactions of this specific stock. Unless we believe that the user want sto check on and is something that we want to see every time we load the stock data. Considering that is actually not much data, perphaps is a good idea to get and append that from the stock perspective?.
+
+
+```dart
+
+  Future<Map<String, dynamic>> getDetailsShare(
+      String symbol, String price) async {
+    print("getDetails store");
+
+    try {
+      loadData();
+
+      final test_if_data_exists = getuserPortfolio(symbol);
+      if (!test_if_data_exists.containsKey("count")) {
+        await syncData();
+      }
+
+      final userPortfolioData = getuserPortfolio(symbol);
+
+      final double currentSymbolPrice = double.parse(price);
+
+      final int count = userPortfolioData["count"];
+      final double averagePrice = userPortfolioData["price_average"];
+      final double totalWorth = currentSymbolPrice * count;
+      final double profit = totalWorth - (averagePrice * count);
+      final double profitPercent = (profit / (averagePrice * count)) * 100;
+
+      final res = {
+        "shares_owned": count.toString(),
+        "shares_owned_worth": totalWorth.toStringAsFixed(2),
+        "shares_owned_profit": profit.toStringAsFixed(2),
+        "shares_owned_profit_percent": profitPercent.toStringAsFixed(2),
+        "shares_owned_average_price": averagePrice.toStringAsFixed(2),
+        "profit_color": profit > 0 ? green219653 : redEB5757,
+        "user_cash": userData["cash"].toStringAsFixed(2),
+      };
+      return res;
+    } catch (e) {
+      // print("error", e);
+
+      final res = {
+        "shares_owned": "0",
+        "shares_owned_worth": "-",
+        "shares_owned_profit": "-",
+        "shares_owned_profit_percent": "-",
+        "shares_owned_average_price": "-",
+        "profit_color": black,
+        "user_cash": userData["cash"].toStringAsFixed(2),
+      };
+      return res;
+    }
+  }
+
+```
+
+- [ ] Improve the general portfolio to get that sare and resume price.
+- [ ] Detect which is the API to modify
+- [ ] 
+
+
+We know that the data being searched is this one:
+
+```
+userPortfolio
+```
+
+given
+
+```dart
+
+  Map<dynamic, dynamic> getuserPortfolio(String userPortfolioSymbol) {
+    for (var asset in userPortfolio) {
+      if (asset["symbol"] == userPortfolioSymbol) {
+        return asset;
+      }
+    }
+    return {};
+  }
+
+```
+
+
+Found it
+
+```dart
+
+    if (playerId != null) {
+      final assetsUrl =
+          "$backendAPI/api/assets/$playerId"; // Replace with actual API URL
+
+      // Make API call using your pr eferred HTTP client (e.g., http package)
+      // Example using http package:
+      final response = await http.get(Uri.parse(assetsUrl));
+
+      // print("body from " + assetsUrl);
+      // print(response.body);
+      // Process the API response and print assets
+      if (response.statusCode == 200) {
+        final assetsData = json.decode(response.body);
+        userPortfolio = []; //Empty the userData before
+        for (var asset in assetsData) {
+          if (asset is Map<String, dynamic>) {
+            userPortfolio.add(asset);
+          }
+        }
+      }
+```
+
+
+The api to modify is `api/assets`
+
+
+
+
+### Craft API for #2 History
+
+1. [ ] Fetch all the transactions given a user and a stock.
+2. [ ] Fetch all the transactions given a user 
 
 
 
