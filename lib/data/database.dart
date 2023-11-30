@@ -251,7 +251,11 @@ class Database {
     final int limitCount = min<int>(count, minCount);
 
     final stocksToLookup = result.sublist(0, limitCount);
+
     showStockData = await researchMultiple(stocksToLookup);
+
+    print("show stock data");
+    print(showStockData);
     return;
   }
 
@@ -399,7 +403,7 @@ class Database {
 
   Future<Map<dynamic, dynamic>> researchMultiple(
       List<String> stocksNames) async {
-    const multipleAPI = "$backendAPI/api/get_today_data_multiple";
+    const multipleAPI = "$backendAPI/api/get_prev_data_multiple";
     final response = await http.post(
       Uri.parse(multipleAPI),
       headers: <String, String>{
@@ -408,8 +412,6 @@ class Database {
       body: jsonEncode(stocksNames),
     );
 
-    print("response body");
-    print(response.body);
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       return responseData;

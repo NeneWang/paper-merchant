@@ -93,3 +93,58 @@ firebase deploy
   "user_email": "wangnelson4@gmail.com"
 }
 ```
+
+### Adding Images
+
+- [ ] SO knowing this si how you add an image
+
+```dart
+Image(
+    image: AssetImage("assets/image/home/AXISBANK.png"),
+),
+```
+
+
+
+Great this works:
+
+```dart
+Image.network(
+"https://api.polygon.io/v1/reference/company-branding/d3d3LmpwbW9yZ2FuY2hhc2UuY29t/images/2023-05-01_icon.jpeg?apiKey=JzpLmiKOusmtMSoeIQxAjhdeU8aPS5QO",
+),
+```
+Lets make it better to work:
+
+Lets store the API key? or should that be provided together with the request itself?
+
+You can see here that there is no strucutre for the stock, which means that the modification is harmless
+
+```dart
+List<Map<String, dynamic>> convertToListingFormat(
+    Map<dynamic, dynamic> inputMap) {
+  List<Map<String, dynamic>> outputList = [];
+
+  inputMap.forEach((key, value) {
+    double adjClose = value["Adj Close"] ?? 0.0;
+    String imageUrl = value['icon_url'] ?? "";
+    outputList.add({
+      "title": key,
+      "imageUrl": imageUrl,
+      "totalRs": adjClose
+          .toStringAsFixed(2), // Format the double with 2 decimal places
+    });
+  });
+}
+```
+
+
+```dart
+
+simpleStockListViewItem(
+title: snapshot.data![index]["title"],
+total: snapshot.data![index]["totalRs"],
+imageUrl: snapshot.data![index]["imageUrl"],
+)
+```
+
+

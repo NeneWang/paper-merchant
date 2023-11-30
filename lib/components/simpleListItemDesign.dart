@@ -14,6 +14,7 @@ simpleStockListViewItem(
   String? title,
   String? total,
   BuildContext? context,
+  String? imageUrl,
   colorName = "black",
 }) {
   return InkWell(
@@ -49,6 +50,14 @@ simpleStockListViewItem(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          imageUrl != null && imageUrl.isNotEmpty && imageUrl != ""
+              ? Image.network(
+                  imageUrl,
+                )
+              : Container(),
+          // Image.network(
+          //   "https://api.polygon.io/v1/reference/company-branding/d3d3LmpwbW9yZ2FuY2hhc2UuY29t/images/2023-05-01_icon.jpeg?apiKey=JzpLmiKOusmtMSoeIQxAjhdeU8aPS5QO",
+          // ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

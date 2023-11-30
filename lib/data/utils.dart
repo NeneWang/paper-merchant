@@ -35,8 +35,10 @@ List<Map<String, dynamic>> convertToListingFormat(
 
   inputMap.forEach((key, value) {
     double adjClose = value["Adj Close"] ?? 0.0;
+    String imageUrl = value['icon_url'] ?? "";
     outputList.add({
       "title": key,
+      "imageUrl": imageUrl,
       "totalRs": adjClose
           .toStringAsFixed(2), // Format the double with 2 decimal places
     });

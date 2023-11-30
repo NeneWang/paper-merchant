@@ -46,10 +46,6 @@ class _WatchListScreenState extends State<WatchListScreen> {
     setState(() {
       bookmarkedList = convertToListingFormat(db.userBookmarkPrices);
     });
-
-    print("bookmarkedList: $bookmarkedList");
-    print('stockList');
-    print(stockList);
   }
 
   @override
@@ -198,6 +194,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                         context: context,
                         title: stockList[index]["title"],
                         total: stockList[index]["totalRs"],
+                        imageUrl: stockList[index]["imageUrl"],
                       ),
                     ),
                     Padding(
@@ -254,6 +251,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                         context: context,
                         title: bookmarkedList[index]["title"],
                         total: bookmarkedList[index]["totalRs"],
+                        imageUrl: bookmarkedList[index]["imageUrl"],
                       ),
                     ),
                   ],
