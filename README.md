@@ -139,15 +139,14 @@ List<Map<String, dynamic>> convertToListingFormat(
 
 ### Adding more information to the indvidual screen
 
+```dart
+Divider(
+    thickness: 3,
+    color: grayF2F2F2,
+),
+FutureBuilder(
+    future: db.getDetailsShare(widget.ticker, widget.price),
 ```
-
-            Divider(
-              thickness: 3,
-              color: grayF2F2F2,
-            ),
-            FutureBuilder(
-                future: db.getDetailsShare(widget.ticker, widget.price),
-                ```
 
 
 ```dart

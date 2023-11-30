@@ -166,6 +166,34 @@ class Database {
     return 0;
   }
 
+  Future<List> getTickerTransactions(String symbol) async {
+    final player_id = userData["player_id"];
+
+    final getTickerTransactionsURL =
+        "$backendAPI/player_transactions/$player_id"; // Replace with actual API URL
+
+    final response = await http.get(Uri.parse(
+        '$backendAPI/player_transactions/$player_id?stock_name=$symbol'));
+
+    if (response.statusCode == 200) {
+      print("============== RUNNING JSON DECODE ==============");
+      final responseData = jsonDecode(response.body);
+      print('Response body:');
+
+      print(responseData);
+      return responseData;
+    } else {
+      print("Failed to fetch ticker transactions");
+      print("FAiled with status code ${response.statusCode}");
+      print("api: $getTickerTransactionsURL");
+      print("body: ${jsonEncode(<String, String>{
+            'player_id': userData["player_id"],
+            'symbol': symbol,
+          })}");
+      return [];
+    }
+  }
+
   Future<Map<String, dynamic>> getDetailsShare(
       String symbol, String price) async {
     print("getDetails store");

@@ -415,22 +415,40 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
-                    Text("History",
+                    const Text("History",
                         style: TextStyle(
                           fontSize: 28,
                           color: black2,
                           fontFamily: "NunitoBold",
                           fontWeight: FontWeight.w700,
                         )),
-                    Row(children: [
-                      Text('AMZN SELL',
-                          style: TextStyle(
-                            fontSize: 18,
-                          ))
-                    ]),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[Text('2022-01-01'), Text('+ 40.23')],
+                    FutureBuilder<List>(
+                      future: db.getTickerTransactions(widget.ticker),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.done) {
+                          print("===========> Connection State");
+                          print(snapshot.data);
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: snapshot.data?.length ?? 0,
+                            itemBuilder: (context, index) {
+                              final item = snapshot.data![index];
+                              return const Text("Hello");
+                              // return historyListViewItem(
+                              //   symbol: item["symbol"],
+                              //   price: item["price"],
+                              //   count: item["count"],
+                              //   type: item["transaction_type"],
+                              //   date: item["created_time"],
+                              // );
+                            },
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
                     ),
                     Divider(),
                   ],
@@ -442,6 +460,22 @@ class _BuySellScreenState extends State<BuySellScreen> {
       ),
     );
   }
+}
+
+historyListViewItem({symbol, price, count, type, date}) {
+  print("Received, $symbol, $price, $count, $type, $date");
+  return Container(
+    child: Row(children: [
+      Text('AMZN SELL',
+          style: TextStyle(
+            fontSize: 18,
+          )),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[Text('2022-01-01'), Text('+ 40.23')],
+      )
+    ]),
+  );
 }
 
 buyDialog(context,
