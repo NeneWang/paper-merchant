@@ -82,6 +82,7 @@ class _AllStockScreenState extends State<AllStockScreen> {
                                 title: snapshot.data![index]["title"],
                                 total: snapshot.data![index]["totalRs"],
                                 imageUrl: snapshot.data![index]["imageUrl"],
+                                // stockData: ,
                                 colorName: green,
                               ),
                             );

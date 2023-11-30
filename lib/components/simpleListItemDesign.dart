@@ -16,10 +16,11 @@ simpleStockListViewItem(
   BuildContext? context,
   String? imageUrl,
   colorName = "black",
+  Map<String, dynamic>? stockData,
 }) {
   return InkWell(
     onTap: () {
-      Get.to(BuySellScreen(ticker: title, price: total));
+      Get.to(BuySellScreen(ticker: title, price: total, stockData: stockData));
     },
     child: Container(
       margin: EdgeInsets.only(

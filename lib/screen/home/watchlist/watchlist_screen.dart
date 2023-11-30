@@ -195,6 +195,8 @@ class _WatchListScreenState extends State<WatchListScreen> {
                         title: stockList[index]["title"],
                         total: stockList[index]["totalRs"],
                         imageUrl: stockList[index]["imageUrl"],
+                        stockData:
+                            db.userStockPrices[stockList[index]["title"]],
                       ),
                     ),
                     Padding(

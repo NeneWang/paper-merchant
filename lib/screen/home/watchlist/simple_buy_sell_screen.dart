@@ -28,7 +28,11 @@ class BuySellScreen extends StatefulWidget {
   final String ticker;
   final String price;
 
-  const BuySellScreen({super.key, required this.ticker, required this.price});
+  // should accept  Map<String, String>? stockData
+  final Map<String, dynamic>? stockData;
+
+  const BuySellScreen(
+      {super.key, required this.ticker, required this.price, this.stockData});
 
   @override
   State<BuySellScreen> createState() => _BuySellScreenState();
@@ -117,25 +121,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
-              child: Container(
-                width: Get.width,
-                height: 56,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ToggleScreen(green219653),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
               child: SizedBox(
                 width: Get.width,
                 height: 56,
@@ -154,6 +139,89 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 ),
               ),
             ),
+            widget.stockData != null || widget.stockData?["type"]
+                ? Padding(
+                    padding:
+                        const EdgeInsets.only(top: 21, left: 13, right: 18),
+                    child: SizedBox(
+                      width: Get.width,
+                      // height: 156,
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              widget.stockData?["description"][0].toString() ??
+                                  "Description",
+                            ),
+                          ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text("Market Cap"),
+                                  Text(
+                                      widget.stockData?["market_cap"]
+                                              .toStringAsFixed(2) ??
+                                          "Market Cap",
+                                      style: blackBoldStyle),
+                                  SizedBox(height: 5),
+                                  const Text('Volume'),
+                                  Text(
+                                      widget.stockData?["Volume"]
+                                              .toStringAsFixed(2) ??
+                                          "Volume",
+                                      style: blackBoldStyle),
+                                  SizedBox(height: 5),
+                                  const Text('sic_description'),
+                                  Text(
+                                      widget.stockData?["sic_description"]
+                                              .toString() ??
+                                          "sic_description",
+                                      style: blackBoldStyle),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text('total_employees'),
+                                  Text(
+                                      widget.stockData?["total_employees"]
+                                              .toStringAsFixed(2) ??
+                                          "total_employees",
+                                      style: blackBoldStyle),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text("city", style: blackBoldStyle),
+                                  Text(
+                                      widget.stockData?["city"].toString() ??
+                                          "city",
+                                      style: blackBoldStyle),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text("state", style: blackBoldStyle),
+                                  Text(
+                                      widget.stockData?["state"].toString() ??
+                                          "state",
+                                      style: blackBoldStyle),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(),
             Divider(
               thickness: 3,
               color: grayF2F2F2,

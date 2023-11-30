@@ -137,6 +137,18 @@ List<Map<String, dynamic>> convertToListingFormat(
 }
 ```
 
+### Adding more information to the indvidual screen
+
+```
+
+            Divider(
+              thickness: 3,
+              color: grayF2F2F2,
+            ),
+            FutureBuilder(
+                future: db.getDetailsShare(widget.ticker, widget.price),
+                ```
+
 
 ```dart
 
@@ -145,6 +157,45 @@ title: snapshot.data![index]["title"],
 total: snapshot.data![index]["totalRs"],
 imageUrl: snapshot.data![index]["imageUrl"],
 )
+```
+
+This is the widget price:
+
+```dart
+const Text("Current Price"),
+Text(widget.price, style: blackBoldStyle)
+```
+
+Where do I get to use add the price value on it? Can I embed the entire data into the screen?
+
+
+```dart
+final String ticker;
+final String price;
+
+const BuySellScreen({super.key, required this.ticker, required this.price});
+```
+
+
+- Is not being called on watchlist_screen, so it has to be on the Simple List Component
+
+
+```dart title = "simpleListItemDesign"
+
+simpleStockListViewItem(
+    /**
+      * Basic design with a random chart, and price.
+    */
+    {
+  String? title,
+  String? total,
+  BuildContext? context,
+  String? imageUrl,
+  colorName = "black",
+}) {
+  return InkWell(
+    onTap: () {
+      Get.to(BuySellScreen(ticker: title, price: total));
 ```
 
 
