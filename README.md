@@ -7,10 +7,16 @@ https://app.diagrams.net/?libs=general;flowchart#G1dBLbwRWmtB2V1uJhricZBCyXAEZr1
 
 ## Deployment
 
+Deployment for the web is done by running the following commands:
+
 ```
-flutter buiid
+flutter buiid web
 firebase deploy
 ```
+
+It will be posted at:
+
+
 
 
 ## Logs
