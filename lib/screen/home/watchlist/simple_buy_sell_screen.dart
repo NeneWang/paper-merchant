@@ -247,7 +247,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     userCash = snapshot.data!["user_cash"];
-                    print("usercash db.getDetailsShare $userCash");
                     return Padding(
                       padding:
                           const EdgeInsets.only(top: 21, left: 13, right: 18),
@@ -256,7 +255,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
                               snapshot.data?["shares_owned"] != ""
                           ? Container(
                               width: Get.width,
-                              height: 150,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -369,7 +367,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 }),
             Padding(
               padding: const EdgeInsets.only(
-                  top: 16, left: 33, right: 33, bottom: 16),
+                  top: 13, left: 33, right: 33, bottom: 16),
               child: Row(
                 // crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -409,7 +407,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
             ),
             // History
             Padding(
-              padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
+              padding: const EdgeInsets.only(top: 11, left: 13, right: 18),
               child: SizedBox(
                 // width: Get.width,
                 width: MediaQuery.of(context).size.width,
@@ -426,21 +424,19 @@ class _BuySellScreenState extends State<BuySellScreen> {
                       future: db.getTickerTransactions(widget.ticker),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState == ConnectionState.done) {
-                          print("===========> Connection State");
-                          print(snapshot.data);
                           return ListView.builder(
                             shrinkWrap: true,
                             itemCount: snapshot.data?.length ?? 0,
                             itemBuilder: (context, index) {
                               final item = snapshot.data![index];
-                              return const Text("Hello");
-                              // return historyListViewItem(
-                              //   symbol: item["symbol"],
-                              //   price: item["price"],
-                              //   count: item["count"],
-                              //   type: item["transaction_type"],
-                              //   date: item["created_time"],
-                              // );
+                              // return const Text("Hello");
+                              return historyListViewItem(
+                                symbol: item["symbol"],
+                                price: item["price"],
+                                count: item["count"],
+                                type: item["transaction_type"],
+                                date: item["created_time"],
+                              );
                             },
                           );
                         } else {
@@ -463,19 +459,20 @@ class _BuySellScreenState extends State<BuySellScreen> {
 }
 
 historyListViewItem({symbol, price, count, type, date}) {
-  print("Received, $symbol, $price, $count, $type, $date");
-  return Container(
-    child: Row(children: [
-      Text('AMZN SELL',
-          style: TextStyle(
-            fontSize: 18,
-          )),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[Text('2022-01-01'), Text('+ 40.23')],
-      )
-    ]),
-  );
+  // Sign is positive if is sell, negative if is buy
+  String sign = type.toUpperCase() == "SELL" ? "+" : "-";
+  String operation = type.toUpperCase() == "SELL" ? "SELL" : "BUY ";
+  return Row(children: [
+    Text('$symbol $operation',
+        style: const TextStyle(
+          fontSize: 18,
+        )),
+    Spacer(),
+    Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[Text(date.toString()), Text('$sign \$$price')],
+    )
+  ]);
 }
 
 buyDialog(context,

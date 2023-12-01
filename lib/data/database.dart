@@ -176,11 +176,7 @@ class Database {
         '$backendAPI/player_transactions/$player_id?stock_name=$symbol'));
 
     if (response.statusCode == 200) {
-      print("============== RUNNING JSON DECODE ==============");
       final responseData = jsonDecode(response.body);
-      print('Response body:');
-
-      print(responseData);
       return responseData;
     } else {
       print("Failed to fetch ticker transactions");
@@ -196,8 +192,6 @@ class Database {
 
   Future<Map<String, dynamic>> getDetailsShare(
       String symbol, String price) async {
-    print("getDetails store");
-
     try {
       loadData();
 

@@ -334,6 +334,10 @@ Found it
 The api to modify is `api/assets`
 
 
+Ideas of why after ===> connection state t prints null, even if on
+
+Get TickerTransation I can see that is printing the body of:
+ [{player_id: 92cb1815-bbc7-47aa-aba4-4788425b0524, symbol: EBAY, transaction_type: BUY, total_price: 81.28, updated_time: 2023-11-30T18:58:03.099814, count: 2, id: 88c442fb-9803-4c6f-bde9-40cfae575339, price: 40.64, created_time: 2023-11-30T18:58:03.099814}, {player_id: 92cb1815-bbc7-47aa-aba4-4788425b0524, symbol: EBAY, transaction_type: SELL, total_price: 43.91, updated_time: 2023-09-18T21:18:09.102293, count: 1, id: 00be748a-d8e6-4fec-a0eb-93e85d17d8d5, price: 43.91, created_time: 2023-09-18T21:18:09.102293}, {player_id: 92cb1815-bbc7-47aa-aba4-4788425b0524, symbol: EBAY, transaction_type: BUY, total_price: 43.91, updated_time: 2023-09-18T21:16:03.748705, count: 1, id: 4ab49911-45ce-4574-b372-3e62fd56213a, price: 43.91, created_time: 2023-09-18T21:16:03.748705}]
 
 
 ### Craft API for #2 History
