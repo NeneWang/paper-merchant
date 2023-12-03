@@ -9,11 +9,13 @@ notificationText({String? svgUrl, String? notificationText, String? textTime}) {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        CircleAvatar(
-          backgroundColor: appColor,
-          maxRadius: 24,
-          child: SvgPicture.asset(svgUrl!),
-        ),
+        svgUrl == null
+            ? Container()
+            : CircleAvatar(
+                backgroundColor: appColor,
+                maxRadius: 24,
+                child: SvgPicture.asset(svgUrl),
+              ),
         Container(
           width: 214,
           child: Text(

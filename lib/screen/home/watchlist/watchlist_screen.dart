@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import 'package:papermarket/controller/tabcontroller_screen.dart';
@@ -10,10 +10,10 @@ import 'package:papermarket/screen/home/watchlist/home_screen.dart';
 import 'package:papermarket/components/simpleListItemDesign.dart';
 
 import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/imagenames.dart';
 import 'package:papermarket/data/database.dart';
 import 'package:papermarket/data/utils.dart';
 import '../notification_screen.dart';
+// Get Reload icon
 
 class WatchListScreen extends StatefulWidget {
   final applicationController myTabController =
@@ -70,13 +70,32 @@ class _WatchListScreenState extends State<WatchListScreen> {
                 alignment: Alignment.topRight,
                 child: Padding(
                   padding: EdgeInsets.only(
+                      right: Get.width / 20.57,
+                      top: Get.height / 178.28,
+                      bottom: Get.height / 178.28),
+                  child: InkWell(
+                    onTap: () {
+                      reloadScreen();
+                    },
+                    child: Icon(
+                      CupertinoIcons.refresh,
+                      size: 24, // Adjust the size as needed
+                    ),
+                  ),
+                ),
+              ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.only(
                       right: Get.width / 20.57, top: Get.height / 178.28),
                   child: InkWell(
                     onTap: () {
                       Get.to(NotificationScreen());
                     },
-                    child: SvgPicture.asset(
-                      bellhome,
+                    child: Icon(
+                      CupertinoIcons.bell,
+                      size: 24, // Adjust the size as needed
                     ),
                   ),
                 ),

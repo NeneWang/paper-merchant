@@ -190,6 +190,30 @@ class Database {
     }
   }
 
+  Future<List> getUserTransactions() async {
+    // if recent transactions are empty then fetch them
+    String playerId = userData["player_id"];
+
+    if (playerId == null) {
+      loadData();
+    }
+
+    playerId = userData["player_id"];
+    final transactionsUrl =
+        "$backendAPI/player_transactions/$playerId?limit=10&offset=0"; // Replace with actual API URL
+    final res_transactions = await http.get(Uri.parse(transactionsUrl));
+    print('Transactions requested to $transactionsUrl');
+    print('Received response status of ${res_transactions.statusCode}');
+
+    if (res_transactions.statusCode == 200) {
+      print("transactions obtained");
+      print(res_transactions.body);
+      return jsonDecode(res_transactions.body);
+    } else {
+      return [];
+    }
+  }
+
   Future<Map<String, dynamic>> getDetailsShare(
       String symbol, String price) async {
     try {

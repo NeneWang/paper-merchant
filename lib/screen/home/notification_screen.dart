@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/data.dart';
-import 'package:papermarket/utils/utils_text.dart';
+import 'package:papermarket/data/database.dart';
+
+import '../../utils/utils_text.dart';
 
 class NotificationScreen extends StatelessWidget {
+  final db = Database();
+
+  get grayE2E2E2 => null;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,14 +40,29 @@ class NotificationScreen extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16, vertical: 25),
-        child: ListView.builder(
-          shrinkWrap: true,
-          itemCount: notificationList.length,
-          itemBuilder: (context, index) => notificationText(
-            svgUrl: notificationList[index]["img"],
-            notificationText: notificationList[index]["title"],
-            textTime: notificationList[index]["time"],
-          ),
+        child: FutureBuilder<List>(
+          future: db.getUserTransactions(),
+          builder: (context, snapshot) => snapshot.hasData
+              ? ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        notificationText(
+                          notificationText: "Hello",
+                          textTime: "12:00",
+                        ),
+                        Divider(
+                          thickness: 1,
+                        ),
+                      ],
+                    );
+                  },
+                )
+              // ? Container(
+              //     child: Text('Loaded'),
+              //   )
+              : Center(child: CircularProgressIndicator()),
         ),
       ),
     );

@@ -16,7 +16,13 @@ firebase deploy
 
 It will be posted at:
 
+Running in chroe
 
+```
+flutter config --enable-web
+flutter run -d chrome
+
+```
 
 
 ## Logs
@@ -339,7 +345,7 @@ Found it
 
 The api to modify is `api/assets`
 
-
+r
 Ideas of why after ===> connection state t prints null, even if on
 
 Get TickerTransation I can see that is printing the body of:
