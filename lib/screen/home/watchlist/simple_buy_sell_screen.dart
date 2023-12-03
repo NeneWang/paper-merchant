@@ -460,17 +460,25 @@ class _BuySellScreenState extends State<BuySellScreen> {
 
 historyListViewItem({symbol, price, count, type, date}) {
   // Sign is positive if is sell, negative if is buy
-  String sign = type.toUpperCase() == "SELL" ? "+" : "-";
-  String operation = type.toUpperCase() == "SELL" ? "SELL" : "BUY ";
+  String sign = "";
+  if (type.toUpperCase() == "SELL") {
+    sign = "+";
+  } else {
+    if (price > 0) {
+      sign = "-";
+    }
+  }
+  // String operation = type.toUpperCase() == "SELL" ? "SELL" : "BUY ";
+  String onlyDate = date.toString().split("T")[0];
   return Row(children: [
-    Text('$symbol $operation',
+    Text('$symbol ${type.toUpperCase()}',
         style: const TextStyle(
           fontSize: 18,
         )),
     Spacer(),
     Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[Text(date.toString()), Text('$sign \$$price')],
+      children: <Widget>[Text(onlyDate), Text('$sign \$$price')],
     )
   ]);
 }
