@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:papermarket/controller/tabcontroller_screen.dart';
+import 'package:paper_merchant/controller/tabcontroller_screen.dart';
 
-import 'package:papermarket/screen/home/watchlist/toggle_design_screen.dart';
-import 'package:papermarket/utils/buttons_widget.dart';
-import 'package:papermarket/utils/color.dart';
+import 'package:paper_merchant/screen/home/watchlist/toggle_design_screen.dart';
+import 'package:paper_merchant/utils/buttons_widget.dart';
+import 'package:paper_merchant/utils/color.dart';
 
-import 'package:papermarket/data/database.dart';
+import 'package:paper_merchant/data/database.dart';
 
-import 'package:papermarket/components/QuantityRow.dart';
-import 'package:papermarket/components/NamesWithPricing.dart';
+import 'package:paper_merchant/components/QuantityRow.dart';
+import 'package:paper_merchant/components/NamesWithPricing.dart';
 
 final applicationController myTabController = Get.put(applicationController());
 // ColorChangeController colorChangeController = Get.put(

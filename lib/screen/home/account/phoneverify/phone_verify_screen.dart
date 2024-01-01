@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/controller/checkbox_controller.dart';
-import 'package:papermarket/utils/buttons_widget.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/imagenames.dart';
+import 'package:paper_merchant/controller/checkbox_controller.dart';
+import 'package:paper_merchant/utils/buttons_widget.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 import 'verify_pin_screen_account.dart';

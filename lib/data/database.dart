@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:papermarket/data/utils.dart';
+import 'package:paper_merchant/data/utils.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';

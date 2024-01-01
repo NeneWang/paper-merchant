@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/controller/drawer_open_controller.dart';
-import 'package:papermarket/screen/home/watchlist/home_screen.dart';
+import 'package:paper_merchant/controller/drawer_open_controller.dart';
+import 'package:paper_merchant/screen/home/watchlist/home_screen.dart';
 import 'drawer_screen_dir/drawer_screen.dart';
 
 // ignore: must_be_immutable

@@ -2,17 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:papermarket/controller/tabcontroller_screen.dart';
-import 'package:papermarket/screen/home/watchlist/all_stocks_screen.dart';
-import 'package:papermarket/screen/home/watchlist/home_screen.dart';
+import 'package:paper_merchant/controller/tabcontroller_screen.dart';
+import 'package:paper_merchant/screen/home/watchlist/all_stocks_screen.dart';
+import 'package:paper_merchant/screen/home/watchlist/home_screen.dart';
 
-import 'package:papermarket/components/simpleListItemDesign.dart';
+import 'package:paper_merchant/components/simpleListItemDesign.dart';
 
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/data/database.dart';
-import 'package:papermarket/data/utils.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/data/database.dart';
+import 'package:paper_merchant/data/utils.dart';
 import '../notification_screen.dart';
-import 'package:papermarket/components/loading_placeholder.dart';
+import 'package:paper_merchant/components/loading_placeholder.dart';
 // Get Reload icon
 
 class WatchListScreen extends StatefulWidget {

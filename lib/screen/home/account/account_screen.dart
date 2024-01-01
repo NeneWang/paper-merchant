@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/data/database.dart';
-import 'package:papermarket/screen/welcome/welcome_screen.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/data/database.dart';
+import 'package:paper_merchant/screen/welcome/welcome_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   @override

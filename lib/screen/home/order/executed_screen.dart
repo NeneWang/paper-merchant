@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/data.dart';
-import 'package:papermarket/utils/utils_text.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/data.dart';
+import 'package:paper_merchant/utils/utils_text.dart';
 
 class ExecutedScreen extends StatelessWidget {
   @override

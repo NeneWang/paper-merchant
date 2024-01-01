@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/screen/home/drawer_open_.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/imagenames.dart';
+import 'package:paper_merchant/screen/home/drawer_open_.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
 
 class WellDoneScreen extends StatelessWidget {
   @override

@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/controller/conteiner_color_change_keypade.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/imagenames.dart';
-import 'package:papermarket/utils/round_container.dart';
-import 'package:papermarket/utils/textformfild.dart';
+import 'package:paper_merchant/controller/conteiner_color_change_keypade.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
+import 'package:paper_merchant/utils/round_container.dart';
+import 'package:paper_merchant/utils/textformfild.dart';
 
 import 'confirmpin_screen.dart';
 

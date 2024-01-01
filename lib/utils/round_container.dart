@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/utils/color.dart';
+import 'package:paper_merchant/utils/color.dart';
 
 roundContainer(
     {String? textNum, Color? colorBox, Color? colorBorder, Color? textColor}) {

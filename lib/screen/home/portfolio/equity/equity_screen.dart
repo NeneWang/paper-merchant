@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/controller/tabcontroller_screen.dart';
-import 'package:papermarket/screen/home/portfolio/equity/others_portfolio.dart';
-import 'package:papermarket/screen/home/portfolio/equity/user_portfolio.dart';
-import 'package:papermarket/utils/color.dart';
+import 'package:paper_merchant/controller/tabcontroller_screen.dart';
+import 'package:paper_merchant/screen/home/portfolio/equity/others_portfolio.dart';
+import 'package:paper_merchant/screen/home/portfolio/equity/user_portfolio.dart';
+import 'package:paper_merchant/utils/color.dart';
 
 // ignore: must_be_immutable
 class EquityScreen extends StatelessWidget {

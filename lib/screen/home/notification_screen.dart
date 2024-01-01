@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/data/database.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/data/database.dart';
 
 import '../../utils/utils_text.dart';
 

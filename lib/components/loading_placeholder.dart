@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/utils/imagenames.dart';
-import 'package:papermarket/utils/color.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
+import 'package:paper_merchant/utils/color.dart';
 
 class LoadingPlaceholder extends StatelessWidget {
   final String waitingMessage;

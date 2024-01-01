@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/utils/imagenames.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
 
 import 'color.dart';
 

@@ -2,16 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/controller/checkbox_controller.dart';
-import 'package:papermarket/screen/auth/forgetpassword/forgetpassword_screen.dart';
-import 'package:papermarket/screen/auth/signup/signup_screen.dart';
-import 'package:papermarket/controller/conteiner_color_change_keypade.dart';
-import 'package:papermarket/screen/home/drawer_open_.dart';
-import 'package:papermarket/utils/buttons_widget.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/imagenames.dart';
-import 'package:papermarket/utils/textformfild.dart';
-import 'package:papermarket/data/database.dart';
+import 'package:paper_merchant/controller/checkbox_controller.dart';
+import 'package:paper_merchant/screen/auth/forgetpassword/forgetpassword_screen.dart';
+import 'package:paper_merchant/screen/auth/signup/signup_screen.dart';
+import 'package:paper_merchant/controller/conteiner_color_change_keypade.dart';
+import 'package:paper_merchant/screen/home/drawer_open_.dart';
+import 'package:paper_merchant/utils/buttons_widget.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
+import 'package:paper_merchant/utils/textformfild.dart';
+import 'package:paper_merchant/data/database.dart';
 
 // ignore: must_be_immutable
 class LogInScreen extends StatelessWidget {

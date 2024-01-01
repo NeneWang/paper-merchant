@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/screen/auth/login/login_screen.dart';
-import 'package:papermarket/utils/buttons_widget.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/textformfild.dart';
+import 'package:paper_merchant/screen/auth/login/login_screen.dart';
+import 'package:paper_merchant/utils/buttons_widget.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/textformfild.dart';
 
 class ChangePasswordScreen extends StatelessWidget {
   @override

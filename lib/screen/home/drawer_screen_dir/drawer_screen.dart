@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/screen/welcome/welcome_screen.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/data.dart';
-import 'package:papermarket/utils/imagenames.dart';
+import 'package:paper_merchant/screen/welcome/welcome_screen.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/data.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
 
 class DrawerScreen extends StatelessWidget {
   @override

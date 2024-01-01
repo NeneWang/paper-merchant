@@ -2,12 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/data.dart';
-import 'package:papermarket/data/database.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/data.dart';
+import 'package:paper_merchant/data/database.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:papermarket/components/loading_placeholder.dart';
-import 'package:papermarket/components/small_space.dart';
+import 'package:paper_merchant/components/loading_placeholder.dart';
+import 'package:paper_merchant/components/small_space.dart';
 
 class OthersPScreen extends StatefulWidget {
   @override

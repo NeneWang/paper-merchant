@@ -1,14 +1,14 @@
-import 'package:papermarket/components/small_space.dart';
+import 'package:paper_merchant/components/small_space.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papermarket/screen/auth/signup/signup_screen.dart';
+import 'package:paper_merchant/screen/auth/signup/signup_screen.dart';
 import '../auth/login/login_screen.dart';
-import 'package:papermarket/screen/home/drawer_open_.dart';
-import 'package:papermarket/utils/buttons_widget.dart';
-import 'package:papermarket/utils/color.dart';
-import 'package:papermarket/utils/imagenames.dart';
-import 'package:papermarket/controller/conteiner_color_change_keypade.dart';
-import 'package:papermarket/data/database.dart';
+import 'package:paper_merchant/screen/home/drawer_open_.dart';
+import 'package:paper_merchant/utils/buttons_widget.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
+import 'package:paper_merchant/controller/conteiner_color_change_keypade.dart';
+import 'package:paper_merchant/data/database.dart';
 
 // ignore: must_be_immutable
 class WelcomeScreen extends StatelessWidget {
