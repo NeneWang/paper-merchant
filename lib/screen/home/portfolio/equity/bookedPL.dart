@@ -169,7 +169,7 @@ bookedListDesign({
     height: 75,
     width: Get.width,
     decoration: BoxDecoration(
-      color: Color(0xffF4F7FB),
+      color: lightBGBlue,
       borderRadius: BorderRadius.circular(12),
       boxShadow: [
         BoxShadow(

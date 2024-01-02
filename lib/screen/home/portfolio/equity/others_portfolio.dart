@@ -49,32 +49,40 @@ class _OthersPScreenState extends State<OthersPScreen> {
                                 show: false,
                               ),
                               borderData: FlBorderData(
-                                show: false,
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    width: 1,
+                                  ),
+                                  top: BorderSide(
+                                    color: Colors.grey.withOpacity(0.0),
+                                    width: 1,
+                                  ),
+                                ),
                               ),
-                              gridData: FlGridData(
-                                show: false,
-                              ),
+                              gridData: FlGridData(show: false),
                               barGroups: snapshot.data!.asMap().entries.map(
                                 (entry) {
                                   int idx = entry.key;
                                   Map data = entry.value;
+                                  bool isYou = data['player_id'] ==
+                                      db.userData['player_id'];
 
                                   return BarChartGroupData(
                                     x: idx,
                                     barRods: [
                                       BarChartRodData(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(6),
+                                          topRight: Radius.circular(6),
+                                        ),
                                         y: _isLog
                                             ? log(
                                                 data['total_worth'].toDouble())
                                             : data['total_worth'].toDouble(),
                                         width: 22,
-                                        borderRadius: BorderRadius.zero,
                                         colors: [
-                                          data['player_id'] ==
-                                                  db.userData['player_id']
-                                              ? Colors.lightGreen
-                                              : Colors.grey.withOpacity(
-                                                  0.5) // 50% opacity
+                                          isYou ? greenLogo : lightBGBlue
                                         ],
                                       ),
                                     ],
@@ -84,7 +92,10 @@ class _OthersPScreenState extends State<OthersPScreen> {
                             )),
                           ),
                           CheckboxListTile(
-                            title: Text("Show as logarithmic"),
+                            title: Text(
+                              "Show as logarithmic",
+                              style: TextStyle(color: greenLogo),
+                            ),
                             value: _isLog,
                             onChanged: (value) {
                               setState(() {
@@ -92,7 +103,15 @@ class _OthersPScreenState extends State<OthersPScreen> {
                               });
                             },
 
-                            activeColor: Colors.green, // Add this line
+                            activeColor: greenLogo, // Add this line
+                          ),
+                          // Make a horizontal line
+                          const Divider(
+                            height: 5,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 20,
+                            color: greenLogo,
                           ),
                           SizedBox(
                             height: Get.height * 0.55,
@@ -102,7 +121,7 @@ class _OthersPScreenState extends State<OthersPScreen> {
                                 return Container(
                                   color: snapshot.data![index]['player_id'] ==
                                           db.userData['player_id']
-                                      ? Colors.lightGreen.withOpacity(0.2)
+                                      ? greenLogo.withOpacity(0.2)
                                       : null,
                                   child: ListTile(
                                     title: Text(
