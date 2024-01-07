@@ -269,6 +269,38 @@ class Database {
     return convertToListingFormat(showStockData);
   }
 
+  Future<List<Map<String, dynamic>>> getCompetitorsData(
+      String competitionUUID) async {
+    const competitorsAPI =
+        "$backendAPI/api/competitors/7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
+    List<Map<String, dynamic>> competitorsDataFormat = [];
+
+    final response = await http.get(Uri.parse(competitorsAPI));
+    if (response.statusCode == 200) {
+      final competitorsData = json.decode(response.body) as List;
+      for (var competitorData in competitorsData) {
+        if (competitorData is Map<String, dynamic>) {
+          competitorsDataFormat.add({
+            "name": competitorData["name"],
+            "total_worth": competitorData["total_worth"],
+          });
+          print("===> COMPETITOR DATA <===");
+          print({
+            "name": competitorData["name"],
+            "total_worth": competitorData["total_worth"],
+          });
+        }
+      }
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
+    print("============== RECEIVED COMPETITORS DATA =========");
+    print(competitorsDataFormat);
+
+    return competitorsDataFormat;
+  }
+
   Future populateAllStocksScreenData({String filter = "", count = 10}) async {
     // get the top 10 stocks from ticket names and request api to include their data on them.
 

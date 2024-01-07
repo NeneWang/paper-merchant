@@ -2,19 +2,61 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papermarket/utils/color.dart';
 import 'package:papermarket/utils/data.dart';
+import 'package:papermarket/data/database.dart';
 
 class OthersPScreen extends StatelessWidget {
+  final db = Database();
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-            padding: EdgeInsets.only(top: 60),
-            child: Text(
-              'Not Implemented Yet',
-              style: TextStyle(fontSize: 20),
-            )),
+          padding: EdgeInsets.only(top: 16),
+          child: FutureBuilder<List<Map<String, dynamic>>>(
+            future: db.getCompetitorsData(
+                '7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b'), // replace with your competitionUUID
+            builder: (BuildContext context,
+                AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return snapshot.data != null
+                    ? Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(0, 3),
+                                  ),
+                                ],
+                              ),
+                              child: ListTile(
+                                title: Text(
+                                    'Name: ${snapshot.data![index]['name'] ?? 'N/A'}'),
+                                subtitle: Text(
+                                    'Total Worth: ${snapshot.data![index]['total_worth']?.toString() ?? 'N/A'}'),
+                              ),
+                            );
+                          },
+                        ),
+                      )
+                    : Center(child: Text('No data'));
+              }
+            },
+          ),
+        ),
         Expanded(
           child: ListView.builder(
             shrinkWrap: true,

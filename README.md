@@ -352,6 +352,44 @@ Get TickerTransation I can see that is printing the body of:
  [{player_id: 92cb1815-bbc7-47aa-aba4-4788425b0524, symbol: EBAY, transaction_type: BUY, total_price: 81.28, updated_time: 2023-11-30T18:58:03.099814, count: 2, id: 88c442fb-9803-4c6f-bde9-40cfae575339, price: 40.64, created_time: 2023-11-30T18:58:03.099814}, {player_id: 92cb1815-bbc7-47aa-aba4-4788425b0524, symbol: EBAY, transaction_type: SELL, total_price: 43.91, updated_time: 2023-09-18T21:18:09.102293, count: 1, id: 00be748a-d8e6-4fec-a0eb-93e85d17d8d5, price: 43.91, created_time: 2023-09-18T21:18:09.102293}, {player_id: 92cb1815-bbc7-47aa-aba4-4788425b0524, symbol: EBAY, transaction_type: BUY, total_price: 43.91, updated_time: 2023-09-18T21:16:03.748705, count: 1, id: 4ab49911-45ce-4574-b372-3e62fd56213a, price: 43.91, created_time: 2023-09-18T21:16:03.748705}]
 
 
+This is how to fetch the apis correctly
+
+```dart
+
+  Future getStockNames() async {
+    const stockAPI = "$backendAPI/api/stickers"; // Replace with actual API URL
+    final response = await http.get(Uri.parse(stockAPI));
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      // print("tickets obtained");
+      // print(responseData);
+      final resticketNames = responseData["tickers"];
+      for (final ticket in resticketNames) {
+        if (ticket is String) {
+          ticketNames.add(ticket);
+        }
+      }
+
+      _myBox.put("ticketNames", ticketNames);
+      print(ticketNames[0]);
+      return;
+    } else {
+      print("Failed to fetch ticker names");
+      print("FAiled with status code ${response.statusCode}");
+      print("api: $stockAPI/api/stickers");
+      return;
+    }
+  }
+
+```
+
+For example we can run this by: "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b"
+
+/api/competitors/7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b
+
+
+
+
 ### Craft API for #2 History
 
 1. [ ] Fetch all the transactions given a user and a stock.

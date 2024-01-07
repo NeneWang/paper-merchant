@@ -26,7 +26,7 @@ class applicationController extends GetxController
     Container(
         height: 30,
         alignment: Alignment.center,
-        child: const Tab(text: 'Others')),
+        child: const Tab(text: 'Competition')),
   ];
   final List<Tab> weekYearContoller = <Tab>[
     // Tab(text: 'Day'),
