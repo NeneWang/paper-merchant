@@ -388,6 +388,14 @@ For example we can run this by: "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b"
 /api/competitors/7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b
 
 
+Adding Readme
+
+```
+fvm flutter pub add charts_flutter_new
+
+fvm flutter pub add charts_flutter
+```
+
 
 
 ### Craft API for #2 History

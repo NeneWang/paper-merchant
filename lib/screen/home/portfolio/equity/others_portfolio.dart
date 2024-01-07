@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papermarket/utils/color.dart';
 import 'package:papermarket/utils/data.dart';
 import 'package:papermarket/data/database.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class OthersPScreen extends StatelessWidget {
   final db = Database();
@@ -11,48 +14,63 @@ class OthersPScreen extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
+        SizedBox(
+          height: Get.height * 0.05,
+        ),
+        SizedBox(
+          height: Get.height * 0.15,
+          child: BarChart(BarChartData(
+            titlesData: FlTitlesData(
+              show: false,
+            ),
+            borderData: FlBorderData(
+              show: false,
+            ),
+            barGroups: List.generate(
+              7,
+              (i) => BarChartGroupData(
+                x: i,
+                barRods: [
+                  BarChartRodData(
+                    y: Random().nextDouble() * 20000 + 10000,
+                    width: 22,
+                    borderRadius: BorderRadius.zero,
+                    colors: [i == 0 ? Colors.red : Colors.blue],
+                  ),
+                ],
+              ),
+            ),
+          )),
+        ),
         Padding(
-          padding: EdgeInsets.only(top: 16),
+          padding: const EdgeInsets.only(top: 6),
           child: FutureBuilder<List<Map<String, dynamic>>>(
-            future: db.getCompetitorsData(
-                '7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b'), // replace with your competitionUUID
+            future:
+                db.getCompetitorsData(), // replace with your competitionUUID
             builder: (BuildContext context,
                 AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
+                return const Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
                 return snapshot.data != null
-                    ? Expanded(
+                    ? SizedBox(
+                        height: Get.height * 0.6,
                         child: ListView.builder(
-                          shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8.0),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.5),
-                                    spreadRadius: 5,
-                                    blurRadius: 7,
-                                    offset: Offset(0, 3),
-                                  ),
-                                ],
+                            return ListTile(
+                              title: Text(
+                                'Name: ${snapshot.data![index]['name'] ?? 'N/A'}',
                               ),
-                              child: ListTile(
-                                title: Text(
-                                    'Name: ${snapshot.data![index]['name'] ?? 'N/A'}'),
-                                subtitle: Text(
-                                    'Total Worth: ${snapshot.data![index]['total_worth']?.toString() ?? 'N/A'}'),
-                              ),
+                              subtitle: Text(
+                                  'Total Worth: ${snapshot.data![index]['total_worth']?.toString() ?? 'N/A'}'),
                             );
                           },
                         ),
                       )
-                    : Center(child: Text('No data'));
+                    : const Center(child: Text('No data'));
               }
             },
           ),

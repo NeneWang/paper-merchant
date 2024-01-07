@@ -202,12 +202,8 @@ class Database {
     final transactionsUrl =
         "$backendAPI/player_transactions/$playerId?limit=10&offset=0"; // Replace with actual API URL
     final res_transactions = await http.get(Uri.parse(transactionsUrl));
-    print('Transactions requested to $transactionsUrl');
-    print('Received response status of ${res_transactions.statusCode}');
 
     if (res_transactions.statusCode == 200) {
-      print("transactions obtained");
-      print(res_transactions.body);
       return jsonDecode(res_transactions.body);
     } else {
       return [];
@@ -269,10 +265,9 @@ class Database {
     return convertToListingFormat(showStockData);
   }
 
-  Future<List<Map<String, dynamic>>> getCompetitorsData(
-      String competitionUUID) async {
-    const competitorsAPI =
-        "$backendAPI/api/competitors/7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
+  Future<List<Map<String, dynamic>>> getCompetitorsData() async {
+    const competitorUuid = "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
+    const competitorsAPI = "$backendAPI/api/competitors/$competitorUuid";
     List<Map<String, dynamic>> competitorsDataFormat = [];
 
     final response = await http.get(Uri.parse(competitorsAPI));
@@ -284,19 +279,11 @@ class Database {
             "name": competitorData["name"],
             "total_worth": competitorData["total_worth"],
           });
-          print("===> COMPETITOR DATA <===");
-          print({
-            "name": competitorData["name"],
-            "total_worth": competitorData["total_worth"],
-          });
         }
       }
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
-
-    print("============== RECEIVED COMPETITORS DATA =========");
-    print(competitorsDataFormat);
 
     return competitorsDataFormat;
   }
@@ -410,16 +397,6 @@ class Database {
 
   Future<void> sellStock(String ticker_symbol,
       {int count = 1, double price = 100}) async {
-    // Create post request of model:
-    // class AssetPurchase(BaseModel):
-    // player_id: str
-    // symbol: str
-    // count: int
-    // price: float
-    // Into api: "${backendAPI}/api/sell";
-
-    // Make internal changes monetarily
-
     final countStocks = updateuserPortfolioCount(ticker_symbol, -count);
     // update userCash
     if (countStocks >= 0) {
@@ -472,8 +449,6 @@ class Database {
         return;
       }
     } else {
-      // print("Purchase stock failed");
-      print(response.body);
       return;
     }
   }

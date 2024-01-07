@@ -15,16 +15,14 @@ class PortFolioScreen extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       body: Column(
         children: [
-          Container(
-            height: Get.height / 1.07,
-            color: white,
+          Expanded(
             child: TabBarView(
               controller: myTabController.controller2,
               children: [
                 EquityScreen(),
               ],
             ),
-          ),
+          )
         ],
       ),
     );

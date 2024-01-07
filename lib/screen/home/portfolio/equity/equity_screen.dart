@@ -20,9 +20,6 @@ class EquityScreen extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(top: 10),
           child: TabBar(
-            // automaticIndicatorColorAdjustment: false,
-            // labelPadding: EdgeInsets.all(15),
-            // onTap: _onItemTapped,
             labelColor: appColor,
             controller: myTabController.controller4,
             unselectedLabelColor: black,
