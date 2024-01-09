@@ -276,11 +276,16 @@ class Database {
       for (var competitorData in competitorsData) {
         if (competitorData is Map<String, dynamic>) {
           competitorsDataFormat.add({
+            "player_id": competitorData["player_id"],
             "name": competitorData["name"],
             "total_worth": competitorData["total_worth"],
           });
         }
       }
+
+      // Sort using total_worth reverse
+      competitorsDataFormat
+          .sort((a, b) => a["total_worth"].compareTo(b["total_worth"]));
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
@@ -516,13 +521,8 @@ class Database {
       final assetsUrl =
           "$backendAPI/api/assets/$playerId"; // Replace with actual API URL
 
-      // Make API call using your pr eferred HTTP client (e.g., http package)
-      // Example using http package:
       final response = await http.get(Uri.parse(assetsUrl));
 
-      // print("body from " + assetsUrl);
-      // print(response.body);
-      // Process the API response and print assets
       if (response.statusCode == 200) {
         final assetsData = json.decode(response.body);
         userPortfolio = []; //Empty the userData before

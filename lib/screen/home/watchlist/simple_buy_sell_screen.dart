@@ -148,7 +148,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                       width: Get.width,
                       // height: 156,
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
+                        width: Get.width * 0.4,
                         child: Column(
                           children: [
                             Align(
@@ -165,41 +165,45 @@ class _BuySellScreenState extends State<BuySellScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text("Market Cap"),
-                                    Text(
-                                        widget.stockData?["market_cap"]
-                                                .toStringAsFixed(2) ??
-                                            "Market Cap",
-                                        style: blackBoldStyle),
-                                    SizedBox(height: 5),
-                                    const Text('Volume'),
-                                    Text(
-                                        widget.stockData?["Volume"]
-                                                .toStringAsFixed(2) ??
-                                            "Volume",
-                                        style: blackBoldStyle),
-                                    SizedBox(height: 5),
-                                    const Text(
-                                        'Standard Industrial Classification:'),
-                                    Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.5,
-                                      child: Text(
-                                        widget.stockData?["sic_description"]
-                                                .toString() ??
-                                            "sic_description",
+                                Container(
+                                  width: Get.width * 0.4,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text("Market Cap"),
+                                      Text(
+                                          widget.stockData?["market_cap"]
+                                                  .toStringAsFixed(2) ??
+                                              "Market Cap",
+                                          style: blackBoldStyle),
+                                      SizedBox(height: 5),
+                                      const Text('Volume'),
+                                      Text(
+                                          widget.stockData?["Volume"]
+                                                  .toStringAsFixed(2) ??
+                                              "Volume",
+                                          style: blackBoldStyle),
+                                      SizedBox(height: 5),
+                                      const Text(
+                                          'Standard Industrial Classification:'),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.5,
+                                        child: Text(
+                                          widget.stockData?["sic_description"]
+                                                  .toString() ??
+                                              "sic_description",
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                                 Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.4,
+                                  width: Get.width * 0.4,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [

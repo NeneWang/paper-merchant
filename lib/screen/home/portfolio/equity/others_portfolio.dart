@@ -7,41 +7,21 @@ import 'package:papermarket/utils/data.dart';
 import 'package:papermarket/data/database.dart';
 import 'package:fl_chart/fl_chart.dart';
 
-class OthersPScreen extends StatelessWidget {
+class OthersPScreen extends StatefulWidget {
+  @override
+  State<OthersPScreen> createState() => _OthersPScreenState();
+}
+
+class _OthersPScreenState extends State<OthersPScreen> {
   final db = Database();
+  bool _isLog = true;
+
   @override
   Widget build(BuildContext context) {
+    db.loadData();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        SizedBox(
-          height: Get.height * 0.05,
-        ),
-        SizedBox(
-          height: Get.height * 0.15,
-          child: BarChart(BarChartData(
-            titlesData: FlTitlesData(
-              show: false,
-            ),
-            borderData: FlBorderData(
-              show: false,
-            ),
-            barGroups: List.generate(
-              7,
-              (i) => BarChartGroupData(
-                x: i,
-                barRods: [
-                  BarChartRodData(
-                    y: Random().nextDouble() * 20000 + 10000,
-                    width: 22,
-                    borderRadius: BorderRadius.zero,
-                    colors: [i == 0 ? Colors.red : Colors.blue],
-                  ),
-                ],
-              ),
-            ),
-          )),
-        ),
         Padding(
           padding: const EdgeInsets.only(top: 6),
           child: FutureBuilder<List<Map<String, dynamic>>>(
@@ -55,20 +35,76 @@ class OthersPScreen extends StatelessWidget {
                 return Text('Error: ${snapshot.error}');
               } else {
                 return snapshot.data != null
-                    ? SizedBox(
-                        height: Get.height * 0.6,
-                        child: ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            return ListTile(
-                              title: Text(
-                                'Name: ${snapshot.data![index]['name'] ?? 'N/A'}',
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: Get.height * 0.15,
+                            child: BarChart(BarChartData(
+                              titlesData: FlTitlesData(
+                                show: false,
                               ),
-                              subtitle: Text(
-                                  'Total Worth: ${snapshot.data![index]['total_worth']?.toString() ?? 'N/A'}'),
-                            );
-                          },
-                        ),
+                              borderData: FlBorderData(
+                                show: false,
+                              ),
+                              barGroups: snapshot.data!.asMap().entries.map(
+                                (entry) {
+                                  int idx = entry.key;
+                                  Map data = entry.value;
+
+                                  return BarChartGroupData(
+                                    x: idx,
+                                    barRods: [
+                                      BarChartRodData(
+                                        y: _isLog
+                                            ? log(
+                                                data['total_worth'].toDouble())
+                                            : data['total_worth'].toDouble(),
+                                        width: 22,
+                                        borderRadius: BorderRadius.zero,
+                                        colors: [
+                                          data['player_id'] ==
+                                                  db.userData['player_id']
+                                              ? Colors.red
+                                              : Colors.blue
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ).toList(),
+                            )),
+                          ),
+                          CheckboxListTile(
+                            title: Text("Show as logarithmic"),
+                            value: _isLog,
+                            onChanged: (value) {
+                              setState(() {
+                                _isLog = value ?? false;
+                              });
+                            },
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.55,
+                            child: ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  color: snapshot.data![index]['player_id'] ==
+                                          db.userData['player_id']
+                                      ? Colors.lightBlue.withOpacity(0.2)
+                                      : null,
+                                  child: ListTile(
+                                    title: Text(
+                                      '${snapshot.data![index]['name'] ?? 'N/A'}',
+                                    ),
+                                    subtitle: Text(
+                                        'Total Worth: ${snapshot.data![index]['total_worth']?.toString() ?? 'N/A'}'),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       )
                     : const Center(child: Text('No data'));
               }

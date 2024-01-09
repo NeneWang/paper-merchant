@@ -203,7 +203,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                       ? Color(0xff2F80ED)
                       : black.withOpacity(0.7),
                 ),
-                label: "PortFolio"),
+                label: "Competition"),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   user,
