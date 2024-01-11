@@ -25,7 +25,6 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset(appLogo),
               const Text(
                 "Welcome to",
                 style: TextStyle(
