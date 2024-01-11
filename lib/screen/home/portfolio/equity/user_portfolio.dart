@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papermarket/utils/color.dart';
-// import 'package:papermarket/utils/data.dart';
 import 'package:papermarket/data/database.dart';
+
+import 'package:papermarket/components/loading_placeholder.dart';
 
 // ignore: use_key_in_widget_constructors, must_be_immutable
 class UserPortfolio extends StatefulWidget {
@@ -41,6 +42,7 @@ class _UserPortfolioState extends State<UserPortfolio> {
   List<Map<dynamic, dynamic>> UserPortfolioData = [];
   double totalInvested = 0;
   double totalProfit = 0;
+  bool loaded = false;
 
   @override
   void initState() {
@@ -64,6 +66,9 @@ class _UserPortfolioState extends State<UserPortfolio> {
     });
     setState(() {
       totalProfit = portfolioSummary["totalProfit"]!;
+    });
+    setState(() {
+      loaded = true;
     });
   }
 
@@ -89,6 +94,11 @@ class _UserPortfolioState extends State<UserPortfolio> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // if not loaded show loading placeholder
+            if (!loaded)
+              LoadingPlaceholder(
+                waitingMessage: "Loading Portfolio",
+              ),
             Expanded(
               child: ListView.builder(
                 shrinkWrap: true,

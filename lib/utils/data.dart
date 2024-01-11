@@ -77,52 +77,11 @@ const List bottomSheetListBuild = [
     "title": "BSE",
   },
   {
-    "img": AZ,
-    "title": "Alphabetically",
-  },
-  {
     "img": arrow,
     "title": "Last Traded Prise",
   },
 ];
-const List watchListPageBuildDesign = [
-  {
-    "img": AXISBANK,
-    "title": "AXISBANK",
-    "subTitle": "NSE",
-    "totalRs": "2126.20",
-    "stock1": "+30.00",
-    "stock2": "+0.72%",
-    "color": green,
-  },
-  {
-    "img": YESBANK,
-    "title": "YESBANK",
-    "subTitle": "NSE",
-    "totalRs": "245.20",
-    "stock1": "-15.00",
-    "stock2": "-1.00%",
-    "color": redEB5757,
-  },
-  {
-    "img": HDFCBANK,
-    "title": "HDFCBANK",
-    "subTitle": "BSE",
-    "totalRs": "1085.00",
-    "stock1": "+45.00 ",
-    "stock2": "+0.01%",
-    "color": green,
-  },
-  {
-    "img": PARLE,
-    "title": "PARLE",
-    "subTitle": "NSE",
-    "totalRs": "245.20",
-    "stock1": "+15.00",
-    "stock2": "+1.00%",
-    "color": green,
-  },
-];
+const List watchListPageBuildDesign = [];
 
 const Map<String, Map<String, dynamic>> watchListPageBuildStocks = {
   "AAPL": {
@@ -190,89 +149,7 @@ const List watchListPageBuildDesignMostStock = [
     "color": redEB5757,
   },
 ];
-const List allStockScreenList = [
-  {
-    "img": AXISBANK,
-    "title": "AXISBANK",
-    "subTitle": "NSE",
-    "totalRs": "2126.20",
-    "stock1": "+30.00",
-    "stock2": "+0.72%",
-    "color": green,
-  },
-  {
-    "img": YESBANK,
-    "title": "YESBANK",
-    "subTitle": "NSE",
-    "totalRs": "245.20",
-    "stock1": "-15.00",
-    "stock2": "-1.00%",
-    "color": redEB5757,
-  },
-  {
-    "img": HDFCBANK,
-    "title": "HDFCBANK",
-    "subTitle": "BSE",
-    "totalRs": "1085.00",
-    "stock1": "+45.00",
-    "stock2": "+0.01%",
-    "color": green,
-  },
-  {
-    "img": PARLE,
-    "title": "PARLE",
-    "subTitle": "NSE",
-    "totalRs": "245.20",
-    "stock1": "+15.00",
-    "stock2": "+1.00%",
-    "color": green,
-  },
-  {
-    "img": RELIANCE,
-    "title": "AXISBANK",
-    "subTitle": "NSE",
-    "totalRs": "2126.20",
-    "stock1": "+30.00",
-    "stock2": "+0.72%",
-    "color": green,
-  },
-  {
-    "img": Sunpharma,
-    "title": "YESBANK",
-    "subTitle": "NSE",
-    "totalRs": "245.20",
-    "stock1": "-15.00",
-    "stock2": "-1.00%",
-    "color": redEB5757,
-  },
-  {
-    "img": HDFCBANK,
-    "title": "HDFCBANK",
-    "subTitle": "BSE",
-    "totalRs": "2510.20",
-    "stock1": "+15.65",
-    "stock2": "+1.00%",
-    "color": green,
-  },
-  {
-    "img": ICICIBANK,
-    "title": "YESBANK",
-    "subTitle": "NSE",
-    "totalRs": "245.20",
-    "stock1": "-15.00",
-    "stock2": "-1.00%",
-    "color": redEB5757,
-  },
-  {
-    "img": YESBANK,
-    "title": "YESBANK",
-    "subTitle": "NSE",
-    "totalRs": "245.20",
-    "stock1": "-15.00",
-    "stock2": "-1.00%",
-    "color": redEB5757,
-  },
-];
+const List allStockScreenList = [];
 const List executedListPageBuildDesign = [
   {
     "con1Color": redEB5757,

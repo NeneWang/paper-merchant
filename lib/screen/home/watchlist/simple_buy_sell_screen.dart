@@ -67,15 +67,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final GlobalKey<_MyPageState> _key = GlobalKey();
-    String sample = "";
-    void reloadPage() {
-      print("Page reloaded");
-      setState(() {
-        sample = "Hello";
-      });
-    }
-
     String userCash = "0";
     bool moreCashThanCost(double currentPrice) {
       double totalCost = currentPrice;
@@ -159,9 +150,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                     "Description",
                               ),
                             ),
-                            SizedBox(
-                              height: 7,
-                            ),
+                            const Height5(),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -179,14 +168,14 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                                   .toStringAsFixed(2) ??
                                               "Market Cap",
                                           style: blackBoldStyle),
-                                      SizedBox(height: 5),
+                                      const Height5(),
                                       const Text('Volume'),
                                       Text(
                                           widget.stockData?["Volume"]
                                                   .toStringAsFixed(2) ??
                                               "Volume",
                                           style: blackBoldStyle),
-                                      SizedBox(height: 5),
+                                      const Height5(),
                                       const Text(
                                           'Standard Industrial Classification:'),
                                       Container(
@@ -202,28 +191,24 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                     ],
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width: Get.width * 0.4,
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.end,
                                     children: [
-                                      Text('total_employees'),
+                                      const Text('total_employees'),
                                       Text(
                                           widget.stockData?["total_employees"]
                                                   .toStringAsFixed(2) ??
                                               "total_employees",
                                           style: blackBoldStyle),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
+                                      const Height5(),
                                       Text("city", style: blackBoldStyle),
                                       Text(
                                         widget.stockData?["city"].toString() ??
                                             "city",
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
+                                      const Height5(),
                                       Text("state", style: blackBoldStyle),
                                       Text(
                                           widget.stockData?["state"]
@@ -241,18 +226,13 @@ class _BuySellScreenState extends State<BuySellScreen> {
                     ),
                   )
                 : Container(),
-            Divider(
-              thickness: 3,
-              color: grayF2F2F2,
-            ),
             FutureBuilder(
                 future: db.getDetailsShare(widget.ticker, widget.price),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     userCash = snapshot.data!["user_cash"];
                     return Padding(
-                      padding:
-                          const EdgeInsets.only(top: 21, left: 13, right: 18),
+                      padding: const EdgeInsets.only(left: 13, right: 18),
                       child: snapshot.data?["shares_owned"] != null &&
                               snapshot.data?["shares_owned"] != "0" &&
                               snapshot.data?["shares_owned"] != ""
@@ -266,8 +246,11 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
+                                      Divider(
+                                        thickness: 3,
+                                        color: grayF2F2F2,
+                                      ),
                                       const Text("Average Price bought at"),
-                                      Text(sample),
                                       Text(
                                         snapshot.data![
                                             "shares_owned_average_price"],
@@ -352,19 +335,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                     );
                   } else {
                     return Center(
-                      child: Column(
-                        children: [
-                          CircularProgressIndicator(),
-                          Text("Loading user data..."),
-                          SizedBox(
-                            height: 22,
-                          ),
-                          Divider(
-                            thickness: 3,
-                            color: grayF2F2F2,
-                          ),
-                        ],
-                      ),
+                      child: Column(),
                     );
                   }
                 }),
@@ -385,7 +356,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
                         db.purchaseStock(symbol, count: count, price: price);
 
                         print('userCash: $userCash');
-                        reloadPage();
                       }, userCash: userCash);
                     },
                   ),
@@ -397,7 +367,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
                           symbol: widget.ticker, sellMethod: (String symbol,
                               {required int count, required double price}) {
                         db.sellStock(symbol, count: count, price: price);
-                        reloadPage();
                       });
                     },
                   ),
@@ -416,13 +385,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
-                    const Text("History",
-                        style: TextStyle(
-                          fontSize: 28,
-                          color: black2,
-                          fontFamily: "NunitoBold",
-                          fontWeight: FontWeight.w700,
-                        )),
                     FutureBuilder<List>(
                       future: db.getTickerTransactions(widget.ticker),
                       builder: (context, snapshot) {
@@ -443,9 +405,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                             },
                           );
                         } else {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
+                          return const Center();
                         }
                       },
                     ),
@@ -457,6 +417,19 @@ class _BuySellScreenState extends State<BuySellScreen> {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Height5 extends StatelessWidget {
+  const Height5({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(
+      height: 5,
     );
   }
 }

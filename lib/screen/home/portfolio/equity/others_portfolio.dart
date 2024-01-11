@@ -6,6 +6,7 @@ import 'package:papermarket/utils/color.dart';
 import 'package:papermarket/utils/data.dart';
 import 'package:papermarket/data/database.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:papermarket/components/loading_placeholder.dart';
 
 class OthersPScreen extends StatefulWidget {
   @override
@@ -30,7 +31,9 @@ class _OthersPScreenState extends State<OthersPScreen> {
             builder: (BuildContext context,
                 AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return const LoadingPlaceholder(
+                  waitingMessage: "Loading competitors data...",
+                );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
               } else {
@@ -44,6 +47,9 @@ class _OthersPScreenState extends State<OthersPScreen> {
                                 show: false,
                               ),
                               borderData: FlBorderData(
+                                show: false,
+                              ),
+                              gridData: FlGridData(
                                 show: false,
                               ),
                               barGroups: snapshot.data!.asMap().entries.map(
@@ -64,8 +70,9 @@ class _OthersPScreenState extends State<OthersPScreen> {
                                         colors: [
                                           data['player_id'] ==
                                                   db.userData['player_id']
-                                              ? Colors.red
-                                              : Colors.blue
+                                              ? Colors.lightGreen
+                                              : Colors.grey.withOpacity(
+                                                  0.5) // 50% opacity
                                         ],
                                       ),
                                     ],
@@ -82,6 +89,8 @@ class _OthersPScreenState extends State<OthersPScreen> {
                                 _isLog = value ?? false;
                               });
                             },
+
+                            activeColor: Colors.green, // Add this line
                           ),
                           SizedBox(
                             height: Get.height * 0.55,
@@ -91,7 +100,7 @@ class _OthersPScreenState extends State<OthersPScreen> {
                                 return Container(
                                   color: snapshot.data![index]['player_id'] ==
                                           db.userData['player_id']
-                                      ? Colors.lightBlue.withOpacity(0.2)
+                                      ? Colors.lightGreen.withOpacity(0.2)
                                       : null,
                                   child: ListTile(
                                     title: Text(

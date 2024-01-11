@@ -73,10 +73,11 @@ class _AllStockScreenState extends State<AllStockScreen> {
                         future: db.getShowStockAsList(filter: widget.search),
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
-                              ConnectionState.done) {
+                                  ConnectionState.done &&
+                              snapshot.hasData) {
                             return ListView.builder(
                               shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
+                              itemCount: snapshot.data?.length,
                               itemBuilder: (context, index) =>
                                   simpleStockListViewItem(
                                 title: snapshot.data![index]["title"],
