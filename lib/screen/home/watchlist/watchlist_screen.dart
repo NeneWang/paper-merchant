@@ -1,4 +1,3 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -77,7 +76,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                     onTap: () {
                       reloadScreen();
                     },
-                    child: Icon(
+                    child: const Icon(
                       CupertinoIcons.refresh,
                       size: 24, // Adjust the size as needed
                     ),
@@ -93,7 +92,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                     onTap: () {
                       Get.to(NotificationScreen());
                     },
-                    child: Icon(
+                    child: const Icon(
                       CupertinoIcons.bell,
                       size: 24, // Adjust the size as needed
                     ),
@@ -101,7 +100,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                 ),
               ),
               Container(
-                height: Get.height / 2.80,
+                height: Get.height / 5,
                 child: TabBarView(
                   controller: myTabController.controller,
                   children: [
@@ -111,51 +110,14 @@ class _WatchListScreenState extends State<WatchListScreen> {
                             "0"),
                     Text(Get.height.toString()),
                     Text(Get.width.toString()),
-                    Text("cj"),
-                    Text("cj"),
                   ],
                 ),
-              ),
-              Container(
-                height: Get.height / 13.42,
-                width: Get.width,
-                child: BottomAppBar(
-                  // notchMargin: 0,
-                  notchMargin: 5.0,
-                  color: pageBackGroundC,
-                  elevation: 0,
-                  child: TabBar(
-                    // labelPadding: EdgeInsets.all(0),
-                    // onTap: _onItemTapped,
-                    labelColor: appColor,
-                    controller: myTabController.controller,
-                    unselectedLabelColor: black,
-                    indicatorColor: appColor,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorWeight: 2,
-                    isScrollable: false,
-                    indicator: UnderlineTabIndicator(
-                      borderSide: BorderSide(color: appColor, width: 2),
-                      // insets: EdgeInsets.only(bottom: 52),
-                    ),
-                    tabs: myTabController.dateViewController,
-                    labelStyle: TextStyle(
-                      fontSize: 15,
-                      color: black,
-                      fontFamily: "NunitoSemiBold",
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: Get.height / 44.57,
               ),
               Container(
                 height:
                     Get.height * 1.2 /*(Get.height > 891) ? Get.height : 275*/,
                 width: Get.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(20),
@@ -173,7 +135,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Stocks",
                             style: TextStyle(
                               fontSize: 18,
@@ -191,7 +153,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                                 ),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               "See All",
                               style: TextStyle(
                                 fontSize: 15,
@@ -218,7 +180,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                             db.userStockPrices[stockList[index]["title"]],
                       ),
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.only(top: 14),
                       child: Divider(
                         height: 2,
@@ -232,7 +194,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             "Bookmark",
                             style: TextStyle(
                               fontSize: 18,
@@ -250,7 +212,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
                                 ),
                               );*/
                             },
-                            child: Text(
+                            child: const Text(
                               "See All",
                               style: TextStyle(
                                 fontSize: 15,
@@ -286,91 +248,6 @@ class _WatchListScreenState extends State<WatchListScreen> {
       ),
     );
   }
-}
-
-lastContainerDesign(
-    {String? text1,
-    Color? mainColor,
-    String? text2,
-    String? richText1,
-    String? richText2}) {
-  return Container(
-    width: 82 /*tablet:80*/,
-    child: Row(
-      children: [
-        VerticalDivider(
-          color: mainColor,
-          thickness: 2,
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text1!,
-              style: TextStyle(
-                fontSize: 9,
-                color: black3B3C59,
-                fontFamily: "NunitoBold",
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Text(
-              text2!,
-              style: TextStyle(
-                fontSize: 12,
-                color: mainColor,
-                fontFamily: "NunitoSemiBold",
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            RichText(
-              text: TextSpan(
-                children: [
-                  TextSpan(
-                    text: richText1,
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: black080D0A,
-                      fontFamily: "Nunito",
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text: "(",
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: black080D0A,
-                      fontFamily: "Nunito",
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text: richText2,
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: mainColor,
-                      fontFamily: "Nunito",
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  TextSpan(
-                    text: ")",
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: black080D0A,
-                      fontFamily: "Nunito",
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
 }
 
 tabAssetsView(String totalCash, String totalAssets) {
@@ -422,10 +299,6 @@ tabAssetsView(String totalCash, String totalAssets) {
             )
           ],
         ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(top: 28),
-        child: SizedBox(height: Get.height / 5.57, child: Container()),
       ),
     ],
   );

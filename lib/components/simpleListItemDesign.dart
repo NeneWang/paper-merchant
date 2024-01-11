@@ -79,23 +79,6 @@ simpleStockListViewItem(
           Container(
             width: 84,
             height: 29,
-            child: LineChart(
-              LineChartData(
-                minX: 0,
-                maxX: 11,
-                minY: 0,
-                maxY: 6,
-                titlesData: FlTitlesData(show: false),
-                gridData: FlGridData(
-                  show: false,
-                  drawVerticalLine: false,
-                ),
-                borderData: FlBorderData(
-                  show: false,
-                ),
-                lineBarsData: [getRandomLineChartData()],
-              ),
-            ),
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
