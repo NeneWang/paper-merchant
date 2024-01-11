@@ -425,27 +425,7 @@ tabAssetsView(String totalCash, String totalAssets) {
       ),
       Padding(
         padding: const EdgeInsets.only(top: 28),
-        child: SizedBox(
-          height: Get.height / 5.57,
-          child: LineChart(
-            LineChartData(
-              minX: 0,
-              maxX: 11,
-              minY: 0,
-              maxY: 6,
-              titlesData: FlTitlesData(show: false),
-              gridData: FlGridData(
-                show: false,
-                drawVerticalLine: false,
-              ),
-              borderData: FlBorderData(
-                show: false,
-                // border: Border.all(color: transPrent, width: 1),
-              ),
-              lineBarsData: [getRandomLineChartData()],
-            ),
-          ),
-        ),
+        child: SizedBox(height: Get.height / 5.57, child: Container()),
       ),
     ],
   );

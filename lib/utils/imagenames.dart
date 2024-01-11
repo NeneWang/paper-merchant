@@ -1,4 +1,4 @@
-const String appLogo = "assets/image/comman/appLogo.svg";
+const String appLogo = "assets/image/comman/logo.png";
 const String drawerIcon = "assets/image/comman/drawerIcon.svg";
 const String personImage = "assets/image/comman/personImage.png";
 const String bg = "assets/image/comman/bg.svg";

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:papermarket/screen/auth/signup/signup_screen.dart';
 import '../auth/login/login_screen.dart';
@@ -21,21 +19,18 @@ class WelcomeScreen extends StatelessWidget {
       backgroundColor: pageBackGroundC,
       body: Center(
         child: Padding(
-          padding: EdgeInsets.only(top: Get.height / 3.87),
+          padding: EdgeInsets.only(),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                "Welcome to",
-                style: TextStyle(
-                  color: black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 28,
-                  fontFamily: "NunitoSemiBold",
-                ),
+              Image.asset(
+                appLogo,
+                height: Get.height / 4.95,
+                width: Get.width / 2.76,
               ),
+              Padding(padding: EdgeInsets.only()),
               const Text(
-                "Paper Stock",
+                "PT Paperstock",
                 style: TextStyle(
                   color: black,
                   fontWeight: FontWeight.w600,
@@ -44,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: Get.height / 4.81),
+                padding: EdgeInsets.only(),
               ),
               loginButton(
                   textLabel: "Login",
@@ -70,9 +65,9 @@ class WelcomeScreen extends StatelessWidget {
                       );
                     }
                   }),
-              SizedBox(
-                height: Get.height / 49.52,
-              ),
+              // SizedBox(
+              //   height: Get.height / 49.52,
+              // ),
               loginButton(
                   textLabel: "Login as Demo2",
                   onTapButton: () async {
