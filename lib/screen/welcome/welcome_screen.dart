@@ -1,3 +1,4 @@
+import 'package:papermarket/components/small_space.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papermarket/screen/auth/signup/signup_screen.dart';
@@ -30,7 +31,7 @@ class WelcomeScreen extends StatelessWidget {
               ),
               Padding(padding: EdgeInsets.only()),
               const Text(
-                "PT Paperstock",
+                "Paper Merchant",
                 style: TextStyle(
                   color: black,
                   fontWeight: FontWeight.w600,
@@ -38,56 +39,13 @@ class WelcomeScreen extends StatelessWidget {
                   fontFamily: "NunitoBold",
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(),
-              ),
+              const SmallSpace(),
               loginButton(
                   textLabel: "Login",
                   onTapButton: () {
                     Get.to(LogInScreen());
                   }),
-              SizedBox(
-                height: Get.height / 49.52,
-              ),
-              loginButton(
-                  textLabel: "Login as Demo",
-                  onTapButton: () async {
-                    // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
-                    final Database db = Database();
-                    final loginResponse = await db.login(
-                        email: "wangnelson4@gmail.com", password: "test123");
-                    if (loginResponse) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DrawerOpenScreen(),
-                        ),
-                      );
-                    }
-                  }),
-              // SizedBox(
-              //   height: Get.height / 49.52,
-              // ),
-              loginButton(
-                  textLabel: "Login as Demo2",
-                  onTapButton: () async {
-                    // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
-                    final Database db = Database();
-                    final loginResponse = await db.login(
-                        email: "caramelitogoloso2k@gmail.com",
-                        password: "test123");
-                    if (loginResponse) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DrawerOpenScreen(),
-                        ),
-                      );
-                    }
-                  }),
-              SizedBox(
-                height: Get.height / 49.52,
-              ),
+              const SmallSpace(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -114,6 +72,40 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
+              const SmallSpace(),
+              loginButton(
+                  textLabel: "Login as Demo",
+                  onTapButton: () async {
+                    // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
+                    final Database db = Database();
+                    final loginResponse = await db.login(
+                        email: "wangnelson4@gmail.com", password: "test123");
+                    if (loginResponse) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DrawerOpenScreen(),
+                        ),
+                      );
+                    }
+                  }),
+              loginButton(
+                  textLabel: "Login as Demo2",
+                  onTapButton: () async {
+                    // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
+                    final Database db = Database();
+                    final loginResponse = await db.login(
+                        email: "caramelitogoloso2k@gmail.com",
+                        password: "test123");
+                    if (loginResponse) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DrawerOpenScreen(),
+                        ),
+                      );
+                    }
+                  }),
             ],
           ),
         ),

@@ -10,7 +10,7 @@ loginButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.blue.withOpacity(0.3),
+          color: Colors.green.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -48,7 +48,7 @@ changePasswordButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.blue.withOpacity(0.3),
+          color: Colors.green.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -86,7 +86,7 @@ resetButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.blue.withOpacity(0.3),
+          color: Colors.green.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -125,7 +125,7 @@ signUpButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.blue.withOpacity(0.3),
+          color: Colors.green.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -164,7 +164,7 @@ buyDropDownButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.blue.withOpacity(0.3),
+          color: Colors.green.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -389,7 +389,7 @@ buyButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.blue.withOpacity(0.3),
+          color: Colors.green.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),

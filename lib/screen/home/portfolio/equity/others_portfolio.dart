@@ -7,6 +7,7 @@ import 'package:papermarket/utils/data.dart';
 import 'package:papermarket/data/database.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:papermarket/components/loading_placeholder.dart';
+import 'package:papermarket/components/small_space.dart';
 
 class OthersPScreen extends StatefulWidget {
   @override
@@ -40,6 +41,7 @@ class _OthersPScreenState extends State<OthersPScreen> {
                 return snapshot.data != null
                     ? Column(
                         children: [
+                          const SmallSpace(),
                           SizedBox(
                             height: Get.height * 0.15,
                             child: BarChart(BarChartData(

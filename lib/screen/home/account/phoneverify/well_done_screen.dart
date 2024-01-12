@@ -65,7 +65,7 @@ class WellDoneScreen extends StatelessWidget {
               decoration: BoxDecoration(
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blue.withOpacity(0.3),
+                    color: Colors.green.withOpacity(0.3),
                     spreadRadius: 4,
                     blurRadius: 10,
                     offset: Offset(0, 1),
