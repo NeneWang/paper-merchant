@@ -221,7 +221,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
               ),
             ),
             ListView.builder(
-              padding: EdgeInsets.only(top: 0),
+              padding: EdgeInsets.only(top: 1),
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemCount: bookmarkedList.length,

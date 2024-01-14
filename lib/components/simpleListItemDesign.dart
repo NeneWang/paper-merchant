@@ -61,7 +61,7 @@ simpleStockListViewItem(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6),
                 child: Text(
                   title!,
                   style: const TextStyle(
@@ -82,7 +82,7 @@ simpleStockListViewItem(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(6.0),
                 child: Text(
                   total!,
                   style: const TextStyle(

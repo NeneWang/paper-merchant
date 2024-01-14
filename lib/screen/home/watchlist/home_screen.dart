@@ -145,7 +145,7 @@ appBarDesign() {
         decoration: const InputDecoration(
           alignLabelWithHint: true,
           border: InputBorder.none,
-          hintText: "Search anything",
+          hintText: "Search Stocks",
           hintStyle: TextStyle(
             fontSize: 14,
             color: gray9B9797,
