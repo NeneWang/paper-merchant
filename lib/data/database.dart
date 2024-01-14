@@ -265,11 +265,9 @@ class Database {
     return convertToListingFormat(showStockData);
   }
 
-  Future<List<Map<String, dynamic>>> getRankingData() async {
-    // TODO Have this using a dynamic competitionUUID
-    // const competitorUuid = "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
-    var competitorUuid = userData["current_competition"];
-    var competitorsAPI = "$backendAPI/api/competitions/$competitorUuid";
+  Future<List<Map<String, dynamic>>> getCompetitionsData() async {
+    var participantGuid = userData["player_id"];
+    var competitorsAPI = "$backendAPI/api/competitions/";
     List<Map<String, dynamic>> competitorsDataFormat = [];
 
     final response = await http.get(Uri.parse(competitorsAPI));
@@ -292,7 +290,17 @@ class Database {
           "Nelson",
           "hello"
         ],
-        "competition_participants_count": 8
+        "competition_participants_count": 8,
+        "competition_participants_guid": [
+          "43ac4396-232b-4acd-a69c-5e330e495b1f",
+          "4379afa2-8dd0-471d-8d1e-695106dae29a",
+          "6877986f-ce17-452a-900f-b94fa66064b8",
+          "3b64b3d6-d1b7-4ea9-a727-3c10fbd165cf",
+          "bbf8e248-ca89-41c4-b55c-e4e20977a6e0",
+          "ddf45ed4-2c31-48bd-bbd9-e2459eab483b",
+          "43ac4396-232b-4acd-a69c-5e330e495b1f",
+          "917605dd-4714-4c56-bb34-5c2487cda84f"
+        ]
       }
     */
 
@@ -313,13 +321,12 @@ class Database {
                 competitorData["competition_participants"],
             "competition_participants_count":
                 competitorData["competition_participants_count"],
+            "user_is_participant":
+                competitorData["competition_participants_guid"]
+                    .contains(participantGuid),
           });
         }
       }
-
-      // Sort using total_worth reverse
-      competitorsDataFormat
-          .sort((a, b) => a["total_worth"].compareTo(b["total_worth"]));
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }
@@ -328,8 +335,9 @@ class Database {
   }
 
   Future<List<Map<String, dynamic>>> getRankingsData() async {
-    const competitorUuid = "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
-    const competitorsAPI = "$backendAPI/api/competitors/$competitorUuid";
+    // const competitorUuid = "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
+    var competitorUuid = userData["current_competition"];
+    var competitorsAPI = "$backendAPI/api/competitors/$competitorUuid";
     List<Map<String, dynamic>> competitorsDataFormat = [];
 
     final response = await http.get(Uri.parse(competitorsAPI));
@@ -347,7 +355,7 @@ class Database {
 
       // Sort using total_worth reverse
       competitorsDataFormat
-          .sort((a, b) => a["total_worth"].compareTo(b["total_worth"]));
+          .sort((a, b) => b["total_worth"].compareTo(a["total_worth"]));
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }

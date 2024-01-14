@@ -1,67 +1,146 @@
-import 'package:paper_merchant/controller/tabcontroller_screen.dart';
-import 'package:paper_merchant/screen/home/portfolio/equity/banking_tabs.dart';
-import 'package:paper_merchant/screen/home/portfolio/equity/user_portfolio.dart';
-import 'package:paper_merchant/utils/color.dart';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paper_merchant/utils/color.dart';
+import 'package:paper_merchant/data/database.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:paper_merchant/components/loading_placeholder.dart';
+import 'package:paper_merchant/components/small_space.dart';
 
-// ignore: must_be_immutable
-class RankingsTabsScreens extends StatelessWidget {
-  applicationController myTabController = Get.find();
+class RankingScreenTab extends StatefulWidget {
+  @override
+  State<RankingScreenTab> createState() => _RankingScreenTabState();
+}
 
-  RankingsTabsScreens({super.key});
+class _RankingScreenTabState extends State<RankingScreenTab> {
+  final db = Database();
+  bool _isLog = true;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: white,
-      appBar: AppBar(
-        elevation: 0,
-        automaticallyImplyLeading: false,
-        backgroundColor: white,
-        title: Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: TabBar(
-            labelColor: appColor,
-            controller: myTabController.controller4,
-            unselectedLabelColor: black,
-            indicatorColor: appColor,
-            indicatorSize: TabBarIndicatorSize.tab,
-            indicatorWeight: 2,
-            // isScrollable: false,
-            physics: const NeverScrollableScrollPhysics(),
-            // labelPadding: EdgeInsets.only(right: 40),
-            indicator: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0xff40000000).withOpacity(0.1),
-                  offset: Offset(0.5, 3),
-                  blurRadius: 5,
-                  spreadRadius: 0.2,
-                ),
-              ],
-              borderRadius: BorderRadius.circular(40),
-              color: pageBackGroundC,
-            ),
-            tabs: myTabController.portfolioController,
-            labelStyle: const TextStyle(
-              fontSize: 12,
-              color: black2,
-              fontFamily: "PoppinsMedium",
-              fontWeight: FontWeight.w500,
-            ),
+    db.loadData();
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 6),
+          child: FutureBuilder<List<Map<String, dynamic>>>(
+            future: db.getRankingsData(), // replace with your competitionUUID
+            builder: (BuildContext context,
+                AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const LoadingPlaceholder(
+                  waitingMessage: "Loading competitors data...",
+                );
+              } else if (snapshot.hasError) {
+                return Text('Error: ${snapshot.error}');
+              } else {
+                return snapshot.data != null
+                    ? Column(
+                        children: [
+                          const SmallSpace(),
+                          SizedBox(
+                            height: Get.height * 0.15,
+                            child: BarChart(BarChartData(
+                              titlesData: FlTitlesData(
+                                show: false,
+                              ),
+                              borderData: FlBorderData(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.grey.withOpacity(0.5),
+                                    width: 1,
+                                  ),
+                                  top: BorderSide(
+                                    color: Colors.grey.withOpacity(0.0),
+                                    width: 1,
+                                  ),
+                                ),
+                              ),
+                              gridData: FlGridData(show: false),
+                              barGroups: snapshot.data!.asMap().entries.map(
+                                (entry) {
+                                  int idx = entry.key;
+                                  Map data = entry.value;
+                                  bool isYou = data['player_id'] ==
+                                      db.userData['player_id'];
+
+                                  return BarChartGroupData(
+                                    x: idx,
+                                    barRods: [
+                                      BarChartRodData(
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(6),
+                                          topRight: Radius.circular(6),
+                                        ),
+                                        y: _isLog
+                                            ? log(
+                                                data['total_worth'].toDouble())
+                                            : data['total_worth'].toDouble(),
+                                        width: 22,
+                                        colors: [
+                                          isYou ? greenLogo : lightBGBlue
+                                        ],
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ).toList(),
+                            )),
+                          ),
+                          CheckboxListTile(
+                            title: const Text(
+                              "Show as logarithmic",
+                              style: TextStyle(color: greenLogo),
+                            ),
+                            value: _isLog,
+                            onChanged: (value) {
+                              setState(() {
+                                _isLog = value ?? false;
+                              });
+                            },
+
+                            activeColor: greenLogo, // Add this line
+                          ),
+                          // Make a horizontal line
+                          const Divider(
+                            height: 5,
+                            thickness: 1,
+                            indent: 20,
+                            endIndent: 20,
+                            color: greenLogo,
+                          ),
+                          SizedBox(
+                            height: Get.height * 0.55,
+                            child: ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  color: snapshot.data![index]['player_id'] ==
+                                          db.userData['player_id']
+                                      ? greenLogo.withOpacity(0.2)
+                                      : null,
+                                  child: ListTile(
+                                    leading: Text('Ranked: ${index + 1}'),
+                                    title: Text(
+                                      '${snapshot.data![index]['name'] ?? 'N/A'}',
+                                    ),
+                                    subtitle: Text(
+                                        'Total Worth: ${snapshot.data![index]['total_worth']?.toStringAsFixed(2) ?? 'N/A'}'),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      )
+                    : const Center(child: Text('No data'));
+              }
+            },
           ),
         ),
-      ),
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: myTabController.controller4,
-        children: [
-          RankingScreenTab(),
-          UserPortfolio(),
-        ],
-      ),
+      ],
     );
   }
 }

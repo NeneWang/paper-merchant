@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paper_merchant/controller/tabcontroller_screen.dart';
-import 'package:paper_merchant/screen/home/portfolio/equity/ranking_tabs.dart';
+import 'package:paper_merchant/screen/home/portfolio/equity/rankingTabControl.dart';
 import 'package:paper_merchant/utils/color.dart';
 
 // ignore: must_be_immutable
-class PortFolioScreen extends StatelessWidget {
+class RankingsScreen extends StatelessWidget {
   applicationController myTabController = Get.find();
 
   @override

@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:paper_merchant/controller/drawer_open_controller.dart';
 import 'package:paper_merchant/screen/home/account/account_screen.dart';
-import 'package:paper_merchant/screen/home/portfolio/portfolio_screen.dart';
+import 'package:paper_merchant/screen/home/portfolio/ranking_screen.dart';
 import 'package:paper_merchant/screen/home/watchlist/watchlist_screen.dart';
 import 'package:paper_merchant/utils/color.dart';
 import 'package:paper_merchant/utils/imagenames.dart';
@@ -89,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                       navigatorKey: navigatorKeys[0]!,
                     ),
                     NavigatorPage(
-                      child: PortFolioScreen(),
+                      child: RankingsScreen(),
                       title: "port",
                       navigatorKey: navigatorKeys[1]!,
                     ),
