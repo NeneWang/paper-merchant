@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paper_merchant/components/loading_placeholder.dart';
 
 import 'package:paper_merchant/components/simpleListItemDesign.dart';
 import 'package:paper_merchant/data/database.dart';
@@ -48,24 +49,12 @@ class _AllStockScreenState extends State<AllStockScreen> {
           ),
           child: Padding(
             padding: const EdgeInsets.only(
-              top: 23,
+              top: 10,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                const Padding(
-                  padding: EdgeInsets.only(left: 12, bottom: 18),
-                  child: Text(
-                    "All Stocks",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: black0D1F3C,
-                      fontFamily: "NunitoBold",
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
                 ScrollConfiguration(
                   behavior: MyBehavior(),
                   child: Expanded(
@@ -89,8 +78,8 @@ class _AllStockScreenState extends State<AllStockScreen> {
                               ),
                             );
                           } else {
-                            return const Center(
-                              child: CircularProgressIndicator(),
+                            return const LoadingPlaceholder(
+                              waitingMessage: "Loading Stocks data...",
                             );
                           }
                         }),
