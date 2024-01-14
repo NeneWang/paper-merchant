@@ -203,7 +203,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                       ? Color(0xff2F80ED)
                       : black.withOpacity(0.7),
                 ),
-                label: "Competition"),
+                label: "Rankings"),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   user,
@@ -211,7 +211,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                       ? Color(0xff2F80ED)
                       : gray9B9797,
                 ),
-                label: "Account"),
+                label: "Player"),
           ],
           currentIndex: s.selectedIndex.toInt(),
           selectedItemColor: Color(0xff2F80ED),

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "papermarket" "\0"
+            VALUE "FileDescription", "papermerchant" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "papermarket" "\0"
+            VALUE "InternalName", "papermerchant" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "papermarket.exe" "\0"
-            VALUE "ProductName", "papermarket" "\0"
+            VALUE "OriginalFilename", "papermerchant.exe" "\0"
+            VALUE "ProductName", "papermerchant" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

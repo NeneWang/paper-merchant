@@ -265,7 +265,69 @@ class Database {
     return convertToListingFormat(showStockData);
   }
 
-  Future<List<Map<String, dynamic>>> getCompetitorsData() async {
+  Future<List<Map<String, dynamic>>> getRankingData() async {
+    // TODO Have this using a dynamic competitionUUID
+    // const competitorUuid = "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
+    var competitorUuid = userData["current_competition"];
+    var competitorsAPI = "$backendAPI/api/competitions/$competitorUuid";
+    List<Map<String, dynamic>> competitorsDataFormat = [];
+
+    final response = await http.get(Uri.parse(competitorsAPI));
+    // Expect array of format:
+    /**
+    * {
+        "competition_id": "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b",
+        "competition_name": "Universal Competition",
+        "competition_description": "Default Competition",
+        "competition_initial_cash": 10000,
+        "competition_start_date": "2023-07-12T19:09:56.652866",
+        "competition_end_date": null,
+        "competition_participants": [
+          "Nelson",
+          "nelson1",
+          "Matthew Nuñez",
+          "camila",
+          "Nelson the Tester",
+          "Caramelito",
+          "Nelson",
+          "hello"
+        ],
+        "competition_participants_count": 8
+      }
+    */
+
+    if (response.statusCode == 200) {
+      final competitorsData = json.decode(response.body) as List;
+      for (var competitorData in competitorsData) {
+        if (competitorData is Map<String, dynamic>) {
+          competitorsDataFormat.add({
+            "competition_id": competitorData["competition_id"],
+            "competition_name": competitorData["competition_name"],
+            "competition_description":
+                competitorData["competition_description"],
+            "competition_initial_cash":
+                competitorData["competition_initial_cash"],
+            "competition_start_date": competitorData["competition_start_date"],
+            "competition_end_date": competitorData["competition_end_date"],
+            "competition_participants":
+                competitorData["competition_participants"],
+            "competition_participants_count":
+                competitorData["competition_participants_count"],
+          });
+        }
+      }
+
+      // Sort using total_worth reverse
+      competitorsDataFormat
+          .sort((a, b) => a["total_worth"].compareTo(b["total_worth"]));
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+
+    return competitorsDataFormat;
+  }
+
+  Future<List<Map<String, dynamic>>> getRankingsData() async {
     const competitorUuid = "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b";
     const competitorsAPI = "$backendAPI/api/competitors/$competitorUuid";
     List<Map<String, dynamic>> competitorsDataFormat = [];

@@ -22,11 +22,15 @@ class applicationController extends GetxController
     Container(
         height: 30,
         alignment: Alignment.center,
+        child: const Tab(text: 'Ranking')),
+    Container(
+        height: 30,
+        alignment: Alignment.center,
         child: const Tab(text: 'Your Portfolio')),
     Container(
         height: 30,
         alignment: Alignment.center,
-        child: const Tab(text: 'Competition')),
+        child: const Tab(text: 'Competitions')),
   ];
   final List<Tab> weekYearContoller = <Tab>[
     // Tab(text: 'Day'),

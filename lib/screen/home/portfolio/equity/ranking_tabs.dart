@@ -1,13 +1,16 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:paper_merchant/controller/tabcontroller_screen.dart';
-import 'package:paper_merchant/screen/home/portfolio/equity/others_portfolio.dart';
+import 'package:paper_merchant/screen/home/portfolio/equity/banking_tabs.dart';
 import 'package:paper_merchant/screen/home/portfolio/equity/user_portfolio.dart';
 import 'package:paper_merchant/utils/color.dart';
 
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 // ignore: must_be_immutable
-class EquityScreen extends StatelessWidget {
+class RankingsTabsScreens extends StatelessWidget {
   applicationController myTabController = Get.find();
+
+  RankingsTabsScreens({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +58,8 @@ class EquityScreen extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         controller: myTabController.controller4,
         children: [
+          RankingScreenTab(),
           UserPortfolio(),
-          OthersPScreen(),
         ],
       ),
     );

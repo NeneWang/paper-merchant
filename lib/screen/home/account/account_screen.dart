@@ -77,20 +77,22 @@ class _AccountScreenState extends State<AccountScreen> {
                     right: Get.width / 17.14,
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "name: ${db.userData["name"] ?? 'name_not_set'}",
+                        "${db.userData["name"] ?? 'name_not_set'}",
                         style: nameTextStyle,
                       ),
                       const SizedBox(
                         height: 5.14,
                       ),
                       Text(
-                          'player_id: ${db.userData["player_id"] ?? "player_id_not_set"}'),
-                      Text("${db.userData["user_id"] ?? 'id_not_set'}",
+                          'Player id: ${db.userData["player_id"] ?? "player_id_not_set"}',
+                          style: detailsTextStyle),
+                      Text("User Id: ${db.userData["user_id"] ?? 'id_not_set'}",
                           style: detailsTextStyle),
                       Text(
-                          "${db.userData["current_competition"] ?? 'competition_not_set'}",
+                          "Current Participation Id ${db.userData["current_competition"] ?? 'competition_not_set'}",
                           style: detailsTextStyle),
                       SizedBox(
                         height: Get.height / 37.14,
@@ -101,12 +103,6 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       SizedBox(
                         height: Get.height / 127.34,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: leftArrowRowLink(
-                          labelText: "Link with Account",
-                        ),
                       ),
                       InkWell(
                         onTap: () {},

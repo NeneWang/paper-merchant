@@ -1,11 +1,11 @@
 {
-    "name": "papermarket",
-    "short_name": "papermarket",
+    "name": "Paper Merchant",
+    "short_name": "papermerchant",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Learn, Trade, Triumph: Join the Competition.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

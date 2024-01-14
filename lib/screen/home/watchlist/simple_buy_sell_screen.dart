@@ -246,7 +246,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Divider(
+                                      const Divider(
                                         thickness: 3,
                                         color: grayF2F2F2,
                                       ),

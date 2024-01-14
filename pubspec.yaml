@@ -1,5 +1,5 @@
 name: paper_merchant
-description: Paper Trading Application that also hosts competitions.
+description: The ultimate paper trading platform where you can hone your trading skills risk-free and take your financial expertise to the next level. Our innovative app not only lets you practice trading in a simulated environment but also invites you to compete against fellow traders for exciting rewards and recognition..
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paper_merchant/controller/tabcontroller_screen.dart';
-import 'package:paper_merchant/screen/home/portfolio/equity/equity_screen.dart';
+import 'package:paper_merchant/screen/home/portfolio/equity/ranking_tabs.dart';
 import 'package:paper_merchant/utils/color.dart';
 
 // ignore: must_be_immutable
@@ -19,7 +19,7 @@ class PortFolioScreen extends StatelessWidget {
             child: TabBarView(
               controller: myTabController.controller2,
               children: [
-                EquityScreen(),
+                RankingsTabsScreens(),
               ],
             ),
           )
