@@ -1,10 +1,8 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paper_merchant/screen/home/watchlist/simple_buy_sell_screen.dart';
 
 import 'package:paper_merchant/utils/color.dart';
-import 'package:paper_merchant/data/utils.dart';
 
 simpleStockListViewItem(
     /**

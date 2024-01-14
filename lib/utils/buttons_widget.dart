@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:paper_merchant/utils/imagenames.dart';
 import 'package:paper_merchant/utils/color.dart';
 
-import 'color.dart';
-
 loginButton({String? textLabel, onTapButton}) {
   return Container(
     decoration: BoxDecoration(
