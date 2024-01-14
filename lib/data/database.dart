@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'dart:math';
 import 'dart:convert';
 import 'package:fuzzy/fuzzy.dart';
+import 'package:paper_merchant/utils/imagenames.dart';
 
 import '../utils/color.dart';
 
@@ -266,7 +267,9 @@ class Database {
   }
 
   Future<List<Map<String, dynamic>>> getCompetitionsData() async {
-    var participantGuid = userData["player_id"];
+    var userId = userData["user_id"];
+    print(userId + " participantGuid");
+
     var competitorsAPI = "$backendAPI/api/competitions/";
     List<Map<String, dynamic>> competitorsDataFormat = [];
 
@@ -323,7 +326,8 @@ class Database {
                 competitorData["competition_participants_count"],
             "user_is_participant":
                 competitorData["competition_participants_guid"]
-                    .contains(participantGuid),
+                    .contains(userId),
+            "competition_has_key": false,
           });
         }
       }
@@ -361,6 +365,89 @@ class Database {
     }
 
     return competitorsDataFormat;
+  }
+
+  /// Returns a list of all the competitions the user is participating in.
+  ///
+  Future<bool> joinCompetition(String competitionUuid) async {
+    final userId = userData["user_id"];
+    final joinCompetitionURL =
+        "$backendAPI/api/join/$competitionUuid/$userId"; // Replace with actual API URL
+
+    final response = await http
+        .post(Uri.parse(joinCompetitionURL), headers: <String, String>{
+      'Content-Type': 'application/json',
+    });
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      userData["current_competition"] = responseData["competition_id"];
+      _myBox.put("userData", userData);
+      Get.snackbar(
+        "Success",
+        "Successfully joined competition",
+        backgroundColor: green219653,
+        colorText: white,
+        duration: const Duration(seconds: 1),
+      );
+      return true;
+    } else {
+      Get.snackbar("Failed", "Failed to join competition",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM);
+      print("Failed to join competition");
+      return false;
+    }
+  }
+
+  Future<bool> leaveCompetition(String competitionUuid) async {
+    final userId = userData["user_id"];
+    final leaveCompetitionURL =
+        "$backendAPI/api/leave_competition/$userId"; // Replace with actual API URL
+
+    final response = await http
+        .post(Uri.parse(leaveCompetitionURL), headers: <String, String>{
+      'Content-Type': 'application/json',
+    });
+
+    if (response.statusCode == 200) {
+      final responseData = jsonDecode(response.body);
+      userData["current_competition"] = responseData["competition_id"];
+      _myBox.put("userData", userData);
+      Get.snackbar(
+        "Success",
+        "Successfully left competition",
+        backgroundColor: green219653,
+        colorText: white,
+        duration: const Duration(seconds: 1),
+      );
+      return true;
+    } else {
+      Get.snackbar("Failed", "Failed to leave competition",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM);
+      print("Failed to leave competition");
+      return false;
+    }
+  }
+
+  /// Switches the current competition of the user.
+  ///
+  /// Takes a [competitionUuid] as the identifier of the competition to switch to.
+  /// Returns `true` if the operation is successful, `false` otherwise.
+  Future<bool> switchCompetition(String competitionUuid) async {
+    final userId = userData["user_id"];
+    final switchCompetitionURL =
+        "$backendAPI/api/switch_competition/$competitionUuid/$userId"; // Replace with actual API URL
+
+    final response = await http
+        .post(Uri.parse(switchCompetitionURL), headers: <String, String>{
+      'Content-Type': 'application/json',
+    });
+
+    return handleLoginWithReportData(response);
   }
 
   Future populateAllStocksScreenData({String filter = "", count = 10}) async {
@@ -687,13 +774,17 @@ class Database {
     );
 
     // Debug
-    print("login requested");
-    print(loginURL);
-    print(email);
-    print(password);
-    print(response.body);
+    // print("login requested");
+    // print(loginURL);
+    // print(email);
+    // print(password);
+    // print(response.body);
 
     // Process the API response and return true/false
+    return handleLoginWithReportData(response);
+  }
+
+  bool handleLoginWithReportData(http.Response response) {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
       userData["player_id"] = responseData["player_id"];
@@ -740,36 +831,7 @@ class Database {
       }),
     );
 
-    print(response.body);
-
     // Process the API response and return true/false
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      userData["player_id"] = responseData["player_id"];
-      userData["name"] = responseData["user_name"];
-      userData["user_id"] = responseData["user_id"];
-      userData["current_competition"] = responseData["competition_id"];
-      userData["cash"] = responseData["user_cash"].toDouble();
-      userData["papel_asset_worth"] =
-          responseData["papel_asset_worth"].toDouble();
-      _myBox.put("userData", userData);
-
-      Get.snackbar(
-        "Success",
-        "Successfully Creating the Account and logged in",
-        backgroundColor: green219653,
-        colorText: white,
-        duration: const Duration(seconds: 1),
-      );
-
-      return true;
-    } else {
-      Get.snackbar("Failed", "Failed to sign up",
-          backgroundColor: redEB5757,
-          colorText: white,
-          snackPosition: SnackPosition.BOTTOM);
-      print("Failed to login");
-      return false;
-    }
+    return handleLoginWithReportData(response);
   }
 }

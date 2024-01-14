@@ -27,6 +27,12 @@ class MyApp extends StatelessWidget {
       home: WelcomeScreen(),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+          ),
+        ),
         textSelectionTheme: TextSelectionThemeData(
           cursorColor: white,
         ),

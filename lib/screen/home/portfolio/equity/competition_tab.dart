@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paper_merchant/screen/home/competition_details_screen.dart';
 import 'package:paper_merchant/utils/color.dart';
 import 'package:paper_merchant/data/database.dart';
 import 'package:paper_merchant/components/loading_placeholder.dart';
@@ -72,6 +73,18 @@ class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
                                     ),
                                     subtitle: Text(
                                         'Players: ${snapshot.data![index]['competition_participants_count']?.toString() ?? '0'}'),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              CompetitionDetailsScreen(
+                                            competitionData:
+                                                snapshot.data![index],
+                                          ),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 );
                               },
