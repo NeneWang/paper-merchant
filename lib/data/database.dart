@@ -23,6 +23,7 @@ String generateShortGuid(int length) {
 
 class Database {
   Map<dynamic, dynamic> userData = {};
+  Map<dynamic, dynamic> persistent_data = {};
   List<Map<dynamic, dynamic>> userPortfolio = [];
 
   // For quick reference
@@ -43,9 +44,12 @@ class Database {
       "player_id": "92cb1815-bbc7-47aa-aba4-4788425b0524",
       "cash": 0.00,
       "papel_asset_worth": 0.0,
+      "auto_login": false,
+    };
+
+    persistent_data = {
       "saved_email": "",
       "saved_password": "",
-      "auto_login": false,
     };
 
     userBookmarkPrices = {
@@ -101,6 +105,14 @@ class Database {
   }
 
   void loginWithDemo() {}
+
+  void createDefaultPersistentData() {
+    persistent_data = {
+      "saved_email": "",
+      "saved_password": "",
+    };
+    _myBox.put("persistent_data", persistent_data);
+  }
 
   void loadData() {
     // If userData doesnt exist then create it
@@ -743,9 +755,11 @@ class Database {
   }
 
   void saveEmailPassword(String email, String password) {
-    userData["saved_email"] = email;
-    userData["saved_password"] = password;
-    _myBox.put("userData", userData);
+    Map<dynamic, dynamic> persistent_data = {};
+    persistent_data["saved_email"] = email;
+    persistent_data["saved_password"] = password;
+    _myBox.put("persistent_data", persistent_data);
+    print("saved email and password");
   }
 
   Future<bool> login(
@@ -777,10 +791,49 @@ class Database {
     // print(loginURL);
     // print(email);
     // print(password);
+    print("rememberAccount =====>");
+    print(rememberAccount);
     // print(response.body);
 
     // Process the API response and return true/false
     return handleLoginWithReportData(response);
+  }
+
+  // Check if user has been saved for quick login.
+  Future<bool> autoLoginRememberedUser() async {
+    if (_myBox.get("persistent_data") == null) {
+      createDefaultPersistentData();
+    }
+    Map<dynamic, dynamic> persisitent_data = _myBox.get("persistent_data");
+    final savedEmail = persisitent_data["saved_email"];
+    final savedPassword = persisitent_data["saved_password"];
+
+    if (savedEmail != null && savedPassword != null) {
+      return await login(email: savedEmail, password: savedPassword);
+    } else {
+      return false;
+    }
+  }
+
+  /// Check if user has been saved. If so returns the email, otherwise the password.
+  /// This is used to autofill the login screen.
+  /// Returns `""` if no user has been saved.
+  /// Returns the email if the email has been saved.
+  String savedLoginEmail() {
+    // Load from the box
+
+    if (_myBox.get("persistent_data") == null) {
+      createDefaultPersistentData();
+    }
+
+    Map<dynamic, dynamic> persisitent_data = _myBox.get("persistent_data");
+    final savedEmail = persisitent_data["saved_email"];
+    final savedPassword = persisitent_data["saved_password"];
+    if (savedEmail != null && savedPassword != null) {
+      return savedEmail;
+    } else {
+      return "";
+    }
   }
 
   /// Login with report data
@@ -795,11 +848,10 @@ class Database {
       userData["name"] = responseData["user_name"];
       userData["user_id"] = responseData["user_id"];
       userData["current_competition"] = responseData["competition_id"];
-      userData["cash"] = responseData["user_cash"].toDouble();
+      userData["cash"] = (responseData["user_cash"]?.toDouble()) ?? 0.0;
       userData["papel_asset_worth"] =
-          responseData["papel_asset_worth"].toDouble();
+          (responseData["papel_asset_worth"]?.toDouble()) ?? 0.0;
       _myBox.put("userData", userData);
-
       Get.snackbar(
         "Success",
         "Successfully logged in",

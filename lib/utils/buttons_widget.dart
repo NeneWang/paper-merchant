@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:paper_merchant/utils/imagenames.dart';
+import 'package:paper_merchant/utils/color.dart';
 
 import 'color.dart';
 
@@ -10,7 +11,7 @@ loginButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.green.withOpacity(0.3),
+          color: Colors.black.withOpacity(0.15),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -24,7 +25,7 @@ loginButton({String? textLabel, onTapButton}) {
       height: Get.height / 19.37,
       minWidth: Get.width / 2.057,
       onPressed: onTapButton,
-      color: appColor,
+      color: lightBGBlue,
       // elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.circular(
@@ -34,7 +35,7 @@ loginButton({String? textLabel, onTapButton}) {
       child: Text(
         textLabel!,
         style: TextStyle(
-          color: white,
+          color: black,
           fontSize: 19,
           fontFamily: "NunitoBold",
         ),
@@ -48,7 +49,7 @@ changePasswordButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.green.withOpacity(0.3),
+          color: greenLogo.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -389,7 +390,7 @@ buyButton({String? textLabel, onTapButton}) {
     decoration: BoxDecoration(
       boxShadow: [
         BoxShadow(
-          color: Colors.green.withOpacity(0.3),
+          color: green219653.withOpacity(0.3),
           spreadRadius: 4,
           blurRadius: 10,
           offset: Offset(0, 1),
@@ -403,7 +404,7 @@ buyButton({String? textLabel, onTapButton}) {
       height: Get.height / 21.22,
       minWidth: Get.width / 2.85,
       onPressed: onTapButton,
-      color: appColor,
+      color: green219653,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadiusDirectional.circular(

@@ -14,10 +14,16 @@ import 'package:paper_merchant/data/database.dart';
 class WelcomeScreen extends StatelessWidget {
   ColorChangeController colorChangeController =
       Get.put(ColorChangeController());
+
+  final db = Database();
+
   @override
   Widget build(BuildContext context) {
+    var lastLoginemail = db.savedLoginEmail();
+    print("========>>" + lastLoginemail);
+
     return Scaffold(
-      backgroundColor: pageBackGroundC,
+      backgroundColor: white,
       body: Center(
         child: Padding(
           padding: EdgeInsets.only(),
@@ -39,9 +45,34 @@ class WelcomeScreen extends StatelessWidget {
                   fontFamily: "NunitoBold",
                 ),
               ),
+              if (lastLoginemail != "")
+                Padding(
+                  padding: EdgeInsets.only(top: Get.height / 29.714),
+                  child: Column(
+                    children: [
+                      const SmallSpace(),
+                      loginButton(
+                          textLabel: "$lastLoginemail",
+                          onTapButton: () async {
+                            // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
+                            bool loginReponse =
+                                await db.autoLoginRememberedUser();
+                            if (loginReponse) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DrawerOpenScreen(),
+                                ),
+                              );
+                            }
+                          }),
+                    ],
+                  ),
+                ),
               const SmallSpace(),
               loginButton(
-                  textLabel: "Login",
+                  textLabel: lastLoginemail == "" ? "Login" : "Switch Account",
                   onTapButton: () {
                     Get.to(LogInScreen());
                   }),
@@ -49,7 +80,7 @@ class WelcomeScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     "Don't have an account?",
                     style: TextStyle(
                       fontSize: 14,
@@ -61,7 +92,7 @@ class WelcomeScreen extends StatelessWidget {
                     onTap: () {
                       Get.to(SignUpScreen());
                     },
-                    child: Text(
+                    child: const Text(
                       " Sign up",
                       style: TextStyle(
                         fontSize: 14,
@@ -77,10 +108,13 @@ class WelcomeScreen extends StatelessWidget {
                   textLabel: "Login as Demo",
                   onTapButton: () async {
                     // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
-                    final Database db = Database();
+
                     final loginResponse = await db.login(
-                        email: "wangnelson4@gmail.com", password: "test123");
+                        email: "wangnelson4@gmail.com",
+                        password: "test123",
+                        rememberAccount: true);
                     if (loginResponse) {
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -93,11 +127,12 @@ class WelcomeScreen extends StatelessWidget {
                   textLabel: "Login as Demo2",
                   onTapButton: () async {
                     // It does make sense to run the login and sync logic here first. and then also return True false whether it is ready for logging in.
-                    final Database db = Database();
+
                     final loginResponse = await db.login(
                         email: "caramelitogoloso2k@gmail.com",
                         password: "test123");
                     if (loginResponse) {
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
                         MaterialPageRoute(

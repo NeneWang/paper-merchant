@@ -133,16 +133,22 @@ class LogInScreen extends StatelessWidget {
                         height: Get.height / 16.20,
                       ),
                       loginButton(
-                        onTapButton: () {
+                        onTapButton: () async {
                           Database db = Database();
-                          db.login(email: '', password: '');
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => DrawerOpenScreen(),
-                            ),
-                          );
+                          final loginResponse = await db.login(
+                              email: emailController.text,
+                              password: passwordController.text,
+                              rememberAccount:
+                                  checkBoxController.isCheck.value);
+                          if (loginResponse) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DrawerOpenScreen(),
+                              ),
+                            );
+                          }
 
                           // Get.to(
                           //   VerificationScreen(),
