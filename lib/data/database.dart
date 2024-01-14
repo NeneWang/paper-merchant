@@ -268,7 +268,6 @@ class Database {
 
   Future<List<Map<String, dynamic>>> getCompetitionsData() async {
     var userId = userData["user_id"];
-    print(userId + " participantGuid");
 
     var competitorsAPI = "$backendAPI/api/competitions/";
     List<Map<String, dynamic>> competitorsDataFormat = [];
@@ -784,6 +783,11 @@ class Database {
     return handleLoginWithReportData(response);
   }
 
+  /// Login with report data
+  ///
+  /// If the login is successful, the user data will be updated.
+  ///
+  /// Returns `true` if the login is successful, `false` otherwise.
   bool handleLoginWithReportData(http.Response response) {
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);

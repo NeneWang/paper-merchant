@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paper_merchant/screen/home/account/switch_competition.dart';
 import 'package:paper_merchant/utils/color.dart';
 import 'package:paper_merchant/data/database.dart';
 import 'package:paper_merchant/screen/welcome/welcome_screen.dart';
 
 class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
+
   @override
   State<AccountScreen> createState() => _AccountScreenState();
 }
@@ -105,9 +108,19 @@ class _AccountScreenState extends State<AccountScreen> {
                         height: Get.height / 127.34,
                       ),
                       InkWell(
-                        onTap: () {},
-                        child: leftArrowRowLink(
-                          labelText: "Join Competition",
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SwtichCompetitionScreen(
+                                currentCompetition:
+                                    db.userData["current_competition"],
+                              ),
+                            ),
+                          );
+                        },
+                        child: ReloadArrowRowLink(
+                          labelText: "Switch Competition",
                         ),
                       ),
                       InkWell(
@@ -128,7 +141,7 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 }
 
-leftArrowRowLink({String? labelText}) {
+ReloadArrowRowLink({String? labelText}) {
   return Container(
     height: 54,
     width: Get.width,
@@ -151,7 +164,7 @@ leftArrowRowLink({String? labelText}) {
           ),
         ),
         const Icon(
-          Icons.arrow_forward,
+          Icons.find_replace_rounded,
           color: gray4,
           size: 30,
         ),
