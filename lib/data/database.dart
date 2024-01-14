@@ -355,7 +355,7 @@ class Database {
 
       // Sort using total_worth reverse
       competitorsDataFormat
-          .sort((a, b) => b["total_worth"].compareTo(a["total_worth"]));
+          .sort((a, b) => a["total_worth"].compareTo(b["total_worth"]));
     } else {
       print('Request failed with status: ${response.statusCode}.');
     }

@@ -116,18 +116,20 @@ class _RankingScreenTabState extends State<RankingScreenTab> {
                             child: ListView.builder(
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
+                                var currentIndexData = snapshot
+                                    .data![snapshot.data!.length - 1 - index];
                                 return Container(
-                                  color: snapshot.data![index]['player_id'] ==
+                                  color: currentIndexData['player_id'] ==
                                           db.userData['player_id']
                                       ? greenLogo.withOpacity(0.2)
                                       : null,
                                   child: ListTile(
                                     leading: Text('Ranked: ${index + 1}'),
                                     title: Text(
-                                      '${snapshot.data![index]['name'] ?? 'N/A'}',
+                                      '${currentIndexData['name'] ?? 'N/A'}',
                                     ),
                                     subtitle: Text(
-                                        'Total Worth: ${snapshot.data![index]['total_worth']?.toStringAsFixed(2) ?? 'N/A'}'),
+                                        'Total Worth: ${currentIndexData['total_worth']?.toStringAsFixed(2) ?? 'N/A'}'),
                                   ),
                                 );
                               },

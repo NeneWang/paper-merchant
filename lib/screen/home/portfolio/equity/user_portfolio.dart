@@ -219,8 +219,8 @@ holdScreenListDesign(
     double avgTextNum = 0.0,
     double profitNum = 0.0,
     int qtyNum = 1}) {
-  String qty = qtyNum.toString();
-  String profit = profitNum.toString();
+  String qty = qtyNum.toStringAsFixed(2);
+  String profit = profitNum.toStringAsFixed(2);
   String avgText = avgTextNum.toStringAsFixed(2);
 
   Color profileColor = calculateProfitColor(profitNum);
@@ -228,6 +228,12 @@ holdScreenListDesign(
   String profitPercentage = calculateProfitPercentage(profitNum, totalInvested);
   String totalInvestedString = totalInvested.toStringAsFixed(2);
 
+  const blackDescriptionFont = const TextStyle(
+    fontSize: 11,
+    color: black,
+    fontFamily: "Nunito",
+    fontWeight: FontWeight.w400,
+  );
   return Container(
     padding: EdgeInsets.only(left: 10, right: 5, top: 10, bottom: 12),
     margin: EdgeInsets.only(left: 12, right: 12, top: 20),
@@ -320,14 +326,9 @@ holdScreenListDesign(
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  TextSpan(
-                    text: "(",
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: black,
-                      fontFamily: "Nunito",
-                      fontWeight: FontWeight.w400,
-                    ),
+                  const TextSpan(
+                    text: " ( ",
+                    style: blackDescriptionFont,
                   ),
                   TextSpan(
                     text: profit,
@@ -338,14 +339,9 @@ holdScreenListDesign(
                       fontWeight: FontWeight.w400,
                     ),
                   ),
-                  TextSpan(
-                    text: ")",
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: black,
-                      fontFamily: "Nunito",
-                      fontWeight: FontWeight.w400,
-                    ),
+                  const TextSpan(
+                    text: " )",
+                    style: blackDescriptionFont,
                   ),
                 ],
               ),
@@ -366,7 +362,7 @@ holdScreenListDesign(
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 Container(
@@ -379,7 +375,7 @@ holdScreenListDesign(
                   child: Center(
                     child: Text(
                       totalInvestedString,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 8,
                         color: white,
                         fontFamily: "NunitoSemiBold",
