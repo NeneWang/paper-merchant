@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.papermerchant">
     <uses-permission android:name="android.permission.INTERNET" />
     <application
-        android:label="papermerchant"
+        android:label="Paper Merchant"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
        

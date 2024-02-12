@@ -397,6 +397,84 @@ fvm flutter pub add charts_flutter
 ```
 
 
+### Publishing to the Play Store
+
+
+```
+keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA \
+        -keysize 2048 -validity 10000 -alias upload
+
+
+dar***
+```
+
+
+```
+storePassword=<password-from-previous-step>
+keyPassword=<password-from-previous-step>
+keyAlias=upload
+storeFile=<keystore-file-location>
+
+```
+
+```
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+      ...
+}
+
+```
+
+
+Adding buildTypes:
+
+
+```
+   buildTypes {
+       release {
+           // TODO: Add your own signing config for the release build.
+           // Signing with the debug keys for now,
+           // so `flutter run --release` works.
+           signingConfig signingConfigs.debug
+       }
+   }
+
+```
+
+
+```
+signingConfigs {
+    release {
+        keyAlias keystoreProperties['keyAlias']
+        keyPassword keystoreProperties['keyPassword']
+        storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+        storePassword keystoreProperties['storePassword']
+    }
+}
+buildTypes {
+    release {
+        signingConfig signingConfigs.release
+    }
+}
+
+```
+
+
+```
+applicationId "com..anvildev.papermerchant"
+```
+
+
+```
+flutter build appbundle
+```
+
+
 
 ### Craft API for #2 History
 

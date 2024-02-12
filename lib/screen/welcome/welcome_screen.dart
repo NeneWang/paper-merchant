@@ -20,7 +20,6 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var lastLoginemail = db.savedLoginEmail();
-    print("========>>" + lastLoginemail);
 
     return Scaffold(
       backgroundColor: white,
