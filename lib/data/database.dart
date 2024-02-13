@@ -895,6 +895,12 @@ class Database {
       }),
     );
 
+    // Check if it was successfull
+    if (response.statusCode == 200) {
+      // Remember the user
+      saveEmailPassword(email, password);
+    }
+
     // Process the API response and return true/false
     return handleLoginWithReportData(response);
   }

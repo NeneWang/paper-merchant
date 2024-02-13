@@ -27,6 +27,14 @@ flutter build web
 firebase deploy
 ```
 
+If you are using the old windwos:
+
+Open an admin console.
+```
+nvm use 16.16.0
+flutter build web
+```
+
 It will be posted at:
 
 Running in chroe
