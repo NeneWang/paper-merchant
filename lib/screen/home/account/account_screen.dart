@@ -97,6 +97,14 @@ class _AccountScreenState extends State<AccountScreen> {
                       Text(
                           "Current Participation Id ${db.userData["current_competition"] ?? 'competition_not_set'}",
                           style: detailsTextStyle),
+                      // Show competition Name
+                      const SizedBox(
+                        height: 5.14,
+                      ),
+                      Text(
+                          "Current Competition: ${db.userData["competition_name"] ?? 'competition_not_set'}",
+                          style: detailsTextStyle),
+
                       SizedBox(
                         height: Get.height / 37.14,
                       ),

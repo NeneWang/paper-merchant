@@ -4,13 +4,26 @@ Diagram Process
 
 https://app.diagrams.net/?libs=general;flowchart#G1dBLbwRWmtB2V1uJhricZBCyXAEZr1rLU
 
+## Disbaling XML Errors
+
+```
+flutter run -d chrome --web-browser-flag "--disable-web-security"
+```
+
+However it seems that the error dissapears when you remove the `/` at the end.
+
+Lesson:
+- it seems that the way you direct in Fastapi the endpoint (with or without `/`) is important.
+
+
+
 
 ## Deployment
 
 Deployment for the web is done by running the following commands:
 
 ```
-flutter buiid web
+flutter build web
 firebase deploy
 ```
 

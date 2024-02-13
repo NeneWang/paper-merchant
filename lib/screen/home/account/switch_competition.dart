@@ -86,7 +86,7 @@ class _SwtichCompetitionScreenState extends State<SwtichCompetitionScreen> {
                                       ),
                                       subtitle: Text(
                                           'Players: ${snapshot.data![index]['competition_participants_count']?.toString() ?? '0'}'),
-                                      onTap: () {
+                                      onTap: () async {
                                         if (isCurrentCompetition) {
                                           // Snackbar to show that this is the current competition
                                           ScaffoldMessenger.of(context)
@@ -98,8 +98,14 @@ class _SwtichCompetitionScreenState extends State<SwtichCompetitionScreen> {
                                           );
                                           return;
                                         }
-                                        db.switchCompetition(snapshot
-                                            .data![index]['competition_id']);
+                                        final successSwitch =
+                                            await db.switchCompetition(
+                                                snapshot.data![index]
+                                                    ['competition_id']);
+                                        // Pop the screen if the switch is successful
+                                        if (successSwitch) {
+                                          Navigator.pop(context);
+                                        }
                                       },
                                     ),
                                   );

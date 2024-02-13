@@ -19,6 +19,7 @@ class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
   @override
   Widget build(BuildContext context) {
     db.loadData();
+    final currentCompetitionId = db.userData['current_competition'] ?? '';
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -71,6 +72,25 @@ class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
                                     title: Text(
                                       '${snapshot.data![index]['competition_name'] ?? 'N/A'}',
                                     ),
+                                    trailing: currentCompetitionId ==
+                                            snapshot.data![index]
+                                                ['competition_id']
+                                        ? Container(
+                                            padding: const EdgeInsets.all(4),
+                                            decoration: BoxDecoration(
+                                              color: greenLogo,
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: const Text(
+                                              'Current',
+                                              style: TextStyle(
+                                                color: white,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          )
+                                        : null,
                                     subtitle: Text(
                                         'Players: ${snapshot.data![index]['competition_participants_count']?.toString() ?? '0'}'),
                                     onTap: () {

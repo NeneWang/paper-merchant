@@ -45,6 +45,7 @@ class Database {
       "cash": 0.00,
       "papel_asset_worth": 0.0,
       "auto_login": false,
+      "competition_name": "Universal Competition",
     };
 
     persistent_data = {
@@ -281,9 +282,14 @@ class Database {
   Future<List<Map<String, dynamic>>> getCompetitionsData() async {
     var userId = userData["user_id"];
 
-    var competitorsAPI = "$backendAPI/api/competitions/";
+    var competitorsAPI = "$backendAPI/api/competitions";
     List<Map<String, dynamic>> competitorsDataFormat = [];
 
+/**
+ * 
+    final response = await http.get(Uri.parse(
+        '$backendAPI/player_transactions/$player_id?stock_name=$symbol'));
+ */
     final response = await http.get(Uri.parse(competitorsAPI));
     // Expect array of format:
     /**
@@ -392,7 +398,7 @@ class Database {
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);
-      userData["current_competition"] = responseData["competition_id"];
+      userData["current_competition"] = competitionUuid;
       _myBox.put("userData", userData);
       Get.snackbar(
         "Success",
@@ -453,8 +459,9 @@ class Database {
     final switchCompetitionURL =
         "$backendAPI/api/switch_competition/$competitionUuid/$userId"; // Replace with actual API URL
 
+    // Use Get request to the backend to switch the competition
     final response = await http
-        .post(Uri.parse(switchCompetitionURL), headers: <String, String>{
+        .get(Uri.parse(switchCompetitionURL), headers: <String, String>{
       'Content-Type': 'application/json',
     });
 
@@ -848,6 +855,7 @@ class Database {
       userData["name"] = responseData["user_name"];
       userData["user_id"] = responseData["user_id"];
       userData["current_competition"] = responseData["competition_id"];
+      userData["competition_name"] = responseData["competition_name"];
       userData["cash"] = (responseData["user_cash"]?.toDouble()) ?? 0.0;
       userData["papel_asset_worth"] =
           (responseData["papel_asset_worth"]?.toDouble()) ?? 0.0;
