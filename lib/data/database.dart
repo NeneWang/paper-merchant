@@ -397,7 +397,6 @@ class Database {
     });
 
     if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
       userData["current_competition"] = competitionUuid;
       _myBox.put("userData", userData);
       Get.snackbar(
@@ -792,15 +791,6 @@ class Database {
         'password': password,
       }),
     );
-
-    // Debug
-    // print("login requested");
-    // print(loginURL);
-    // print(email);
-    // print(password);
-    print("rememberAccount =====>");
-    print(rememberAccount);
-    // print(response.body);
 
     // Process the API response and return true/false
     return handleLoginWithReportData(response);

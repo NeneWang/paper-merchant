@@ -12,6 +12,14 @@ class AccountScreen extends StatefulWidget {
   State<AccountScreen> createState() => _AccountScreenState();
 }
 
+String capitalize(sentence) {
+  // Capitalize first letter of each word
+  return sentence
+      .split(" ")
+      .map((word) => word[0].toUpperCase() + word.substring(1))
+      .join(" ");
+}
+
 class _AccountScreenState extends State<AccountScreen> {
   final Database db = Database();
 
@@ -38,6 +46,12 @@ class _AccountScreenState extends State<AccountScreen> {
     );
     const detailsTextStyle = TextStyle(
       fontSize: 10,
+      color: black2,
+      fontFamily: "NunitoSemiBold",
+      fontWeight: FontWeight.w600,
+    );
+    const BolderTextStyle = TextStyle(
+      fontSize: 15,
       color: black2,
       fontFamily: "NunitoSemiBold",
       fontWeight: FontWeight.w600,
@@ -83,12 +97,15 @@ class _AccountScreenState extends State<AccountScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "${db.userData["name"] ?? 'name_not_set'}",
+                        capitalize(db.userData["name"] ?? 'name_not_set'),
                         style: nameTextStyle,
                       ),
                       const SizedBox(
                         height: 5.14,
                       ),
+                      Text(
+                          "Attending: ${db.userData["competition_name"] ?? 'competition_not_set'}",
+                          style: BolderTextStyle),
                       Text(
                           'Player id: ${db.userData["player_id"] ?? "player_id_not_set"}',
                           style: detailsTextStyle),
@@ -97,14 +114,6 @@ class _AccountScreenState extends State<AccountScreen> {
                       Text(
                           "Current Participation Id ${db.userData["current_competition"] ?? 'competition_not_set'}",
                           style: detailsTextStyle),
-                      // Show competition Name
-                      const SizedBox(
-                        height: 5.14,
-                      ),
-                      Text(
-                          "Current Competition: ${db.userData["competition_name"] ?? 'competition_not_set'}",
-                          style: detailsTextStyle),
-
                       SizedBox(
                         height: Get.height / 37.14,
                       ),
