@@ -387,11 +387,12 @@ class Database {
     final joinCompetitionURL =
         "$backendAPI/api/join/$competitionUuid/$userId"; // Replace with actual API URL
 
-    final response = await http
-        .post(Uri.parse(joinCompetitionURL), headers: <String, String>{
-      'Content-Type': 'application/json',
-    });
-
+    final response = await http.get(
+      Uri.parse(joinCompetitionURL),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
     if (response.statusCode == 200) {
       userData["current_competition"] = competitionUuid;
       _myBox.put("userData", userData);

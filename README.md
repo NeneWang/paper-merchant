@@ -29,15 +29,25 @@ firebase deploy
 
 If you are using the old windwos:
 
-Open an admin console.
+> Open an admin console. | cd to it
 ```
 nvm use 16.16.0
 flutter build web
+nvm use  20.11.0
+```
+
+> requires SDK version >=3.0.6 <4.0.0, version solving failed.
+
+```bash
+flutter doctor
+flutter channel stable
+flutter upgrade
+flutter pub get
 ```
 
 It will be posted at:
 
-Running in chroe
+Running in chro,me
 
 ```
 flutter config --enable-web

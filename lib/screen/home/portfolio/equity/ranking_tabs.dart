@@ -74,14 +74,13 @@ class _RankingScreenTabState extends State<RankingScreenTab> {
                                           topLeft: Radius.circular(6),
                                           topRight: Radius.circular(6),
                                         ),
-                                        y: _isLog
+                                        fromY: _isLog
                                             ? log(
                                                 data['total_worth'].toDouble())
                                             : data['total_worth'].toDouble(),
                                         width: 22,
-                                        colors: [
-                                          isYou ? greenLogo : lightBGBlue
-                                        ],
+                                        color: isYou ? greenLogo : lightBGBlue,
+                                        toY: 0.0,
                                       ),
                                     ],
                                   );

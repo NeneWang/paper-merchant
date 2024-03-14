@@ -32,7 +32,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
             if (competitionData['user_is_participant'])
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
+                  backgroundColor: Colors.red,
                 ),
                 onPressed: () async {
                   // Add your leave competition logic here
