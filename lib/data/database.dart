@@ -5,7 +5,6 @@ import 'package:http/http.dart' as http;
 import 'dart:math';
 import 'dart:convert';
 import 'package:fuzzy/fuzzy.dart';
-import 'package:paper_merchant/utils/imagenames.dart';
 
 import '../utils/color.dart';
 
@@ -208,10 +207,6 @@ class Database {
     // if recent transactions are empty then fetch them
     String playerId = userData["player_id"];
 
-    if (playerId == null) {
-      loadData();
-    }
-
     playerId = userData["player_id"];
     final transactionsUrl =
         "$backendAPI/player_transactions/$playerId?limit=10&offset=0"; // Replace with actual API URL
@@ -386,8 +381,9 @@ class Database {
 
   /// Returns a list of all the competitions the user is participating in.
   ///
-  Future<bool> joinCompetition(String competitionUuid) async {
-    final userId = userData["user_id"];
+  Future<bool> joinCompetition(String competitionUuid, {String? userId}) async {
+    userId ??= userData["user_id"];
+
     final joinCompetitionURL =
         "$backendAPI/api/join/$competitionUuid/$userId"; // Replace with actual API URL
 
@@ -418,14 +414,16 @@ class Database {
   }
 
   Future<bool> leaveCompetition(String competitionUuid) async {
-    final userId = userData["user_id"];
+    final playerId = userData["player_id"];
     final leaveCompetitionURL =
-        "$backendAPI/api/leave_competition/$userId"; // Replace with actual API URL
+        "$backendAPI/api/leave_competition/$playerId"; // Replace with actual API URL
 
-    final response = await http
-        .post(Uri.parse(leaveCompetitionURL), headers: <String, String>{
-      'Content-Type': 'application/json',
-    });
+    final response = await http.get(
+      Uri.parse(leaveCompetitionURL),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+    );
 
     if (response.statusCode == 200) {
       final responseData = jsonDecode(response.body);

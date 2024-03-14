@@ -15,7 +15,7 @@ class RankingScreenTab extends StatefulWidget {
 
 class _RankingScreenTabState extends State<RankingScreenTab> {
   final db = Database();
-  bool _isLog = true;
+  bool _isLog = false;
 
   @override
   Widget build(BuildContext context) {

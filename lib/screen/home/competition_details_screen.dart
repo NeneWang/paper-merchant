@@ -10,6 +10,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Database db = Database();
+    db.loadData();
     return Scaffold(
       appBar: AppBar(
         title: Text(competitionData['competition_name']),
@@ -33,9 +34,10 @@ class CompetitionDetailsScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   // Add your leave competition logic here
-                  db.leaveCompetition(competitionData['competition_id']);
+                  await db.leaveCompetition(competitionData['competition_id']);
+                  Navigator.pop(context);
                 },
                 child: Text('Leave Competition'),
               ),
@@ -43,9 +45,11 @@ class CompetitionDetailsScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: competitionData['user_is_participant']
                     ? null
-                    : () {
+                    : () async {
                         // Add your join competition logic here
-                        db.joinCompetition(competitionData['competition_id']);
+                        await db
+                            .joinCompetition(competitionData['competition_id']);
+                        Navigator.pop(context);
                       },
                 child: Text('Join Competition'),
               ),
