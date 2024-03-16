@@ -69,15 +69,12 @@ LineChartBarData getRandomLineChartData() {
       FlSpot(11, getRandomPointY()),
     ],
     isCurved: true,
-    colors: gradientColors,
+    color: gradientColors[0],
     barWidth: 2,
     dotData: FlDotData(show: false),
     belowBarData: BarAreaData(
       show: true,
-      colors: [
-        const Color(0xff73BE8C).withOpacity(0.4),
-        const Color(0xf73BE8C),
-      ],
+      color: const Color(0xff73BE8C).withOpacity(0.4),
     ),
   );
 }

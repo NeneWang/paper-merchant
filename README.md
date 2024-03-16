@@ -36,6 +36,11 @@ flutter build web
 nvm use  20.11.0
 ```
 
+
+```
+If you just upgraded dependecies amke sure to delete your cache.
+```
+
 > requires SDK version >=3.0.6 <4.0.0, version solving failed.
 
 ```bash

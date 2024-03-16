@@ -1092,67 +1092,12 @@ lineGraph() {
       maxX: 7,
       minY: 0,
       maxY: 8,
-      titlesData: FlTitlesData(
+      titlesData: const FlTitlesData(
         show: true,
-        rightTitles: SideTitles(showTitles: false),
-        topTitles: SideTitles(showTitles: false),
-        bottomTitles: SideTitles(
-          showTitles: true,
-          reservedSize: 22,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-              color: gray7C828A,
-              fontWeight: FontWeight.w400,
-              fontFamily: "Nunito",
-              fontSize: 12),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '·11am';
-              case 2:
-                return '.12am';
-              case 3:
-                return '·1pm';
-              case 4:
-                return '·2pm';
-              case 5:
-                return '·3pm';
-              case 6:
-                return '.03.45.09';
-            }
-            return '';
-          },
-          margin: 0,
-        ),
-        leftTitles: SideTitles(
-          showTitles: true,
-          interval: 1,
-          getTextStyles: (context, value) => const TextStyle(
-              color: gray7C828A,
-              fontWeight: FontWeight.w400,
-              fontFamily: "Nunito",
-              fontSize: 12),
-          getTitles: (value) {
-            switch (value.toInt()) {
-              case 1:
-                return '0';
-              case 2:
-                return '150';
-              case 3:
-                return '250';
-              case 4:
-                return '350';
-              case 5:
-                return '500';
-              case 6:
-                return '650';
-              case 7:
-                return '750';
-            }
-            return '';
-          },
-          reservedSize: 32,
-          margin: 12,
+        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        bottomTitles: AxisTitles(
+          sideTitles: SideTitles(showTitles: true),
         ),
       ),
       gridData: FlGridData(
@@ -1185,9 +1130,7 @@ lineGraph() {
           ],
           isCurved: true,
           barWidth: 1,
-          colors: [
-            appColor,
-          ],
+          color: appColor,
         ),
         LineChartBarData(
           dotData: FlDotData(show: false),
@@ -1202,9 +1145,7 @@ lineGraph() {
           ],
           isCurved: true,
           barWidth: 1,
-          colors: [
-            redEB5757,
-          ],
+          color: redEB5757,
         ),
       ],
     ),
