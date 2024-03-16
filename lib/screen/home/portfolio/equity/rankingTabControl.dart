@@ -1,3 +1,4 @@
+// ignore: file_names
 import 'package:paper_merchant/controller/tabcontroller_screen.dart';
 import 'package:paper_merchant/screen/home/portfolio/equity/ranking_tabs.dart';
 import 'package:paper_merchant/screen/home/portfolio/equity/competition_tab.dart';
@@ -57,7 +58,11 @@ class RankingsTabsScreens extends StatelessWidget {
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         controller: myTabController.controller4,
-        children: [RankingScreenTab(), UserPortfolio(), CompetitionScreenTab()],
+        children: [
+          RankingScreenTab(),
+          UserPortfolio(),
+          const CompetitionScreenTab()
+        ],
       ),
     );
   }

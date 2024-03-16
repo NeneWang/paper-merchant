@@ -1,10 +1,10 @@
+import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:paper_merchant/utils/color.dart';
 import 'package:paper_merchant/data/database.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:paper_merchant/components/loading_placeholder.dart';
 import 'package:paper_merchant/components/small_space.dart';
 
@@ -16,6 +16,21 @@ class RankingScreenTab extends StatefulWidget {
 class _RankingScreenTabState extends State<RankingScreenTab> {
   final db = Database();
   bool _isLog = false;
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      setState(() {}); // Trigger rebuild every second
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +44,8 @@ class _RankingScreenTabState extends State<RankingScreenTab> {
             future: db.getRankingsData(), // replace with your competitionUUID
             builder: (BuildContext context,
                 AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.connectionState == ConnectionState.waiting &&
+                  !snapshot.hasData) {
                 return const LoadingPlaceholder(
                   waitingMessage: "Loading competitors data...",
                 );
@@ -88,9 +104,11 @@ class _RankingScreenTabState extends State<RankingScreenTab> {
                               ).toList(),
                             )),
                           ),
+                          // Display current competition
                           CheckboxListTile(
-                            title: const Text(
-                              "Show as logarithmic",
+                            title: Text(
+                              'Current Competition: ${db.userData['competition_name'] ?? 'N/A'}  ' +
+                                  ' || Show as Logarithmic',
                               style: TextStyle(color: greenLogo),
                             ),
                             value: _isLog,

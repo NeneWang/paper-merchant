@@ -28,6 +28,11 @@ class SignUpScreen extends StatelessWidget {
     final String password = passwordController.text;
     final String reEnterPassword = reEnterPasswordController.text;
 
+    print("Name: $name");
+    print("Email: $email");
+    print("Password: $password");
+    print("Re Enter Password: $reEnterPassword");
+
     if (!verifyEmail(email)) {
       showErrorSnackBar(
           title: "Email is not valid", message: "Please enter valid email");
@@ -168,6 +173,9 @@ class SignUpScreen extends StatelessWidget {
                       signUpButton(
                         textLabel: "Sign Up",
                         onTapButton: () {
+                          // Get.to(
+                          //   CreatePinScreen(),
+                          // );
                           submit(context);
                         },
                       ),
@@ -192,7 +200,7 @@ class SignUpScreen extends StatelessWidget {
                               );
                               print("Sign Up");
                             },
-                            child: const Text(
+                            child: Text(
                               "Login",
                               style: TextStyle(
                                 fontSize: 15,

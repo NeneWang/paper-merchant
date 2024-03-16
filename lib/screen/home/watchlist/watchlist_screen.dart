@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +33,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
   List stockList = [];
   List bookmarkedList = [];
   bool loaded = false;
+  late Timer _timer;
 
   reloadScreen({onlyDB = false, onlySync = false}) async {
     if (!onlySync) {
@@ -56,7 +59,16 @@ class _WatchListScreenState extends State<WatchListScreen> {
   @override
   void initState() {
     super.initState();
-    reloadScreen();
+    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      reloadScreen();
+    });
+    reloadScreen(); // Initial data load
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
   }
 
   @override
@@ -96,17 +108,10 @@ class _WatchListScreenState extends State<WatchListScreen> {
           ),
         ),
       ),
-      Container(
+      SizedBox(
         height: Get.height / 5,
-        child: TabBarView(
-          controller: myTabController.controller,
-          children: [
-            tabAssetsView(db.userData["cash"]?.toStringAsFixed(2) ?? "0",
-                db.userData["papel_asset_worth"]?.toStringAsFixed(2) ?? "0"),
-            Text(Get.height.toString()),
-            Text(Get.width.toString()),
-          ],
-        ),
+        child: tabAssetsView(db.userData["cash"]?.toStringAsFixed(2) ?? "0",
+            db.userData["papel_asset_worth"]?.toStringAsFixed(2) ?? "0"),
       ),
     ];
 

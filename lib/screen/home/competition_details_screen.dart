@@ -20,6 +20,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            Text('Competition Id: ${competitionData['competition_id']}'),
             Text('Description: ${competitionData['competition_description']}'),
             Text(
                 'Initial Cash: ${competitionData['competition_initial_cash']}'),
@@ -28,7 +29,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
                 'End Date: ${competitionData['competition_end_date'] ?? 'Not set'}'),
             Text(
                 'Participants: ${competitionData['competition_participants_count']}'),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             if (competitionData['user_is_participant'])
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -39,7 +40,7 @@ class CompetitionDetailsScreen extends StatelessWidget {
                   await db.leaveCompetition(competitionData['competition_id']);
                   Navigator.pop(context);
                 },
-                child: Text('Leave Competition'),
+                child: const Text('Leave Competition'),
               ),
             if (!competitionData['user_is_participant'])
               ElevatedButton(
@@ -49,9 +50,10 @@ class CompetitionDetailsScreen extends StatelessWidget {
                         // Add your join competition logic here
                         await db
                             .joinCompetition(competitionData['competition_id']);
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                       },
-                child: Text('Join Competition'),
+                child: const Text('Join Competition'),
               ),
           ],
         ),

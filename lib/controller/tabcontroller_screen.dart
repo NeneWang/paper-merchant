@@ -32,6 +32,7 @@ class applicationController extends GetxController
         alignment: Alignment.center,
         child: const Tab(text: 'Competitions')),
   ];
+
   final List<Tab> weekYearContoller = <Tab>[
     // Tab(text: 'Day'),
     Tab(text: 'Week'),

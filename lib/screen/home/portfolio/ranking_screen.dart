@@ -8,6 +8,8 @@ import 'package:paper_merchant/utils/color.dart';
 class RankingsScreen extends StatelessWidget {
   applicationController myTabController = Get.find();
 
+  RankingsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,12 +18,7 @@ class RankingsScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: TabBarView(
-              controller: myTabController.controller2,
-              children: [
-                RankingsTabsScreens(),
-              ],
-            ),
+            child: RankingsTabsScreens(),
           )
         ],
       ),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paper_merchant/utils/color.dart';
@@ -43,11 +44,23 @@ class _UserPortfolioState extends State<UserPortfolio> {
   double totalInvested = 0;
   double totalProfit = 0;
   bool loaded = false;
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     loadInformation();
+
+    // Reload every 5 seconds
+    _timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      refresh();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
   }
 
   Future<void> loadInformation({onlyLoad = false}) async {
@@ -73,13 +86,6 @@ class _UserPortfolioState extends State<UserPortfolio> {
   }
 
   void refresh() async {
-    await loadInformation(onlyLoad: true);
-    Get.snackbar(
-      "Refreshed",
-      "Portfolio refreshed",
-      backgroundColor: green219653,
-      colorText: white,
-    );
     await loadInformation(onlyLoad: false);
     setState(() {});
   }

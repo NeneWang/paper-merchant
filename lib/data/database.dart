@@ -280,38 +280,6 @@ class Database {
         '$backendAPI/player_transactions/$player_id?stock_name=$symbol'));
  */
     final response = await http.get(Uri.parse(competitorsAPI));
-    // Expect array of format:
-    /**
-    * {
-        "competition_id": "7bc69deb-b1b4-4d45-aab1-43ce2d9caf8b",
-        "competition_name": "Universal Competition",
-        "competition_description": "Default Competition",
-        "competition_initial_cash": 10000,
-        "competition_start_date": "2023-07-12T19:09:56.652866",
-        "competition_end_date": null,
-        "competition_participants": [
-          "Nelson",
-          "nelson1",
-          "Matthew Nuñez",
-          "camila",
-          "Nelson the Tester",
-          "Caramelito",
-          "Nelson",
-          "hello"
-        ],
-        "competition_participants_count": 8,
-        "competition_participants_guid": [
-          "43ac4396-232b-4acd-a69c-5e330e495b1f",
-          "4379afa2-8dd0-471d-8d1e-695106dae29a",
-          "6877986f-ce17-452a-900f-b94fa66064b8",
-          "3b64b3d6-d1b7-4ea9-a727-3c10fbd165cf",
-          "bbf8e248-ca89-41c4-b55c-e4e20977a6e0",
-          "ddf45ed4-2c31-48bd-bbd9-e2459eab483b",
-          "43ac4396-232b-4acd-a69c-5e330e495b1f",
-          "917605dd-4714-4c56-bb34-5c2487cda84f"
-        ]
-      }
-    */
 
     if (response.statusCode == 200) {
       final competitorsData = json.decode(response.body) as List;
@@ -374,7 +342,7 @@ class Database {
   }
 
   /// Returns a list of all the competitions the user is participating in.
-  ///
+
   Future<bool> joinCompetition(String competitionUuid, {String? userId}) async {
     userId ??= userData["user_id"];
 
@@ -403,21 +371,23 @@ class Database {
           backgroundColor: redEB5757,
           colorText: white,
           snackPosition: SnackPosition.BOTTOM);
-      print("Failed to join competition");
       return false;
     }
   }
 
   Future<bool> leaveCompetition(String competitionUuid) async {
-    final playerId = userData["player_id"];
-    final leaveCompetitionURL =
-        "$backendAPI/api/leave_competition/$playerId"; // Replace with actual API URL
+    final userId = userData["user_id"];
+    const leaveCompetitionURL = "$backendAPI/api/leave_competition";
 
-    final response = await http.get(
+    final response = await http.post(
       Uri.parse(leaveCompetitionURL),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
+      body: jsonEncode({
+        "competition_id": competitionUuid,
+        "user_id": userId,
+      }),
     );
 
     if (response.statusCode == 200) {

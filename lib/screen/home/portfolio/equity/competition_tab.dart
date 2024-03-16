@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paper_merchant/screen/home/competition_details_screen.dart';
@@ -15,23 +16,37 @@ class CompetitionScreenTab extends StatefulWidget {
 
 class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
   final db = Database();
+  late Timer _timer;
+
+  @override
+  void initState() {
+    super.initState();
+    db.loadData();
+    _timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      setState(() {}); // Reload every 5 seconds
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel(); // Cancel the timer when the widget is disposed
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    db.loadData();
     final currentCompetitionId = db.userData['current_competition'] ?? '';
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Current Competitions
         Padding(
           padding: const EdgeInsets.only(top: 6),
           child: FutureBuilder<List<Map<String, dynamic>>>(
-            future:
-                db.getCompetitionsData(), // replace with your competitionUUID
+            future: db.getCompetitionsData(),
             builder: (BuildContext context,
                 AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (snapshot.connectionState == ConnectionState.waiting &&
+                  !snapshot.hasData) {
                 return const LoadingPlaceholder(
                   waitingMessage: "Loading Competitions data...",
                 );
@@ -94,6 +109,25 @@ class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
                                     subtitle: Text(
                                         'Players: ${snapshot.data![index]['competition_participants_count']?.toString() ?? '0'}'),
                                     onTap: () {
+                                      // print('Selected competition');
+                                      // print(snapshot.data![index]);
+
+                                      // Don't do anything if the selected competition is the current one as well.
+                                      if (currentCompetitionId ==
+                                          snapshot.data![index]
+                                              ['competition_id']) {
+                                        // Snackbars are used to display a message at the bottom of the screen
+                                        Get.snackbar(
+                                          'Can\'t select',
+                                          'You are already in this competition',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: const Color.fromARGB(
+                                              255, 111, 54, 244),
+                                          colorText: Colors.white,
+                                        );
+                                        return;
+                                      }
+
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
