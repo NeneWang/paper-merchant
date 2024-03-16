@@ -28,19 +28,16 @@ class SignUpScreen extends StatelessWidget {
     final String password = passwordController.text;
     final String reEnterPassword = reEnterPasswordController.text;
 
-    print("Name: $name");
-    print("Email: $email");
-    print("Password: $password");
-    print("Re Enter Password: $reEnterPassword");
-
     if (!verifyEmail(email)) {
       showErrorSnackBar(
           title: "Email is not valid", message: "Please enter valid email");
+      return;
     }
 
     if (password != reEnterPassword) {
       showErrorSnackBar(
           title: "Password not match", message: "Please enter same password");
+      return;
     }
 
     final Database db = Database();
@@ -78,7 +75,7 @@ class SignUpScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: pageBackGroundC,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Create Account",
           style: TextStyle(
             fontSize: 25,
@@ -88,7 +85,7 @@ class SignUpScreen extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             CupertinoIcons.back,
             color: black1,
           ),
@@ -115,7 +112,7 @@ class SignUpScreen extends StatelessWidget {
             child: Container(
               height: Get.height / 1.59,
               width: Get.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
@@ -146,7 +143,7 @@ class SignUpScreen extends StatelessWidget {
                       inputFieldCustom(
                         hint: "Email",
                         textController: emailController,
-                        iconWidget: Icon(
+                        iconWidget: const Icon(
                           Icons.email_outlined,
                           color: gray9B9797,
                           size: 27,
@@ -171,9 +168,6 @@ class SignUpScreen extends StatelessWidget {
                       signUpButton(
                         textLabel: "Sign Up",
                         onTapButton: () {
-                          // Get.to(
-                          //   CreatePinScreen(),
-                          // );
                           submit(context);
                         },
                       ),
@@ -198,7 +192,7 @@ class SignUpScreen extends StatelessWidget {
                               );
                               print("Sign Up");
                             },
-                            child: Text(
+                            child: const Text(
                               "Login",
                               style: TextStyle(
                                 fontSize: 15,

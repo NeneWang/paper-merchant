@@ -52,7 +52,7 @@ flutter pub get
 
 It will be posted at:
 
-Running in chro,me
+Running in chrome
 
 ```
 flutter config --enable-web

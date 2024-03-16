@@ -108,7 +108,7 @@ resetButton({String? textLabel, onTapButton}) {
       ),
       child: Text(
         textLabel!,
-        style: TextStyle(
+        style: const TextStyle(
           color: white,
           fontSize: 19,
           fontFamily: "NunitoSemiBold",
@@ -120,39 +120,24 @@ resetButton({String? textLabel, onTapButton}) {
 }
 
 signUpButton({String? textLabel, onTapButton}) {
-  return Container(
-    decoration: BoxDecoration(
-      boxShadow: [
-        BoxShadow(
-          color: Colors.green.withOpacity(0.3),
-          spreadRadius: 4,
-          blurRadius: 10,
-          offset: Offset(0, 1),
-        )
-      ],
-      borderRadius: BorderRadius.all(
-        Radius.circular(25),
+  return MaterialButton(
+    height: Get.height / 18.19,
+    minWidth: Get.width / 2.046,
+    onPressed: onTapButton,
+    color: appColor,
+    // elevation: 4,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadiusDirectional.circular(
+        25,
       ),
     ),
-    child: MaterialButton(
-      height: Get.height / 18.19,
-      minWidth: Get.width / 2.046,
-      onPressed: onTapButton,
-      color: appColor,
-      // elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadiusDirectional.circular(
-          25,
-        ),
-      ),
-      child: Text(
-        textLabel!,
-        style: TextStyle(
-          color: white,
-          fontSize: 19,
-          fontFamily: "NunitoBold",
-          fontWeight: FontWeight.w600,
-        ),
+    child: Text(
+      textLabel!,
+      style: const TextStyle(
+        color: white,
+        fontSize: 19,
+        fontFamily: "NunitoBold",
+        fontWeight: FontWeight.w600,
       ),
     ),
   );

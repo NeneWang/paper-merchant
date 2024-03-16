@@ -10,7 +10,8 @@ import '../utils/color.dart';
 
 // reference our box
 final _myBox = Hive.box("market_user");
-const backendAPI = "https://crvmb5tnnr.us-east-1.awsapprunner.com";
+// const backendAPI = "https://crvmb5tnnr.us-east-1.awsapprunner.com";
+const backendAPI = "http://127.0.0.1:8000";
 
 String generateShortGuid(int length) {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
@@ -182,8 +183,7 @@ class Database {
   Future<List> getTickerTransactions(String symbol) async {
     final player_id = userData["player_id"];
 
-    final getTickerTransactionsURL =
-        "$backendAPI/player_transactions/$player_id"; // Replace with actual API URL
+// Replace with actual API URL
 
     final response = await http.get(Uri.parse(
         '$backendAPI/player_transactions/$player_id?stock_name=$symbol'));
@@ -193,12 +193,6 @@ class Database {
       return responseData;
     } else {
       print("Failed to fetch ticker transactions");
-      print("FAiled with status code ${response.statusCode}");
-      print("api: $getTickerTransactionsURL");
-      print("body: ${jsonEncode(<String, String>{
-            'player_id': userData["player_id"],
-            'symbol': symbol,
-          })}");
       return [];
     }
   }

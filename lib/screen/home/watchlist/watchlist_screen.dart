@@ -15,6 +15,7 @@ import '../notification_screen.dart';
 import 'package:paper_merchant/components/loading_placeholder.dart';
 // Get Reload icon
 
+// ignore: use_key_in_widget_constructors
 class WatchListScreen extends StatefulWidget {
   final applicationController myTabController =
       Get.put(applicationController());
@@ -109,6 +110,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
       ),
     ];
 
+    // ignore: non_constant_identifier_names
     var StocksData = [
       Container(
         height: Get.height * 1.2 /*(Get.height > 891) ? Get.height : 275*/,
@@ -163,9 +165,9 @@ class _WatchListScreenState extends State<WatchListScreen> {
               ),
             ),
             ListView.builder(
-              padding: EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 10),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: stockList.length,
               itemBuilder: (context, index) => simpleStockListViewItem(
                 context: context,
@@ -221,9 +223,9 @@ class _WatchListScreenState extends State<WatchListScreen> {
               ),
             ),
             ListView.builder(
-              padding: EdgeInsets.only(top: 1),
+              padding: const EdgeInsets.only(top: 1),
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: bookmarkedList.length,
               itemBuilder: (context, index) => simpleStockListViewItem(
                 context: context,
