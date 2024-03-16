@@ -10,8 +10,8 @@ import '../utils/color.dart';
 
 // reference our box
 final _myBox = Hive.box("market_user");
-// const backendAPI = "https://crvmb5tnnr.us-east-1.awsapprunner.com";
-const backendAPI = "http://127.0.0.1:8000";
+const backendAPI = "https://crvmb5tnnr.us-east-1.awsapprunner.com";
+// const backendAPI = "http://127.0.0.1:8000"; // Only usable at web!
 
 String generateShortGuid(int length) {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
