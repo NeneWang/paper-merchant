@@ -27,13 +27,16 @@ flutter build web
 firebase deploy
 ```
 
-If you are using the old windwos:
+If you are using the old windwos run the following.:
 
 > Open an admin console. | cd to it
+
 ```
 nvm use 16.16.0
 flutter build web
+firebase deploy
 nvm use  20.11.0
+
 ```
 
 
