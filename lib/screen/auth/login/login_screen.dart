@@ -2,16 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:paper_merchant/controller/checkbox_controller.dart';
+import 'package:paper_merchant/controller/conteiner_color_change_keypade.dart';
+import 'package:paper_merchant/data/database.dart';
 import 'package:paper_merchant/screen/auth/forgetpassword/forgetpassword_screen.dart';
 import 'package:paper_merchant/screen/auth/signup/signup_screen.dart';
-import 'package:paper_merchant/controller/conteiner_color_change_keypade.dart';
 import 'package:paper_merchant/screen/home/drawer_open_.dart';
 import 'package:paper_merchant/utils/buttons_widget.dart';
 import 'package:paper_merchant/utils/color.dart';
 import 'package:paper_merchant/utils/imagenames.dart';
 import 'package:paper_merchant/utils/textformfild.dart';
-import 'package:paper_merchant/data/database.dart';
 
 // ignore: must_be_immutable
 class LogInScreen extends StatelessWidget {
@@ -19,8 +21,15 @@ class LogInScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  ColorChangeController colorChangeController =
-      Get.put(ColorChangeController());
+  final String FORGOT_PASSWORD = 'https://forms.gle/hi1C2R4PRVh53dnp9';
+
+  Future<void> launch_forgot_password_form() async {
+    Uri uri = Uri.parse(FORGOT_PASSWORD);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $FORGOT_PASSWORD');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,20 +117,13 @@ class LogInScreen extends StatelessWidget {
                               fontFamily: "MontserratRegular",
                             ),
                           ),
-                          SizedBox(
-                            width: 30 /*tablet:110*/,
-                          ),
                           TextButton(
-                            onPressed: () {
-                              Get.to(
-                                ForGetPassword(),
-                              );
-                            },
+                            onPressed: launch_forgot_password_form,
                             child: Text(
-                              "Forgot Password?",
+                              "Forgot Password Form?",
                               style: TextStyle(
                                 color: black.withOpacity(0.6),
-                                fontSize: 13,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w400,
                                 fontFamily: "MontserratRegular",
                               ),
