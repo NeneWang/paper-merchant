@@ -18,14 +18,14 @@ import 'package:paper_merchant/components/loading_placeholder.dart';
 // Get Reload icon
 
 // ignore: use_key_in_widget_constructors
-class WatchListScreen extends StatefulWidget {
+class TradeScreen extends StatefulWidget {
   final applicationController myTabController =
       Get.put(applicationController());
   @override
-  State<WatchListScreen> createState() => _WatchListScreenState();
+  State<TradeScreen> createState() => _TradeScreenState();
 }
 
-class _WatchListScreenState extends State<WatchListScreen> {
+class _TradeScreenState extends State<TradeScreen> {
   final applicationController myTabController =
       Get.put(applicationController());
 
@@ -109,10 +109,11 @@ class _WatchListScreenState extends State<WatchListScreen> {
         ),
       ),
       SizedBox(
-        height: Get.height / 5,
-        child: tabAssetsView(db.userData["cash"]?.toStringAsFixed(2) ?? "0",
-            db.userData["papel_asset_worth"]?.toStringAsFixed(2) ?? "0"),
-      ),
+          height: Get.height / 5,
+          child: tabAssetsView(
+              db.userData["cash"]?.toStringAsFixed(2) ?? "0",
+              db.userData["papel_asset_worth"]?.toStringAsFixed(2) ?? "0",
+              db.userData["competition_name"] ?? "")),
     ];
 
     // ignore: non_constant_identifier_names
@@ -274,7 +275,7 @@ class _WatchListScreenState extends State<WatchListScreen> {
   }
 }
 
-tabAssetsView(String totalCash, String totalAssets) {
+tabAssetsView(String totalCash, String totalAssets, String comeptitionName) {
   String totalWorth =
       (double.parse(totalCash) + double.parse(totalAssets)).toStringAsFixed(2);
   const greenTextStyle = TextStyle(
@@ -323,6 +324,13 @@ tabAssetsView(String totalCash, String totalAssets) {
             )
           ],
         ),
+      ),
+      const SizedBox(
+        height: 10,
+      ),
+      Text(
+        comeptitionName,
+        style: blackTextStyle,
       ),
     ],
   );

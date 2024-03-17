@@ -5,10 +5,10 @@ import 'package:paper_merchant/screen/home/portfolio/equity/rankingTabControl.da
 import 'package:paper_merchant/utils/color.dart';
 
 // ignore: must_be_immutable
-class RankingsScreen extends StatelessWidget {
+class CompetitionScreen extends StatelessWidget {
   applicationController myTabController = Get.find();
 
-  RankingsScreen({super.key});
+  CompetitionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

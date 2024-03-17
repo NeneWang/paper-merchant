@@ -107,9 +107,9 @@ class _RankingScreenTabState extends State<RankingScreenTab> {
                           // Display current competition
                           CheckboxListTile(
                             title: Text(
-                              'Current Competition: ${db.userData['competition_name'] ?? 'N/A'}  ' +
-                                  ' || Show as Logarithmic',
-                              style: TextStyle(color: greenLogo),
+                              '${db.userData['competition_name'] ?? 'N/A'}' +
+                                  ' || Logarithmic',
+                              style: TextStyle(color: greenLogo, fontSize: 16),
                             ),
                             value: _isLog,
                             onChanged: (value) {

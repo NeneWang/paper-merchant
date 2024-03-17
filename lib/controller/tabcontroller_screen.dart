@@ -26,7 +26,7 @@ class applicationController extends GetxController
     Container(
         height: 30,
         alignment: Alignment.center,
-        child: const Tab(text: 'Your Portfolio')),
+        child: const Tab(text: 'Profits')),
     Container(
         height: 30,
         alignment: Alignment.center,

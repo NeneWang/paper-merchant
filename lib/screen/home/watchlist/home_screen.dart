@@ -84,12 +84,12 @@ class HomeScreen extends StatelessWidget {
                   children: <Widget>[
                     // LogInScreen(),
                     NavigatorPage(
-                      child: WatchListScreen(),
-                      title: "Watch",
+                      child: TradeScreen(),
+                      title: "Trade",
                       navigatorKey: navigatorKeys[0]!,
                     ),
                     NavigatorPage(
-                      child: RankingsScreen(),
+                      child: CompetitionScreen(),
                       title: "port",
                       navigatorKey: navigatorKeys[1]!,
                     ),
@@ -194,7 +194,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                     s.selectedIndex.value == 0 ? Color(0xff2F80ED) : gray9B9797,
               ),
               /* Icon(Icons.home)*/
-              label: 'Watchlist',
+              label: 'Trade',
             ),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
@@ -203,7 +203,7 @@ class SuperFaBottomNavigationBar extends StatelessWidget {
                       ? Color(0xff2F80ED)
                       : black.withOpacity(0.7),
                 ),
-                label: "Rankings"),
+                label: "Competition"),
             BottomNavigationBarItem(
                 icon: SvgPicture.asset(
                   user,
