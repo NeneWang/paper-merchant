@@ -1,4 +1,22 @@
-## Links
+# Paper Merchant
+
+
+<p align="center">
+<img src="https://github.com/NeneWang/paper-merchant/assets/29577570/4543b759-3fc5-4774-b24d-4b068116fc72" 
+  alt="Size Limit comment in pull request about bundle size changes">
+
+- Try Here: https://descartable-server.web.app/
+- Interested in participating in a competition? https://prometheusinvestors.com/trade-competition
+
+- For Mobile Applications, feel free to scan here:
+
+
+<img src="https://github.com/NeneWang/paper-merchant/assets/29577570/83eeaf97-62fc-4781-a518-337534e9f1c0" 
+  alt="Size Limit comment in pull request about bundle size changes">
+</p>
+
+## Development Notes
+_Here some development notes for mantainers._
 
 Diagram Process
 
