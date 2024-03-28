@@ -9,6 +9,8 @@ import 'package:paper_merchant/utils/imagenames.dart';
 import 'package:paper_merchant/utils/textformfild.dart';
 
 class RestPinEmailScreen extends StatelessWidget {
+  const RestPinEmailScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +20,7 @@ class RestPinEmailScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: pageBackGroundC,
         centerTitle: true,
-        title: Text(
+        title: const Text(
           "Forgot Pin",
           style: TextStyle(
             fontSize: 26,
@@ -28,7 +30,7 @@ class RestPinEmailScreen extends StatelessWidget {
           ),
         ),
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             CupertinoIcons.back,
             color: black1,
           ),

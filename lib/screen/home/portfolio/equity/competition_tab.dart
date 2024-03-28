@@ -7,6 +7,8 @@ import 'package:paper_merchant/data/database.dart';
 import 'package:paper_merchant/components/loading_placeholder.dart';
 import 'package:paper_merchant/components/small_space.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
 class CompetitionScreenTab extends StatefulWidget {
   const CompetitionScreenTab({super.key});
 
@@ -18,11 +20,23 @@ class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
   final db = Database();
   late Timer _timer;
 
+  // ignore: non_constant_identifier_names
+  final String LATEST_COMPETITIONS_URL =
+      'https://prometheusinvestors.com/trade-competition';
+
+  // ignore: non_constant_identifier_names
+  Future<void> launch_latest_competition_url() async {
+    Uri uri = Uri.parse(LATEST_COMPETITIONS_URL);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $LATEST_COMPETITIONS_URL');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     db.loadData();
-    _timer = Timer.periodic(Duration(seconds: 10), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 10), (timer) {
       setState(() {}); // Reload every 5 seconds
     });
   }
@@ -63,6 +77,44 @@ class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
                               color: black2,
                               fontFamily: "NunitoBold",
                               fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          // Sized box for description:
+                          SizedBox(
+                            // Add left, right padding.
+                            width: double.infinity,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 20, right: 20),
+                              child: Row(
+                                children: [
+                                  const Expanded(
+                                    child: Text(
+                                      'Sign up to compete in competitions and be elegible for prizes. Is free!',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        color: black,
+                                        fontFamily: "Nunito",
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: launch_latest_competition_url,
+                                      child: Text(
+                                        "Check out our upcoming competition starting on April 22nd 2024! (Link)",
+                                        style: TextStyle(
+                                          color: black.withOpacity(0.6),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400,
+                                          fontFamily: "MontserratRegular",
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                           const SmallSpace(),

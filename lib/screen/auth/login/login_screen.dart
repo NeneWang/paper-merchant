@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:paper_merchant/controller/checkbox_controller.dart';
-import 'package:paper_merchant/controller/conteiner_color_change_keypade.dart';
 import 'package:paper_merchant/data/database.dart';
-import 'package:paper_merchant/screen/auth/forgetpassword/forgetpassword_screen.dart';
 import 'package:paper_merchant/screen/auth/signup/signup_screen.dart';
 import 'package:paper_merchant/screen/home/drawer_open_.dart';
 import 'package:paper_merchant/utils/buttons_widget.dart';
@@ -21,8 +18,12 @@ class LogInScreen extends StatelessWidget {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  // ignore: non_constant_identifier_names
   final String FORGOT_PASSWORD = 'https://forms.gle/hi1C2R4PRVh53dnp9';
 
+  LogInScreen({super.key});
+
+  // ignore: non_constant_identifier_names
   Future<void> launch_forgot_password_form() async {
     Uri uri = Uri.parse(FORGOT_PASSWORD);
     if (!await launchUrl(uri)) {
@@ -43,7 +44,7 @@ class LogInScreen extends StatelessWidget {
                 padding: EdgeInsets.only(top: Get.height / 14),
                 child: Column(
                   children: [
-                    Text(
+                    const Text(
                       "Login",
                       style: TextStyle(
                         fontSize: 26,
@@ -69,7 +70,7 @@ class LogInScreen extends StatelessWidget {
             child: Container(
               height: Get.height / 1.7,
               width: Get.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(20),
@@ -145,16 +146,13 @@ class LogInScreen extends StatelessWidget {
                                   checkBoxController.isCheck.value);
                           if (loginResponse) {
                             Navigator.push(
+                              // ignore: use_build_context_synchronously
                               context,
                               MaterialPageRoute(
                                 builder: (context) => DrawerOpenScreen(),
                               ),
                             );
                           }
-
-                          // Get.to(
-                          //   VerificationScreen(),
-                          // );
                         },
                         textLabel: "Log In",
                       ),
@@ -164,7 +162,7 @@ class LogInScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
+                          const Text(
                             "Don't have an account?",
                             style: TextStyle(
                               fontSize: 14,
@@ -177,9 +175,8 @@ class LogInScreen extends StatelessWidget {
                               Get.to(
                                 SignUpScreen(),
                               );
-                              print("Sign Up");
                             },
-                            child: Text(
+                            child: const Text(
                               "Sign up",
                               style: TextStyle(
                                 fontSize: 14,
