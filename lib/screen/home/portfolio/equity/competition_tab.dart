@@ -161,9 +161,6 @@ class _CompetitionScreenTabState extends State<CompetitionScreenTab> {
                                     subtitle: Text(
                                         'Players: ${snapshot.data![index]['competition_participants_count']?.toString() ?? '0'}'),
                                     onTap: () {
-                                      // print('Selected competition');
-                                      // print(snapshot.data![index]);
-
                                       // Don't do anything if the selected competition is the current one as well.
                                       if (currentCompetitionId ==
                                           snapshot.data![index]

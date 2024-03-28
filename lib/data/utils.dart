@@ -3,12 +3,10 @@ import 'dart:ui';
 
 import 'package:fl_chart/fl_chart.dart';
 
-/**
- * Filter the ticket symbols based on their similarity to the input
- * @param input The input string to filter the tickets by
- * @param ticketList The list of tickets to filter
- * @returns The filtered list of tickets
- */
+/// Filter the ticket symbols based on their similarity to the input
+/// @param input The input string to filter the tickets by
+/// @param ticketList The list of tickets to filter
+/// @returns The filtered list of tickets
 List<String> filterTickets(String input, List<String> ticketList) {
   // Convert input to lowercase for case-insensitive comparison
   final normalizedInput = input.toLowerCase();
