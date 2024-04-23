@@ -33,7 +33,12 @@ However it seems that the error dissapears when you remove the `/` at the end.
 Lesson:
 - it seems that the way you direct in Fastapi the endpoint (with or without `/`) is important.
 
+## Mantainance
 
+!!
+```
+firebase hosting:disable
+```
 
 
 ## Deployment
