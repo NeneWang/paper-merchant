@@ -521,6 +521,16 @@ class Database {
         );
         return;
       }
+      if (response.body.contains("Market is closed")) {
+        Get.snackbar(
+          "Failed",
+          "Market is closed - We are limiting the purchase after trading hours at the moment to reflect accurate market data. ",
+          backgroundColor: redEB5757,
+          colorText: white,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return;
+      }
 
       await syncData();
       Get.snackbar("Success", "$ticker_symbol share purchased",
@@ -581,14 +591,36 @@ class Database {
           colorText: white,
           snackPosition: SnackPosition.BOTTOM,
         );
+
+        if (response.body.contains("Market is closed")) {
+          Get.snackbar(
+            "Failed",
+            "Market is closed - We are limiting the purchase after trading hours at the moment to reflect accurate market data. ",
+            backgroundColor: redEB5757,
+            colorText: white,
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          return;
+        }
+
         return;
       } else {
+        if (response.body.contains("Market is closed")) {
+          Get.snackbar(
+            "Failed",
+            "Market is closed - We are limiting the purchase after trading hours at the moment to reflect accurate market data. ",
+            backgroundColor: redEB5757,
+            colorText: white,
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          return;
+        }
+
         await syncData();
-        Get.snackbar("Success", "$ticker_symbol share sold",
+        Get.snackbar("Error", "Failed to sell $ticker_symbol share",
             backgroundColor: green219653,
             colorText: white,
             snackPosition: SnackPosition.BOTTOM);
-        return;
       }
     } else {
       return;
