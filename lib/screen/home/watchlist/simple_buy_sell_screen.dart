@@ -12,6 +12,7 @@ import 'package:paper_merchant/data/database.dart';
 
 import 'package:paper_merchant/components/QuantityRow.dart';
 import 'package:paper_merchant/components/NamesWithPricing.dart';
+import 'package:intl/intl.dart';
 
 final applicationController myTabController = Get.put(applicationController());
 // ColorChangeController colorChangeController = Get.put(
@@ -445,9 +446,9 @@ historyListViewItem({symbol, price, count, type, date}) {
     }
   }
   // String operation = type.toUpperCase() == "SELL" ? "SELL" : "BUY ";
-  String onlyDate = date.toString().split("T")[0];
+  String onlyDate = "UTC: " + date.toString().split(".")[0];
   return Row(children: [
-    Text('$symbol ${type.toUpperCase()}',
+    Text(' $symbol ${type.toUpperCase()}',
         style: const TextStyle(
           fontSize: 18,
         )),
