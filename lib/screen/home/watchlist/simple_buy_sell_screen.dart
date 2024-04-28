@@ -12,7 +12,7 @@ import 'package:paper_merchant/data/database.dart';
 
 import 'package:paper_merchant/components/QuantityRow.dart';
 import 'package:paper_merchant/components/NamesWithPricing.dart';
-import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final applicationController myTabController = Get.put(applicationController());
 // ColorChangeController colorChangeController = Get.put(
@@ -22,6 +22,18 @@ final applicationController myTabController = Get.put(applicationController());
 // Function to reload the page
 void reloadPage(BuildContext context) {
   Navigator.of(context).popAndPushNamed('/your_page_route_name');
+}
+
+// ignore: non_constant_identifier_names
+String YAHOO_PRICING = 'https://finance.yahoo.com/quote/';
+
+// ignore: non_constant_identifier_names
+Future<void> launch_latest_competition_url(symbol) async {
+  String shareYahooStock = YAHOO_PRICING + symbol;
+  Uri uri = Uri.parse(shareYahooStock);
+  if (!await launchUrl(uri)) {
+    throw Exception('Could not launch $shareYahooStock');
+  }
 }
 
 class BuySellScreen extends StatefulWidget {
@@ -66,17 +78,19 @@ class _BuySellScreenState extends State<BuySellScreen> {
     fontWeight: FontWeight.w700,
   );
 
+  bool isBookmarked = false;
+
+  // At init state, check if the stock is bookmarked
+  @override
+  void initState() {
+    super.initState();
+    db.loadData();
+    isBookmarked = db.isBookmarked(widget.ticker);
+  }
+
   @override
   Widget build(BuildContext context) {
     String userCash = "0";
-    bool moreCashThanCost(double currentPrice) {
-      double totalCost = currentPrice;
-      if (totalCost > double.parse(userCash)) {
-        return false;
-      } else {
-        return true;
-      }
-    }
 
     return Scaffold(
       backgroundColor: white,
@@ -85,7 +99,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
         backgroundColor: pageBackGroundC,
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
+          icon: const Icon(
             CupertinoIcons.back,
             color: black1,
           ),
@@ -97,7 +111,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
           padding: const EdgeInsets.only(left: 75),
           child: Text(
             widget.ticker,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 20,
               color: black2,
               fontFamily: "NunitoBold",
@@ -105,6 +119,24 @@ class _BuySellScreenState extends State<BuySellScreen> {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(
+              isBookmarked
+                  ? CupertinoIcons.bookmark_fill
+                  : CupertinoIcons.bookmark,
+              color: black1,
+            ),
+            onPressed: () {
+              // Add your bookmark logic here
+              final bookmarkRes = db.toggleBookmark(widget.ticker);
+              print("Bookmark result: $bookmarkRes");
+              setState(() {
+                isBookmarked = bookmarkRes;
+              });
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -114,7 +146,6 @@ class _BuySellScreenState extends State<BuySellScreen> {
               padding: const EdgeInsets.only(top: 21, left: 13, right: 18),
               child: SizedBox(
                 width: Get.width,
-                height: 56,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -122,8 +153,27 @@ class _BuySellScreenState extends State<BuySellScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text("Current Price"),
-                        Text(widget.price, style: blackBoldStyle)
+                        const Text("15 Mins Delayed Price"),
+                        Text(widget.price, style: blackBoldStyle),
+                        Container(
+                          width: Get.width * 0.8,
+                          child: const Text(
+                              "Transaction prices will be updated to reflect the price at the moment bought by the end of the day."),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            launch_latest_competition_url(widget.ticker);
+                          },
+                          child: Text(
+                            "Check the real current price here.",
+                            style: TextStyle(
+                              color: black.withOpacity(0.6),
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              fontFamily: "MontserratRegular",
+                            ),
+                          ),
+                        ),
                       ],
                     )
                   ],
@@ -179,7 +229,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                       const Height5(),
                                       const Text(
                                           'Standard Industrial Classification:'),
-                                      Container(
+                                      SizedBox(
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.5,
@@ -237,7 +287,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                       child: snapshot.data?["shares_owned"] != null &&
                               snapshot.data?["shares_owned"] != "0" &&
                               snapshot.data?["shares_owned"] != ""
-                          ? Container(
+                          ? SizedBox(
                               width: Get.width,
                               child: Row(
                                 mainAxisAlignment:
@@ -296,7 +346,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                                 text: snapshot.data![
                                                     "shares_owned_profit"],
                                                 style: blackBoldStyle),
-                                            TextSpan(
+                                            const TextSpan(
                                               text: " (",
                                               style: TextStyle(
                                                 fontSize: 18,
@@ -308,14 +358,14 @@ class _BuySellScreenState extends State<BuySellScreen> {
                                             TextSpan(
                                               text: snapshot.data![
                                                   "shares_owned_profit_percent"],
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontSize: 18,
                                                 color: green219653,
                                                 fontFamily: "Nunito",
                                                 fontWeight: FontWeight.w400,
                                               ),
                                             ),
-                                            TextSpan(
+                                            const TextSpan(
                                               text: ")",
                                               style: TextStyle(
                                                 fontSize: 18,
@@ -335,7 +385,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                           : Container(),
                     );
                   } else {
-                    return Center(
+                    return const Center(
                       child: Column(),
                     );
                   }
@@ -374,7 +424,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                 ],
               ),
             ),
-            Divider(
+            const Divider(
               thickness: 3,
               color: grayF2F2F2,
             ),
@@ -410,7 +460,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                         }
                       },
                     ),
-                    Divider(),
+                    const Divider(),
                   ],
                 ),
               ),
@@ -446,13 +496,13 @@ historyListViewItem({symbol, price, count, type, date}) {
     }
   }
   // String operation = type.toUpperCase() == "SELL" ? "SELL" : "BUY ";
-  String onlyDate = "UTC: " + date.toString().split(".")[0];
+  String onlyDate = "UTC: ${date.toString().split(".")[0]}";
   return Row(children: [
     Text(' $symbol ${type.toUpperCase()}',
         style: const TextStyle(
           fontSize: 18,
         )),
-    Spacer(),
+    const Spacer(),
     Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[Text(onlyDate), Text('$sign \$$price')],
@@ -462,7 +512,7 @@ historyListViewItem({symbol, price, count, type, date}) {
 
 buyDialog(context,
     {String symbol = "", String price = "0", purchaseMethod, userCash = "0"}) {
-  final TextEditingController _totalCostController =
+  final TextEditingController totalCostController =
       TextEditingController(text: '1');
 
   return Get.defaultDialog(
@@ -484,7 +534,7 @@ buyDialog(context,
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(CupertinoIcons.clear),
+                icon: const Icon(CupertinoIcons.clear),
               ),
             ),
           ),
@@ -493,22 +543,22 @@ buyDialog(context,
               price: price,
               color1: appColor2F80ED,
               userCash: userCash),
-          Divider(
+          const Divider(
             thickness: 3,
             color: grayF2F2F2,
           ),
           priceQuantity(
               color2: appColor,
               price: price,
-              totalcostController: _totalCostController),
+              totalcostController: totalCostController),
           Padding(
-            padding: EdgeInsets.only(top: 39, bottom: 16),
+            padding: const EdgeInsets.only(top: 39, bottom: 16),
             child: buyDropDownButton(
               textLabel: "BUY",
               onTapButton: () {
                 print("_totalCostController.text");
                 // print(_totalCostController.text);
-                String totalCostString = _totalCostController.text;
+                String totalCostString = totalCostController.text;
 
                 // Check if the input string is a valid integer
                 double totalCost = double.parse(totalCostString);

@@ -28,9 +28,10 @@ class Database {
 
   // For quick reference
   Map<dynamic, dynamic> userStockPrices = {};
-  Map<dynamic, dynamic> userBookmarkPrices = {};
+  Map<dynamic, dynamic> userBookmarkPrices = {}; // Why did I even create this?
   List<String> searchHistory = ["GOOGL"];
   List<String> ticketNames = [];
+  List<String> bookmark = [];
 
   Map<dynamic, dynamic> showStockData =
       {}; //The stocks being shown in the watchlist
@@ -103,6 +104,7 @@ class Database {
     _myBox.delete("userBookmarkPrices");
     _myBox.delete("userStockPrices");
     _myBox.delete("ticketNames");
+    _myBox.delete("bookmark");
   }
 
   void loginWithDemo() {}
@@ -130,7 +132,16 @@ class Database {
       _myBox.put("userPortfolio", userPortfolio);
       _myBox.put("userBookmarkPrices", userBookmarkPrices);
       _myBox.put("userStockPrices", userStockPrices);
+
       // syncData();
+    }
+
+    if (_myBox.get("bookmark") == null || _myBox.get("bookmark").isEmpty) {
+      _myBox.put("bookmark", ['AAPL', 'MSFT', 'GOOGL', 'AMZN', 'TSLA']);
+      bookmark = _myBox.get("bookmark");
+    } else {
+      bookmark = _myBox.get("bookmark");
+      print('Bookmarks: $bookmark');
     }
 
     if (_myBox.get("ticketNames") == null ||
@@ -183,8 +194,6 @@ class Database {
   Future<List> getTickerTransactions(String symbol) async {
     final player_id = userData["player_id"];
 
-// Replace with actual API URL
-
     final response = await http.get(Uri.parse(
         '$backendAPI/player_transactions/$player_id?stock_name=$symbol'));
 
@@ -218,8 +227,8 @@ class Database {
     try {
       loadData();
 
-      final test_if_data_exists = getuserPortfolio(symbol);
-      if (!test_if_data_exists.containsKey("count")) {
+      final testIfDataExists = getuserPortfolio(symbol);
+      if (!testIfDataExists.containsKey("count")) {
         await syncData();
       }
 
@@ -459,10 +468,23 @@ class Database {
     final stocksToLookup = result.sublist(0, limitCount);
 
     showStockData = await researchMultiple(stocksToLookup);
-
-    // print("show stock data");
-    // print(showStockData);
     return;
+  }
+
+  bool isBookmarked(String tickerSymbol) {
+    return bookmark.contains(tickerSymbol);
+  }
+
+  bool toggleBookmark(String tickerSymbol) {
+    if (bookmark.contains(tickerSymbol)) {
+      bookmark.remove(tickerSymbol);
+      _myBox.put("bookmark", bookmark);
+      return false;
+    } else {
+      bookmark.add(tickerSymbol);
+      _myBox.put("bookmark", bookmark);
+      return true;
+    }
   }
 
   Future<void> purchaseStock(String ticker_symbol,
@@ -709,7 +731,8 @@ class Database {
       const getHighlightURL =
           "$backendAPI/api/get_highlight_today"; // Replace with actual API URL
 
-      final bookmarks = ["AAPL", "JPM", "MSFT", "EBAY", "SHOP"];
+      final bookmarksParam = bookmark;
+      print("Bookmarks parameter to be used.: $bookmarksParam");
       final headers = <String, String>{
         'Content-Type': 'application/json',
       };
@@ -724,7 +747,7 @@ class Database {
       final response_2 = await http.post(
         uri,
         headers: headers,
-        body: jsonEncode(bookmarks),
+        body: jsonEncode(bookmarksParam),
       );
 
       if (response.statusCode == 200) {

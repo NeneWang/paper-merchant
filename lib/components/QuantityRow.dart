@@ -87,13 +87,16 @@ class _QuantitiyRowState extends State<QuantitiyRow> {
           // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              "Total",
-              style: TextStyle(
-                fontSize: 13,
-                color: gray4,
-                fontFamily: "NunitoSemiBold",
-                fontWeight: FontWeight.w600,
+            Container(
+              width: Get.width / 4.37 /*94*/,
+              child: const Text(
+                "Totalestimated (will update by end of day)",
+                style: TextStyle(
+                  fontSize: 13,
+                  color: gray4,
+                  fontFamily: "NunitoSemiBold",
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
             Container(

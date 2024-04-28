@@ -209,11 +209,11 @@ class _TradeScreenState extends State<TradeScreen> {
                   TextButton(
                     onPressed: () {
                       /*  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => AllStockScreen(),
-                                    ),
-                                  );*/
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AllStockScreen(),
+                            ),
+                          );*/
                     },
                     child: const Text(
                       "See All",
