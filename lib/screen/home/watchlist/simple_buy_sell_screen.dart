@@ -37,7 +37,8 @@ Future<void> launch_latest_competition_url(symbol) async {
 }
 
 Future<void> launch_transaction_execution_preview(player_id) async {
-  String baseUrl = 'http://127.0.0.1:8000/api/preview_execution_report/';
+  String baseUrl =
+      'https://crvmb5tnnr.us-east-1.awsapprunner.com/api/preview_execution_report/';
   String url = baseUrl + player_id;
   Uri uri = Uri.parse(url);
   if (!await launchUrl(uri)) {
