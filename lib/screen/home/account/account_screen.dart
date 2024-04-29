@@ -4,6 +4,7 @@ import 'package:paper_merchant/screen/home/account/switch_competition.dart';
 import 'package:paper_merchant/utils/color.dart';
 import 'package:paper_merchant/data/database.dart';
 import 'package:paper_merchant/screen/welcome/welcome_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -28,6 +29,16 @@ class _AccountScreenState extends State<AccountScreen> {
     super.initState();
     db.loadData();
     db.syncData();
+  }
+
+  Future<void> launch_transaction_execution_preview(player_id) async {
+    String baseUrl =
+        'https://crvmb5tnnr.us-east-1.awsapprunner.com/api/preview_execution_report/';
+    String url = baseUrl + player_id;
+    Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   @override
@@ -142,6 +153,15 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       InkWell(
                         onTap: () {
+                          launch_transaction_execution_preview(
+                              db.userData["player_id"]);
+                        },
+                        child: ViewRowLink(
+                          labelText: "All Transactions Execution Preview",
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
                           Get.to(WelcomeScreen());
                         },
                         child: logOffRowButton(
@@ -182,6 +202,38 @@ ReloadArrowRowLink({String? labelText}) {
         ),
         const Icon(
           Icons.find_replace_rounded,
+          color: gray4,
+          size: 30,
+        ),
+      ],
+    ),
+  );
+}
+
+ViewRowLink({String? labelText}) {
+  return Container(
+    height: 54,
+    width: Get.width,
+    margin: const EdgeInsets.only(top: 16),
+    padding: EdgeInsets.symmetric(horizontal: 16, vertical: Get.height / 59.42),
+    decoration: BoxDecoration(
+      color: pageBackGroundC,
+      borderRadius: BorderRadius.circular(10),
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          labelText!,
+          style: const TextStyle(
+            fontSize: 19,
+            color: black2,
+            fontFamily: "NunitoSemiBold",
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        const Icon(
+          Icons.view_compact_sharp,
           color: gray4,
           size: 30,
         ),

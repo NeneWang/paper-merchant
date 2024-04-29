@@ -180,7 +180,7 @@ class _BuySellScreenState extends State<BuySellScreen> {
                         Container(
                           width: Get.width * 0.8,
                           child: const Text(
-                              "Transaction prices will be updated to reflect the price at the moment bought by the end of the day."),
+                              "Transaction prices will be updated to reflect the price (from the real stock market) using the moment bought by the end of the day."),
                         ),
                         TextButton(
                             onPressed: () {
