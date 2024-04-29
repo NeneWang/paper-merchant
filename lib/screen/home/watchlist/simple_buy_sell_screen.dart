@@ -36,6 +36,15 @@ Future<void> launch_latest_competition_url(symbol) async {
   }
 }
 
+Future<void> launch_transaction_execution_preview(player_id) async {
+  String baseUrl = 'http://127.0.0.1:8000/api/preview_execution_report/';
+  String url = baseUrl + player_id;
+  Uri uri = Uri.parse(url);
+  if (!await launchUrl(uri)) {
+    throw Exception('Could not launch $url');
+  }
+}
+
 class BuySellScreen extends StatefulWidget {
   final String ticker;
   final String price;
@@ -154,26 +163,31 @@ class _BuySellScreenState extends State<BuySellScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text("15 Mins Delayed Price"),
-                        Text(widget.price, style: blackBoldStyle),
+                        Row(
+                          children: [
+                            Text(widget.price, style: blackBoldStyle),
+                            TextButton(
+                              onPressed: () {
+                                launch_latest_competition_url(widget.ticker);
+                              },
+                              child: Text(
+                                "Check the real current price here.",
+                              ),
+                            ),
+                          ],
+                        ),
                         Container(
                           width: Get.width * 0.8,
                           child: const Text(
                               "Transaction prices will be updated to reflect the price at the moment bought by the end of the day."),
                         ),
                         TextButton(
-                          onPressed: () {
-                            launch_latest_competition_url(widget.ticker);
-                          },
-                          child: Text(
-                            "Check the real current price here.",
-                            style: TextStyle(
-                              color: black.withOpacity(0.6),
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "MontserratRegular",
-                            ),
-                          ),
-                        ),
+                            onPressed: () {
+                              launch_transaction_execution_preview(
+                                  db.userData['player_id']);
+                            },
+                            child:
+                                Text("Preview Transaction Execution Report")),
                       ],
                     )
                   ],

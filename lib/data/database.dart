@@ -141,7 +141,6 @@ class Database {
       bookmark = _myBox.get("bookmark");
     } else {
       bookmark = _myBox.get("bookmark");
-      print('Bookmarks: $bookmark');
     }
 
     if (_myBox.get("ticketNames") == null ||
@@ -732,7 +731,6 @@ class Database {
           "$backendAPI/api/get_highlight_today"; // Replace with actual API URL
 
       final bookmarksParam = bookmark;
-      print("Bookmarks parameter to be used.: $bookmarksParam");
       final headers = <String, String>{
         'Content-Type': 'application/json',
       };
