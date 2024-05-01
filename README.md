@@ -6,6 +6,7 @@
   alt="Size Limit comment in pull request about bundle size changes">
 
 - Try Here: https://descartable-server.web.app/
+- Available at Playstore: https://play.google.com/store/apps/details?id=com.anvildev.papermerchant&pli=1
 - Interested in participating in a competition? https://prometheusinvestors.com/trade-competition
 
 - For Mobile Applications, feel free to scan here:
